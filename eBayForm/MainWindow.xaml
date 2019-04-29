@@ -5,8 +5,31 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:eBayForm"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        WindowStartupLocation="CenterScreen"
+        FontFamily="Popins" Background="{StaticResource MainBackground}"
+        Height="630" Width="1000" WindowStyle="None" ResizeMode="NoResize">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Frame Grid.Row="0" Name="Taskbar"/>
+
+        <Grid Grid.Row="1">
+            <!--Background Fill-->
+            <Rectangle Grid.Row="0" Fill="{StaticResource ThirdBackground}" />
+            <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Name="btnHome" Content="Home" FontSize="12" Width="120" Margin="5, 0" Height="20" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{StaticResource MainForeground}" Click="BtnHome_Click"/>
+                <Button Name="btnTemplates" Content="Templates" FontSize="12" Width="120" Margin="5, 0" Height="20" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{StaticResource MainForeground}" Click="BtnTemplates_Click"/>
+                <Button Name="btnGetFromWeb" Content="Get from web" FontSize="12" Width="120" Margin="5, 0" Height="20" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{StaticResource MainForeground}" Click="BtnGetFromWeb_Click"/>
+                <Button Name="btnImport" Content="Import" FontSize="12" Width="120" Margin="5, 0" Height="20" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{StaticResource MainForeground}" Click="BtnImport_Click"/>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="2">
+            <WebBrowser Name="wbWorkspace" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                        Height="500" Width="700"/>
+        </Grid>
     </Grid>
 </Window>
