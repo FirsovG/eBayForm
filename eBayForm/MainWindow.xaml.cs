@@ -70,6 +70,8 @@ namespace eBayForm
             {
                 wbWorkspace.NavigateToString(htmlCode);
                 wbWorkspace.Visibility = Visibility.Visible;
+                PropertiesToolBox toolBox = new PropertiesToolBox(lc);
+                toolBox.Show();
             }
         }
         #endregion

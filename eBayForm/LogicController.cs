@@ -6,7 +6,7 @@ using Microsoft.Win32;
 
 namespace eBayForm
 {
-    sealed class LogicController
+    public sealed class LogicController
     {
         // TODO: Check if the IE meta-tag at the beginn of the file
         public string ImportHtml()

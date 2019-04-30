@@ -15,13 +15,16 @@ using System.Windows.Shapes;
 namespace eBayForm.Windows
 {
     /// <summary>
-    /// Логика взаимодействия для PropertysToolBox.xaml
+    /// Логика взаимодействия для PropertiesToolBox.xaml
     /// </summary>
-    public partial class PropertysToolBox : Window
+    public partial class PropertiesToolBox : Window
     {
-        public PropertysToolBox()
+        private LogicController lc;
+        public PropertiesToolBox(LogicController lc)
         {
             InitializeComponent();
+            Taskbar.Content = new DesignItems.Taskbar(this);
+            this.lc = lc;
         }
     }
 }
