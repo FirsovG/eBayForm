@@ -46,7 +46,7 @@ namespace eBayForm
 
         }
 
-        private async void BtnGetFromWeb_Click(object sender, RoutedEventArgs e)
+        private void BtnGetFromWeb_Click(object sender, RoutedEventArgs e)
         {
             //GetFromWeb getFromWebDialog = new GetFromWeb();
             //getFromWebDialog.ShowDialog();
@@ -69,9 +69,15 @@ namespace eBayForm
             else
             {
                 wbWorkspace.NavigateToString(htmlCode);
+                wbWorkspace.Visibility = Visibility.Visible;
             }
         }
         #endregion
+
+        private async Task DisplayToolBox(string htmlCode)
+        {
+            
+        }
 
         //private async Task<string> DownloadPageAsync(string url)
         //{

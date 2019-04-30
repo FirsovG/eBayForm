@@ -68,6 +68,9 @@
     <Compile Include="Windows\GetFromWeb.xaml.cs">
       <DependentUpon>GetFromWeb.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\PropertysToolBox.xaml.cs">
+      <DependentUpon>PropertysToolBox.xaml</DependentUpon>
+    </Compile>
     <Page Include="DesignItems\Taskbar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -88,6 +91,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Windows\GetFromWeb.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\PropertysToolBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

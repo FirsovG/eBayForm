@@ -29,7 +29,7 @@
         </Grid>
         <Grid Grid.Row="2">
             <WebBrowser Name="wbWorkspace" HorizontalAlignment="Center" VerticalAlignment="Center" 
-                        Height="500" Width="700"/>
+                        Height="500" Width="900" Visibility="Hidden"/>
         </Grid>
     </Grid>
 </Window>
