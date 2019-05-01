@@ -65,6 +65,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="LogicController.cs" />
+    <Compile Include="LogicUnits\HtmlTagElement.cs" />
     <Compile Include="Windows\GetFromWeb.xaml.cs">
       <DependentUpon>GetFromWeb.xaml</DependentUpon>
     </Compile>
@@ -141,8 +142,6 @@
   <ItemGroup>
     <Resource Include="Images\logo64.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="LogicUnits\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

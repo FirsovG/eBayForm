@@ -1,4 +1,5 @@
-﻿using eBayForm.Windows;
+﻿using eBayForm.LogicUnits;
+using eBayForm.Windows;
 using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
@@ -70,6 +71,7 @@ namespace eBayForm
             {
                 wbWorkspace.NavigateToString(htmlCode);
                 wbWorkspace.Visibility = Visibility.Visible;
+                List<HtmlTagElement> htmlTags = lc.GetTags();
                 PropertiesToolBox toolBox = new PropertiesToolBox(lc);
                 toolBox.Show();
             }

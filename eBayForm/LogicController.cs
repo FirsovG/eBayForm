@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using eBayForm.LogicUnits;
 using HtmlAgilityPack;
 using Microsoft.Win32;
 
@@ -8,6 +9,9 @@ namespace eBayForm
 {
     public sealed class LogicController
     {
+        // Html agility pack
+        // Class which gonna contain HtmlCode
+        HtmlDocument document = new HtmlDocument();
         // TODO: Check if the IE meta-tag at the beginn of the file
         public string ImportHtml()
         {
@@ -26,9 +30,6 @@ namespace eBayForm
                     // Insert content into htmlCode
                     htmlCode = reader.ReadToEnd();
                 }
-                // Html agility pack
-                // Class which gonna contain HtmlCode
-                HtmlDocument document = new HtmlDocument();
                 // Loading the Code
                 document.LoadHtml(htmlCode);
                 // To diplay the content rightly we need to check compatibility to InternetExplorer
@@ -55,6 +56,17 @@ namespace eBayForm
                 return document.DocumentNode.OuterHtml;
             }
             return null;
+        }
+
+
+        public List<HtmlTagElement> GetTags()
+        {
+            List<HtmlTagElement> htmlTags = new List<HtmlTagElement>();
+            foreach (HtmlNode node in document.DocumentNode.SelectNodes("//p"))
+            {
+                htmlTags.Add(new HtmlTagElement("p", node.InnerHtml));
+            }
+            return htmlTags;
         }
     }
 }
