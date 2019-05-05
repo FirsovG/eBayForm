@@ -8,15 +8,15 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Dark.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Amber.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.DeepPurple.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <FontFamily x:Key="Poppins">pack://application:,,,/Fonts/#Poppins</FontFamily>
-            <SolidColorBrush x:Key="MainBackground" Color="#F3F5EF"/>
-            <SolidColorBrush x:Key="SecondBackground" Color="#3C3C4C"/>
-            <SolidColorBrush x:Key="ThirdBackground" Color="#B0ACB4"/>
-            <SolidColorBrush x:Key="MainForeground" Color="#e7b754"/>
-            <SolidColorBrush x:Key="WatermarkForeground" Color="#d9dbd6"/>
+            <SolidColorBrush x:Key="MainColor" Color="#6a39c6"/>
+            <SolidColorBrush x:Key="SecondColor" Color="#dddddd"/>
+            <SolidColorBrush x:Key="WatermarkColor" Color="#545454"/>
+
+            <SolidColorBrush x:Key="AccentDark" Color="#383838"/>
         </ResourceDictionary>
     </Application.Resources>
 

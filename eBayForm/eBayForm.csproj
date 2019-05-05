@@ -65,12 +65,23 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="LogicController.cs" />
-    <Compile Include="LogicUnits\HtmlTagElement.cs" />
+    <Compile Include="LogicUnits\CustomMessageBox.cs" />
+    <Compile Include="LogicUnits\Exceptions\NotATemplateException.cs" />
+    <Compile Include="LogicUnits\Exceptions\UnknownTemplateException.cs" />
+    <Compile Include="LogicUnits\HtmlTags\HtmlLinkTagElement.cs" />
+    <Compile Include="LogicUnits\HtmlTags\HtmlTagElement.cs" />
+    <Compile Include="LogicUnits\HtmlTags\IHtmlTagElement.cs" />
     <Compile Include="Windows\GetFromWeb.xaml.cs">
       <DependentUpon>GetFromWeb.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\OwnMessageBox.xaml.cs">
+      <DependentUpon>OwnMessageBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\PropertiesToolBox.xaml.cs">
       <DependentUpon>PropertiesToolBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\YNDialog.xaml.cs">
+      <DependentUpon>YNDialog.xaml</DependentUpon>
     </Compile>
     <Page Include="DesignItems\Taskbar.xaml">
       <SubType>Designer</SubType>
@@ -95,7 +106,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Windows\OwnMessageBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\PropertiesToolBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\YNDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

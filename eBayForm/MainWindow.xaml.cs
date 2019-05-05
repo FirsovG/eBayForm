@@ -1,23 +1,10 @@
 ﻿using eBayForm.LogicUnits;
+using eBayForm.LogicUnits.Exceptions;
+using eBayForm.LogicUnits.HtmlTags;
 using eBayForm.Windows;
-using HtmlAgilityPack;
-using System;
+
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace eBayForm
 {
@@ -28,6 +15,7 @@ namespace eBayForm
     /// </summary>
     public partial class MainWindow : Window
     {
+        PropertiesToolBox toolBox;
         LogicController lc;
         public MainWindow()
         {
@@ -62,26 +50,41 @@ namespace eBayForm
 
         private void BtnImport_Click(object sender, RoutedEventArgs e)
         {
-            string htmlCode = lc.ImportHtml();
-            if (htmlCode == null)
+            OwnMessageBox messageBox;
+            try
             {
-                MessageBox.Show("Coudn't open file");
+                string htmlCode = lc.ImportHtml();
+                if (htmlCode == null)
+                {
+                    CustomMessageBox.Show("Coudn't open file");
+                }
+                else
+                {
+                    wbWorkspace.NavigateToString(htmlCode);
+                    wbWorkspace.Visibility = Visibility.Visible;
+                    if (toolBox != null)
+                    {
+                        toolBox.Close();
+                    }
+                    toolBox = new PropertiesToolBox(lc, wbWorkspace);
+                    toolBox.Show();
+                }
             }
-            else
+            catch (NotATemplateException exception)
             {
-                wbWorkspace.NavigateToString(htmlCode);
-                wbWorkspace.Visibility = Visibility.Visible;
-                List<HtmlTagElement> htmlTags = lc.GetTags();
-                PropertiesToolBox toolBox = new PropertiesToolBox(lc);
-                toolBox.Show();
+                CustomMessageBox.Show(exception.Message);
+            }
+            catch (UnknownTemplateException exception)
+            {
+                MessageBox.Show(exception.Message);
             }
         }
         #endregion
 
-        private async Task DisplayToolBox(string htmlCode)
-        {
-            
-        }
+        //private async Task DisplayToolBox(string htmlCode)
+        //{
+
+        //}
 
         //private async Task<string> DownloadPageAsync(string url)
         //{
@@ -118,11 +121,30 @@ namespace eBayForm
         //    // Close the response.  
         //    response.Close();
 
-            
+
         //    //var Pannel = document.DocumentNode.SelectSingleNode(".//div[@id='BottomPanel']");
 
         //    //string tmp = Pannel.SelectSingleNode("//body").InnerHtml;
         //    return url;
         //}
+
+        #region OnClose
+
+        protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
+        {
+            if (toolBox != null)
+            {
+                bool? result = CustomMessageBox.Dialog("Do you want to export the file?");
+                if (result == true)
+                {
+                    MessageBox.Show("Export not ready");
+                }
+                toolBox.Close();
+            }
+
+            base.OnClosing(e);
+        }
+
+        #endregion
     }
 }

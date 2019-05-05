@@ -4,8 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:eBayForm.Windows"
-        mc:Ignorable="d" Height="600" Width="300"
-        FontFamily="Popins" Background="{StaticResource MainBackground}"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d" Height="600" Width="400"
+        FontFamily="Popins" Background="{DynamicResource MaterialDesignPaper}"
         WindowStyle="None" ResizeMode="NoResize">
     <Grid>
         <Grid.RowDefinitions>
@@ -16,11 +17,8 @@
         <Frame Grid.Row="0" Name="Taskbar"/>
 
         <ScrollViewer Grid.Row="1">
-            <StackPanel Name="spList">
-                <Label FontSize="14" Content="Paragraph" Foreground="{StaticResource MainForeground}" FontWeight="Bold"/>
-                <TextBox Text="Hello" BorderThickness="0,0,0,1.5" BorderBrush="{StaticResource SecondBackground}" Margin="2.5, 5, 2.5, 10" FontSize="18" Foreground="{StaticResource SecondBackground}"/>
-                <Label FontSize="14" Content="Paragraph" Foreground="{StaticResource MainForeground}" FontWeight="Bold"/>
-                <TextBox Text="Hello" BorderThickness="0,0,0,1.5" BorderBrush="{StaticResource SecondBackground}" Margin="2.5, 5, 2.5, 10" FontSize="18" Foreground="{StaticResource SecondBackground}"/>
+            <StackPanel Name="spMain">
+                
             </StackPanel>
         </ScrollViewer>
     </Grid>

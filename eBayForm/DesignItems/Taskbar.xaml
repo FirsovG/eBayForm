@@ -8,7 +8,7 @@
       mc:Ignorable="d" 
       MouseMove="Window_MouseMove"
       d:DesignHeight="30" d:DesignWidth="800"
-      Title="Taskbar" Background="{StaticResource SecondBackground}">
+      Title="Taskbar" Background="{DynamicResource MaterialDesignPaper}">
 
     <Grid>
         <StackPanel HorizontalAlignment="Left" Margin="10, 0">
@@ -19,24 +19,24 @@
             <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Name="btnMinimize" 
                     Height="25" Width="25" BorderBrush="Transparent" 
                     Background="Transparent" Click="BtnMinimize_Click">
-                <materialDesign:PackIcon Kind="WindowMinimize" Foreground="{StaticResource MainForeground}" Margin="0,5,0,0"/>
+                <materialDesign:PackIcon Kind="WindowMinimize" Foreground="{StaticResource MainColor}" Margin="0,5,0,0"/>
             </Button>
             <Grid>
                 <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Name="btnMaximize" 
                         Height="25" Width="25" BorderBrush="Transparent" 
                         Background="Transparent" Click="BtnMaximize_Click">
-                    <materialDesign:PackIcon Kind="WindowMaximize" Foreground="{StaticResource MainForeground}"/>
+                    <materialDesign:PackIcon Kind="WindowMaximize" Foreground="{StaticResource MainColor}"/>
                 </Button>
                 <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Visibility="Hidden"  Name="btnRestore" 
                         Height="25" Width="25" BorderBrush="Transparent" 
                         Background="Transparent" Click="BtnRestore_Click">
-                    <materialDesign:PackIcon Kind="WindowRestore" Foreground="{StaticResource MainForeground}"/>
+                    <materialDesign:PackIcon Kind="WindowRestore" Foreground="{StaticResource MainColor}"/>
                 </Button>
             </Grid>
             <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"  Name="btnClose" 
                     Height="25" Width="25" BorderBrush="Transparent" 
                     Background="Transparent" Click="BtnClose_Click">
-                <materialDesign:PackIcon Kind="Close" Foreground="{StaticResource MainForeground}"/>
+                <materialDesign:PackIcon Kind="Close" Foreground="{StaticResource MainColor}"/>
             </Button>
 
         </StackPanel>

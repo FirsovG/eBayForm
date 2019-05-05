@@ -3,11 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:eBayForm"
         mc:Ignorable="d"
-        WindowStartupLocation="CenterScreen"
-        FontFamily="Popins" Background="{StaticResource MainBackground}"
-        Height="630" Width="1000" WindowStyle="None" ResizeMode="NoResize">
+        WindowStartupLocation="CenterScreen" Foreground="{StaticResource SecondColor}"
+        FontFamily="Popins" Background="{DynamicResource MaterialDesignPaper}"
+        Height="720" Width="1200" WindowStyle="None" ResizeMode="NoResize">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
@@ -19,17 +20,17 @@
 
         <Grid Grid.Row="1">
             <!--Background Fill-->
-            <Rectangle Grid.Row="0" Fill="{StaticResource ThirdBackground}" />
+            <Rectangle Grid.Row="0" Fill="{StaticResource MainColor}" />
             <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button Name="btnHome" Content="Home" FontSize="12" Width="120" Margin="5, 0" Height="20" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{StaticResource MainForeground}" Click="BtnHome_Click"/>
-                <Button Name="btnTemplates" Content="Templates" FontSize="12" Width="120" Margin="5, 0" Height="20" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{StaticResource MainForeground}" Click="BtnTemplates_Click"/>
-                <Button Name="btnGetFromWeb" Content="Get from web" FontSize="12" Width="120" Margin="5, 0" Height="20" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{StaticResource MainForeground}" Click="BtnGetFromWeb_Click"/>
-                <Button Name="btnImport" Content="Import" FontSize="12" Width="120" Margin="5, 0" Height="20" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{StaticResource MainForeground}" Click="BtnImport_Click"/>
+                <Button Name="btnHome" Content="Home" FontSize="12" Width="120" Margin="5, 0" Height="20" Background="{x:Null}" BorderBrush="{x:Null}" Click="BtnHome_Click"/>
+                <Button Name="btnTemplates" Content="Templates" FontSize="12" Width="120" Margin="5, 0" Height="20" Background="{x:Null}" BorderBrush="{x:Null}" Click="BtnTemplates_Click"/>
+                <Button Name="btnGetFromWeb" Content="Get from web" FontSize="12" Width="120" Margin="5, 0" Height="20" Background="{x:Null}" BorderBrush="{x:Null}" Click="BtnGetFromWeb_Click"/>
+                <Button Name="btnImport" Content="Import" FontSize="12" Width="120" Margin="5, 0" Height="20" Background="{x:Null}" BorderBrush="{x:Null}" Click="BtnImport_Click"/>
             </StackPanel>
         </Grid>
         <Grid Grid.Row="2">
             <WebBrowser Name="wbWorkspace" HorizontalAlignment="Center" VerticalAlignment="Center" 
-                        Height="500" Width="900" Visibility="Hidden"/>
+                        Height="650" Width="1100" Visibility="Hidden"/>
         </Grid>
     </Grid>
 </Window>
