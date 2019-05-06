@@ -1,15 +1,11 @@
 ﻿using eBayForm.LogicUnits;
 using eBayForm.LogicUnits.Exceptions;
-using eBayForm.LogicUnits.HtmlTags;
 using eBayForm.Windows;
-
-using System.Collections.Generic;
+using Microsoft.Win32;
 using System.Windows;
 
 namespace eBayForm
 {
-    /* Set Font from Code
-       myTextBlock.FontFamily = new FontFamily(new Uri("pack://application:,,,/"), "./Fonts/#Poppins"); */
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
@@ -35,32 +31,30 @@ namespace eBayForm
 
         }
 
-        private void BtnGetFromWeb_Click(object sender, RoutedEventArgs e)
-        {
-            //GetFromWeb getFromWebDialog = new GetFromWeb();
-            //getFromWebDialog.ShowDialog();
-            //string url = "";
-            //if (getFromWebDialog.DialogResult == true)
-            //{
-            //    url = getFromWebDialog.Link.Text;
-            //    getFromWebDialog.Close();
-            //    string htmlCode = await DownloadPageAsync(url);
-            //}
-        }
+        //private void BtnGetFromWeb_Click(object sender, RoutedEventArgs e)
+        //{
+        //    //GetFromWeb getFromWebDialog = new GetFromWeb();
+        //    //getFromWebDialog.ShowDialog();
+        //    //string url = "";
+        //    //if (getFromWebDialog.DialogResult == true)
+        //    //{
+        //    //    url = getFromWebDialog.Link.Text;
+        //    //    getFromWebDialog.Close();
+        //    //    string htmlCode = await DownloadPageAsync(url);
+        //    //}
+        //}
 
         private void BtnImport_Click(object sender, RoutedEventArgs e)
         {
-            OwnMessageBox messageBox;
             try
             {
-                string htmlCode = lc.ImportHtml();
-                if (htmlCode == null)
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                // Only html files
+                openFileDialog.Filter = "html files (*.html)|*.html";
+                bool? result = openFileDialog.ShowDialog();
+                if (result == true)
                 {
-                    CustomMessageBox.Show("Coudn't open file");
-                }
-                else
-                {
-                    wbWorkspace.NavigateToString(htmlCode);
+                    wbWorkspace.NavigateToString(lc.ImportHtml(openFileDialog.FileName));
                     wbWorkspace.Visibility = Visibility.Visible;
                     if (toolBox != null)
                     {
@@ -137,7 +131,14 @@ namespace eBayForm
                 bool? result = CustomMessageBox.Dialog("Do you want to export the file?");
                 if (result == true)
                 {
-                    MessageBox.Show("Export not ready");
+                    SaveFileDialog fileDialog = new SaveFileDialog();
+                    fileDialog.Filter = "html files (*.html)|*.html";
+                    bool? dialogResult = fileDialog.ShowDialog();
+
+                    if (dialogResult == true)
+                    {
+                        lc.Export(fileDialog.FileName);
+                    }
                 }
                 toolBox.Close();
             }
