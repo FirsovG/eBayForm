@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:eBayForm.Windows"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen" Foreground="{StaticResource SecondColor}"
-        FontFamily="Popins" Background="{DynamicResource MaterialDesignPaper}"
-        Height="230" Width="300" WindowStyle="None" ResizeMode="NoResize">
+        FontFamily="Popins" Background="{StaticResource AccentDark}"
+        Height="180" Width="400" WindowStyle="None" ResizeMode="NoResize">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
@@ -18,7 +18,7 @@
 
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="150"/>
+                <RowDefinition Height="100"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
 

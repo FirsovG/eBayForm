@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:eBayForm.Windows"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen" Foreground="{StaticResource SecondColor}"
-        FontFamily="Popins" Background="{DynamicResource MaterialDesignPaper}"
-        Height="230" Width="300" WindowStyle="None" ResizeMode="NoResize">
+        FontFamily="Popins" Background="{StaticResource AccentDark}"
+        Height="180" Width="400" WindowStyle="None" ResizeMode="NoResize">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
@@ -18,11 +18,11 @@
 
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="150"/>
+                <RowDefinition Height="100"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
-            <TextBlock Name="tbMessage" TextWrapping="WrapWithOverflow" Grid.Row="0" Width="250" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock Name="tbMessage" TextWrapping="WrapWithOverflow" Grid.Row="0" Width="350" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
             <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
                 <Button IsDefault="True" IsCancel="True" Name="btnYes" Content="Yes" Width="75" Margin="10,0,10,0"/>

@@ -12,7 +12,7 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.DeepPurple.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <FontFamily x:Key="Poppins">pack://application:,,,/Fonts/#Poppins</FontFamily>
-            <SolidColorBrush x:Key="MainColor" Color="#6a39c6"/>
+            <SolidColorBrush x:Key="MainColor" Color="#7944dd"/>
             <SolidColorBrush x:Key="SecondColor" Color="#dddddd"/>
             <SolidColorBrush x:Key="WatermarkColor" Color="#545454"/>
 
