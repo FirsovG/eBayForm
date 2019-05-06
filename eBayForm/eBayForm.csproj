@@ -71,9 +71,6 @@
     <Compile Include="LogicUnits\HtmlTags\HtmlLinkTagElement.cs" />
     <Compile Include="LogicUnits\HtmlTags\HtmlTagElement.cs" />
     <Compile Include="LogicUnits\HtmlTags\IHtmlTagElement.cs" />
-    <Compile Include="Windows\GetFromWeb.xaml.cs">
-      <DependentUpon>GetFromWeb.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Windows\OwnMessageBox.xaml.cs">
       <DependentUpon>OwnMessageBox.xaml</DependentUpon>
     </Compile>
@@ -102,10 +99,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Windows\GetFromWeb.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Windows\OwnMessageBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
