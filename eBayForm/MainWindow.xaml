@@ -12,7 +12,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
-            <RowDefinition Height="20"/>
+            <RowDefinition Height="22"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
@@ -22,10 +22,9 @@
             <!--Background Fill-->
             <Rectangle Grid.Row="0" Fill="{StaticResource MainColor}" />
             <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button Name="btnHome" Content="Home" FontSize="12" Width="120" Margin="5, 0" Height="20" Background="{x:Null}" BorderBrush="{x:Null}" Click="BtnHome_Click"/>
-                <Button Name="btnTemplates" Content="Templates" FontSize="12" Width="120" Margin="5, 0" Height="20" Background="{x:Null}" BorderBrush="{x:Null}" Click="BtnTemplates_Click"/>
-                <Button Name="btnGetFromWeb" Content="Get from web" FontSize="12" Width="120" Margin="5, 0" Height="20" Background="{x:Null}" BorderBrush="{x:Null}" Click="BtnGetFromWeb_Click"/>
-                <Button Name="btnImport" Content="Import" FontSize="12" Width="120" Margin="5, 0" Height="20" Background="{x:Null}" BorderBrush="{x:Null}" Click="BtnImport_Click"/>
+                <Button Name="btnHome" Content="Home" FontSize="12" Width="120" Margin="7.5, 0" Height="22" Background="{x:Null}" BorderBrush="{x:Null}" Click="BtnHome_Click"/>
+                <Button Name="btnTemplates" Content="Templates" FontSize="12" Width="120" Margin="7.5, 0" Height="22" Background="{x:Null}" BorderBrush="{x:Null}" Click="BtnTemplates_Click"/>
+                <Button Name="btnImport" Content="Import" FontSize="12" Width="120" Margin="7.5, 0" Height="22" Background="{x:Null}" BorderBrush="{x:Null}" Click="BtnImport_Click"/>
             </StackPanel>
         </Grid>
         <Grid Grid.Row="2">
