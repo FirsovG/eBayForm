@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
 using eBayForm.LogicUnits.Exceptions;
 using eBayForm.LogicUnits.HtmlTags;
 using HtmlAgilityPack;
-using Microsoft.Win32;
 
 namespace eBayForm
 {
@@ -20,66 +18,57 @@ namespace eBayForm
         public string Document { get => document.DocumentNode.OuterHtml; }
 
         // TODO: Check if the IE meta-tag at the beginn of the file
-        public string ImportHtml()
+        public string ImportHtml(string path)
         {
             // string which contain htmlCode
             string htmlCode;
-            // FileDialog
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            // Only html files
-            openFileDialog.Filter = "html files (*.html)|*.html";
-            Nullable<bool> result = openFileDialog.ShowDialog();
-            if (result == true)
+            // Read the file
+            using (StreamReader reader = new StreamReader(path))
             {
-                // Read the file
-                using (StreamReader reader = new StreamReader(openFileDialog.FileName))
-                {
-                    // Insert content into htmlCode
-                    htmlCode = reader.ReadToEnd();
-                }
-                // Compress htmlHode
-                htmlCode = Regex.Replace(htmlCode, @"( |\t|\r?\n)\1+", "$1");
-                // Loading the Code
-                document.LoadHtml(htmlCode);
-                // To diplay the content rightly we need to check compatibility to InternetExplorer
-
-                // Searching for Template meta tag
-                HtmlNode templateTag = document.DocumentNode.SelectSingleNode("//head/meta/@itemprop");
-                if (templateTag == null)
-                {
-                    throw new NotATemplateException("Doesn't find meta tag, which contain the Templatename");
-                }
-                else if (templateTag.Attributes["content"].Value == "Tea")
-                {
-                    templatename = "Tea";
-                }
-                else
-                {
-                    throw new UnknownTemplateException("Unknown Template");
-                }
-
-                //// Searching IE meta tag 
-                //foreach (var element in document.DocumentNode.SelectNodes("//meta/@http-equiv"))
-                //{
-                //    // If found we don't to change htmlCode
-                //    if (element.Attributes["content"].Value == "IE=10")
-                //    {
-                //        return htmlCode;
-                //    }
-                //}
-                // Select the head-tag
-                HtmlNode head = document.DocumentNode.SelectSingleNode("//head");
-                // Creating meta-tag
-                HtmlNode meta = document.CreateElement("meta");
-                // Adding meta-tag at the beginn of head-tag
-                head.PrependChild(meta);
-                // Adding IE Attributes
-                meta.SetAttributeValue("http-equiv", "X-UA-Compatible");
-                meta.SetAttributeValue("content", "IE=11");
-                // Returning the HtmlCode as string
-                return document.DocumentNode.OuterHtml;
+                // Insert content into htmlCode
+                htmlCode = reader.ReadToEnd();
             }
-            return null;
+            // Compress htmlHode
+            htmlCode = Regex.Replace(htmlCode, @"( |\t|\r?\n)\1+", "$1");
+            // Loading the Code
+            document.LoadHtml(htmlCode);
+            // To diplay the content rightly we need to check compatibility to InternetExplorer
+
+            // Searching for Template meta tag
+            HtmlNode templateTag = document.DocumentNode.SelectSingleNode("//head/meta/@itemprop");
+            if (templateTag == null)
+            {
+                throw new NotATemplateException("Doesn't find meta tag, which contain the Templatename");
+            }
+            else if (templateTag.Attributes["content"].Value == "Tea")
+            {
+                templatename = "Tea";
+            }
+            else
+            {
+                throw new UnknownTemplateException("Unknown Template");
+            }
+
+            //// Searching IE meta tag 
+            //foreach (var element in document.DocumentNode.SelectNodes("//meta/@http-equiv"))
+            //{
+            //    // If found we don't to change htmlCode
+            //    if (element.Attributes["content"].Value == "IE=10")
+            //    {
+            //        return htmlCode;
+            //    }
+            //}
+            // Select the head-tag
+            HtmlNode head = document.DocumentNode.SelectSingleNode("//head");
+            // Creating meta-tag
+            HtmlNode meta = document.CreateElement("meta");
+            // Adding meta-tag at the beginn of head-tag
+            head.PrependChild(meta);
+            // Adding IE Attributes
+            meta.SetAttributeValue("http-equiv", "X-UA-Compatible");
+            meta.SetAttributeValue("content", "IE=11");
+            // Returning the HtmlCode as string
+            return document.DocumentNode.OuterHtml;
         }
 
 
@@ -208,6 +197,14 @@ namespace eBayForm
                 element.SetAttributeValue("href", htmlCopyrightLinkTag.Link);
             }
             return document.DocumentNode.OuterHtml;
+        }
+
+        public void Export(string path)
+        {
+            using (StreamWriter sw = new StreamWriter(path))
+            {
+                sw.WriteLine(Document);
+            }
         }
     }
 }

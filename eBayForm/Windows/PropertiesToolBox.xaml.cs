@@ -1,4 +1,5 @@
 ﻿using eBayForm.LogicUnits.HtmlTags;
+using Microsoft.Win32;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -35,7 +36,7 @@ namespace eBayForm.Windows
 
                 TextBox textBox = new TextBox();
                 textBox.Name = element.Element;
-                textBox.Text = element.Value;
+                textBox.Text = element.Value == "" ? "Enter text here..." : element.Value;
                 textBoxList.Add(textBox);
 
 
@@ -45,36 +46,23 @@ namespace eBayForm.Windows
 
                 textBox.FontSize = 18;
                 textBox.BorderThickness = new Thickness(0, 0, 0, 1.5);
-                textBox.Margin = new Thickness(7.5, 2.5, 7.5, 10);
+                textBox.Margin = new Thickness(10, 2.5, 12.5, 10);
                 textBox.Foreground = (Brush)FindResource("SecondColor");
-                textBox.BorderBrush = (Brush)FindResource("MainColor");
+                textBox.BorderBrush = (Brush)FindResource("SecondColor");
+                textBox.GotFocus += RemoveText;
+                textBox.LostFocus += AddText;
 
-                if (element.IsInList == false)
+                StackPanel panel = spMain;
+
+                if (!element.IsInList)
                 {
-                    spMain.Children.Add(label);
-                    spMain.Children.Add(textBox);
-                    
-                    if (element.Element.Contains("Link"))
-                    {
-                        HtmlLinkTagElement linkElement = (HtmlLinkTagElement)element;
-                        TextBox linkTextBox = new TextBox();
-
-                        textBox.Tag = linkTextBox;
-
-                        linkTextBox.FontSize = 18;
-                        linkTextBox.BorderThickness = new Thickness(0, 0, 0, 1.5);
-                        linkTextBox.Margin = new Thickness(7.5, 2.5, 7.5, 10);
-                        linkTextBox.Foreground = (Brush)FindResource("SecondColor");
-                        linkTextBox.BorderBrush = (Brush)FindResource("MainColor");
-
-                        spMain.Children.Add(linkTextBox);
-                    }
+                    panel.Children.Add(label);
+                    panel.Children.Add(textBox);
                 }
                 else
                 {
-                    textBox.Margin = new Thickness(10, 2.5, 10, 8);
-                    string menuName = new string(element.Element.Where(c => (c < '0' || c > '9')).ToArray());
-                    StackPanel panel;
+                    textBox.Margin = new Thickness(10, 2.5, 15, 8);
+                    string menuName = new string(element.Element.Where(c => (c < '0' || c > '9')).ToArray()).Replace("Link", "");
                     if (lc.IsInList(spList, menuName, out panel))
                     {
                         panel.Children.Add(label);
@@ -84,14 +72,14 @@ namespace eBayForm.Windows
                     {
                         Button btnForStackPanel = new Button();
                         btnForStackPanel.Content = menuName;
-                        btnForStackPanel.Margin = new Thickness(0, 5, 0, 5);
+                        btnForStackPanel.Margin = new Thickness(5, 5, 5, 5);
                         btnForStackPanel.BorderBrush = (Brush)FindResource("MainColor");
                         btnForStackPanel.Click += BtnOpenMenu_Click;
 
                         StackPanel elementsStackPanel = new StackPanel();
                         elementsStackPanel.Name = "sp" + menuName;
                         elementsStackPanel.Margin = new Thickness(0, 0, 0, 10);
-                        elementsStackPanel.Background = (Brush)FindResource("AccentDark");
+                        elementsStackPanel.Background = (Brush)FindResource("MaterialDesignPaper");
                         elementsStackPanel.Visibility = Visibility.Collapsed;
                         spList.Add(elementsStackPanel);
 
@@ -104,24 +92,25 @@ namespace eBayForm.Windows
                         spMain.Children.Add(btnForStackPanel);
                         spMain.Children.Add(elementsStackPanel);
                     }
+                }
+                if (element.Element.Contains("Link"))
+                {
+                    HtmlLinkTagElement linkElement = (HtmlLinkTagElement)element;
+                    TextBox linkTextBox = new TextBox();
+                    linkTextBox.Name = "l" + linkElement.Element;
+                    linkTextBox.Text = linkElement.Link == "" ? "Enter link here..." : linkElement.Link;
 
-                    if (element.Element.Contains("Link"))
-                    {
-                        HtmlLinkTagElement linkElement = (HtmlLinkTagElement)element;
-                        TextBox linkTextBox = new TextBox();
-                        linkTextBox.Name = "l" + linkElement.Element;
-                        linkTextBox.Text = linkElement.Link;
+                    textBox.Tag = linkTextBox;
 
-                        textBox.Tag = linkTextBox;
+                    linkTextBox.FontSize = 18;
+                    linkTextBox.BorderThickness = new Thickness(0, 0, 0, 1.5);
+                    linkTextBox.Margin = new Thickness(10, 2.5, 15, 8);
+                    linkTextBox.Foreground = (Brush)FindResource("SecondColor");
+                    linkTextBox.BorderBrush = (Brush)FindResource("SecondColor");
+                    linkTextBox.GotFocus += RemoveText;
+                    linkTextBox.LostFocus += AddText;
 
-                        linkTextBox.FontSize = 18;
-                        linkTextBox.BorderThickness = new Thickness(0, 0, 0, 1.5);
-                        linkTextBox.Margin = new Thickness(10, 2.5, 10, 8);
-                        linkTextBox.Foreground = (Brush)FindResource("SecondColor");
-                        linkTextBox.BorderBrush = (Brush)FindResource("MainColor");
-
-                        panel.Children.Add(linkTextBox);
-                    }
+                    panel.Children.Add(linkTextBox);
                 }
             }
 
@@ -159,14 +148,16 @@ namespace eBayForm.Windows
             foreach (TextBox textBox in textBoxList)
             {
                 bool isInList = textBox.Parent == spMain ? false : true;
+                string text = textBox.Text == "Enter text here..." ? "" : textBox.Text;
                 if (textBox.Tag == null)
                 {
-                    htmlTags.Add(new HtmlTagElement(isInList, textBox.Name, textBox.Text));
+                    htmlTags.Add(new HtmlTagElement(isInList, textBox.Name, text));
                 }
                 else
                 {
-                    string link = ((TextBox)textBox.Tag).Text;
-                    htmlTags.Add(new HtmlLinkTagElement(isInList, textBox.Name, textBox.Text, link));
+                    TextBox linkTextBox = (TextBox)textBox.Tag;
+                    string link = linkTextBox.Text == "Enter link here..." ? "" : linkTextBox.Text;
+                    htmlTags.Add(new HtmlLinkTagElement(isInList, textBox.Name, text, link));
                 }
             }
             wbWorkspace.NavigateToString(lc.SaveChanges(htmlTags));
@@ -174,7 +165,39 @@ namespace eBayForm.Windows
 
         private void BtnExport_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Export not ready");
+            SaveFileDialog fileDialog = new SaveFileDialog();
+            fileDialog.Filter = "html files (*.html)|*.html";
+            bool? dialogResult = fileDialog.ShowDialog();
+
+            if (dialogResult == true)
+            {
+                lc.Export(fileDialog.FileName);
+            }
+        }
+
+        private void RemoveText(object sender, RoutedEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            if (textBox.Text == "Enter text here..." || textBox.Text == "Enter link here...")
+            {
+                textBox.Text = "";
+            }
+        }
+
+        private void AddText(object sender, RoutedEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            if (string.IsNullOrWhiteSpace(textBox.Text))
+            {
+                if (textBox.Name.StartsWith("l"))
+                {
+                    textBox.Text = "Enter link here...";
+                }
+                else
+                {
+                    textBox.Text = "Enter text here...";
+                }
+            }
         }
     }
 }
