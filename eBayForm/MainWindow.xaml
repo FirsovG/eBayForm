@@ -27,9 +27,75 @@
                 <Button Name="btnImport" Content="Import" FontSize="12" Width="120" Margin="7.5, 0" Height="22" Background="{x:Null}" BorderBrush="{x:Null}" Click="BtnImport_Click"/>
             </StackPanel>
         </Grid>
+
         <Grid Grid.Row="2">
-            <WebBrowser Name="wbWorkspace" HorizontalAlignment="Center" VerticalAlignment="Center" 
+            <TabControl Name="tabControll" Background="{x:Null}" BorderBrush="{x:Null}">
+
+                <TabControl.ItemContainerStyle>
+                    <Style TargetType="{x:Type TabItem}">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                    </Style>
+                </TabControl.ItemContainerStyle>
+
+                <TabItem>
+                    <WebBrowser Name="wbWorkspace" HorizontalAlignment="Center" VerticalAlignment="Center" 
                         Height="650" Width="1100" Visibility="Hidden"/>
+                </TabItem>
+
+                <TabItem>
+                    <StackPanel>
+                        <ScrollViewer Height="620" Width="1100" VerticalScrollBarVisibility="Auto">
+                            <Grid Name="gTemplates">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="370"/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+
+                                <Button Name="Tea" Height="330" Grid.Row="0" Grid.Column="0" Background="{x:Null}" BorderBrush="{x:Null}" Click="BtnTemplate_Click">
+                                    <StackPanel>
+                                        <Image HorizontalAlignment="Center" Height="270" Width="350" Source="pack://application:,,,/Images/tea_markup.png"/>
+                                        <TextBlock Text="Tea" FontSize="22" HorizontalAlignment="Center" Margin="0,15,0,0"/>
+                                    </StackPanel>
+                                </Button>
+
+                            </Grid>
+                        </ScrollViewer>
+                        <StackPanel Height="35" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Ellipse Margin="5,0,0,0" Width="8" Height="8" Fill="#607BFF" Canvas.Left="135" Canvas.Top="25" VerticalAlignment="Center"/>
+                            <Label Margin="0,1,5,0" Content="Background" FontSize="16" VerticalAlignment="Center"/>
+
+                            <Ellipse Margin="5,0,0,0" Width="8" Height="8" Fill="#A93AFF" Canvas.Left="135" Canvas.Top="25" VerticalAlignment="Center"/>
+                            <Label Margin="0,1,5,0" Content="Logo" FontSize="16" VerticalAlignment="Center"/>
+
+                            <Ellipse Margin="5,0,0,0" Width="8" Height="8" Fill="#FFFFFF" Canvas.Left="135" Canvas.Top="25" VerticalAlignment="Center"/>
+                            <Label Margin="0,1,5,0" Content="Navigation bar" FontSize="16" VerticalAlignment="Center"/>
+
+                            <Ellipse Margin="5,0,0,0" Width="8" Height="8" Fill="#75CEFF" Canvas.Left="135" Canvas.Top="25" VerticalAlignment="Center"/>
+                            <Label Margin="0,1,5,0" Content="Product image" FontSize="16" VerticalAlignment="Center"/>
+
+                            <Ellipse Margin="5,0,0,0" Width="8" Height="8" Fill="#FFCDB7" Canvas.Left="135" Canvas.Top="25" VerticalAlignment="Center"/>
+                            <Label Margin="0,1,5,0" Content="Product name" FontSize="16" VerticalAlignment="Center"/>
+
+                            <Ellipse Margin="5,0,0,0" Width="8" Height="8" Fill="#F8FFAD" Canvas.Left="135" Canvas.Top="25" VerticalAlignment="Center"/>
+                            <Label Margin="0,0,5,0" Content="Arguments" FontSize="16" VerticalAlignment="Center"/>
+
+                            <Ellipse Margin="5,0,0,0" Width="8" Height="8" Fill="#CBFF91" Canvas.Left="135" Canvas.Top="25" VerticalAlignment="Center"/>
+                            <Label Margin="0,0,5,0" Content="Headline" FontSize="16" VerticalAlignment="Center"/>
+
+                            <Ellipse Margin="5,0,0,0" Width="8" Height="8" Fill="#FFBD54" Canvas.Left="135" Canvas.Top="25" VerticalAlignment="Center"/>
+                            <Label Margin="0,0,5,0" Content="Text" FontSize="16" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </StackPanel>
+                </TabItem>
+            </TabControl>
+            
         </Grid>
     </Grid>
 </Window>

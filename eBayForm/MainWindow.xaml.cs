@@ -2,7 +2,9 @@
 using eBayForm.LogicUnits.Exceptions;
 using eBayForm.Windows;
 using Microsoft.Win32;
+using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace eBayForm
 {
@@ -13,6 +15,7 @@ namespace eBayForm
     {
         PropertiesToolBox toolBox;
         LogicController lc;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -23,12 +26,12 @@ namespace eBayForm
         #region MenuEvents
         private void BtnHome_Click(object sender, RoutedEventArgs e)
         {
-
+            tabControll.SelectedIndex = 0;
         }
 
         private void BtnTemplates_Click(object sender, RoutedEventArgs e)
         {
-
+            tabControll.SelectedIndex = 1;
         }
 
         //private void BtnGetFromWeb_Click(object sender, RoutedEventArgs e)
@@ -62,6 +65,7 @@ namespace eBayForm
                     }
                     toolBox = new PropertiesToolBox(lc, wbWorkspace);
                     toolBox.Show();
+                    tabControll.SelectedIndex = 0;
                 }
             }
             catch (NotATemplateException exception)
@@ -73,6 +77,57 @@ namespace eBayForm
                 MessageBox.Show(exception.Message);
             }
         }
+        #endregion
+
+        #region Templates
+
+
+        private void BtnTemplate_Click(object sender, RoutedEventArgs e)
+        {
+            if (lc.Document != null)
+            {
+                bool? result = CustomMessageBox.Dialog("Do you want to export the file?");
+                if (result == true)
+                {
+                    SaveFileDialog fileDialog = new SaveFileDialog();
+                    fileDialog.Filter = "html files (*.html)|*.html";
+                    bool? dialogResult = fileDialog.ShowDialog();
+
+                    if (dialogResult == true)
+                    {
+                        lc.Export(fileDialog.FileName);
+                    }
+                }
+                toolBox.Close();
+            }
+
+            string templateName = ((Button)sender).Name;
+
+            SetupDialog setupDialog = new SetupDialog();
+            setupDialog.ShowDialog();
+
+            if (setupDialog.DialogResult == true)
+            {
+
+                Dictionary<string, string> configurationKeyValues = new Dictionary<string, string>();
+                foreach (TextBox textBox in SetupDialog.FindVisualChildren<TextBox>(setupDialog))
+                {
+                    configurationKeyValues.Add(textBox.Name, textBox.Text);
+                }
+
+                string htmlCode = lc.LoadTemplate(templateName, configurationKeyValues);
+                wbWorkspace.NavigateToString(htmlCode);
+                wbWorkspace.Visibility = Visibility.Visible;
+                if (toolBox != null)
+                {
+                    toolBox.Close();
+                }
+                toolBox = new PropertiesToolBox(lc, wbWorkspace);
+                toolBox.Show();
+                tabControll.SelectedIndex = 0;
+            }
+        }
+
         #endregion
 
         //private async Task DisplayToolBox(string htmlCode)
@@ -126,7 +181,7 @@ namespace eBayForm
 
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
         {
-            if (toolBox != null)
+            if (lc.Document != null)
             {
                 bool? result = CustomMessageBox.Dialog("Do you want to export the file?");
                 if (result == true)

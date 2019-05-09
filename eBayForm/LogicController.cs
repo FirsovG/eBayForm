@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
@@ -15,7 +16,7 @@ namespace eBayForm
         HtmlDocument document = new HtmlDocument();
         string templatename;
 
-        public string Document { get => document.DocumentNode.OuterHtml; }
+        public string Document { get => document.DocumentNode.InnerText == "" ? null : document.DocumentNode.OuterHtml; }
 
         // TODO: Check if the IE meta-tag at the beginn of the file
         public string ImportHtml(string path)
@@ -58,15 +59,18 @@ namespace eBayForm
             //        return htmlCode;
             //    }
             //}
-            // Select the head-tag
-            HtmlNode head = document.DocumentNode.SelectSingleNode("//head");
-            // Creating meta-tag
-            HtmlNode meta = document.CreateElement("meta");
-            // Adding meta-tag at the beginn of head-tag
-            head.PrependChild(meta);
-            // Adding IE Attributes
-            meta.SetAttributeValue("http-equiv", "X-UA-Compatible");
-            meta.SetAttributeValue("content", "IE=11");
+            if (document.DocumentNode.SelectSingleNode("//meta/@http-equiv") == null)
+            {
+                // Select the head-tag
+                HtmlNode head = document.DocumentNode.SelectSingleNode("//head");
+                // Creating meta-tag
+                HtmlNode meta = document.CreateElement("meta");
+                // Adding meta-tag at the beginn of head-tag
+                head.PrependChild(meta);
+                // Adding IE Attributes
+                meta.SetAttributeValue("http-equiv", "X-UA-Compatible");
+                meta.SetAttributeValue("content", "IE=11");
+            }
             // Returning the HtmlCode as string
             return document.DocumentNode.OuterHtml;
         }
@@ -196,6 +200,73 @@ namespace eBayForm
                 element.InnerHtml = htmlCopyrightLinkTag.Value;
                 element.SetAttributeValue("href", htmlCopyrightLinkTag.Link);
             }
+            return document.DocumentNode.OuterHtml;
+        }
+
+        public string LoadTemplate(string templateName, Dictionary<string, string> configurationKeyValues)
+        {
+            templatename = templateName;
+            string htmlCode;
+
+            using (StreamReader reader = new StreamReader("../../HtmlTemplates/" + templateName + ".html"))
+            {
+                htmlCode = reader.ReadToEnd();
+            }
+
+            document.LoadHtml(htmlCode);
+
+            HtmlNode element = document.DocumentNode.SelectSingleNode("//img[@class='logo']");
+            element.SetAttributeValue("src", configurationKeyValues["LogoLink"]);
+
+            HtmlNode parentElement = document.DocumentNode.SelectSingleNode("//nav/ul");
+
+            int count = Convert.ToInt16(configurationKeyValues["NavLinkCount"]);
+
+            for (int i = 0; i < count; i++)
+            {
+                element = HtmlNode.CreateNode("<li><a href=''>Navigation Item</a></li>");
+                parentElement.AppendChild(element);
+            }
+
+            element = document.DocumentNode.SelectSingleNode("//img[@class='product_image']");
+            element.SetAttributeValue("src", configurationKeyValues["ProductImageLink"]);
+
+            element = document.DocumentNode.SelectSingleNode("//h1[@class='productname']");
+            element.InnerHtml = configurationKeyValues["ProductName"];
+
+            parentElement = document.DocumentNode.SelectSingleNode("//ul[@class='arguments']");
+
+            count = Convert.ToInt16(configurationKeyValues["ArgumentsCount"]);
+
+            for (int i = 0; i < count; i++)
+            {
+                element = HtmlNode.CreateNode("<li>Argument</li>");
+                parentElement.AppendChild(element);
+            }
+
+            parentElement = document.DocumentNode.SelectSingleNode("//div[@id='textbox_1']");
+            HtmlNode parentElementSecond = document.DocumentNode.SelectSingleNode("//div[@id='textbox_2']");
+
+            count = Convert.ToInt16(configurationKeyValues["TexboxCount"]);
+
+            for (int i = 0; i < count; i++)
+            {
+                element = HtmlNode.CreateNode("<div class='info_item'><h2 class='headline'>Headline</h2>" +
+                                              "<p class='text'>Text</p></div>");
+                if (i % 2 == 1)
+                {
+                    parentElement.AppendChild(element);
+                }
+                else
+                {
+                    parentElementSecond.AppendChild(element);
+                }
+            }
+
+            element = document.DocumentNode.SelectSingleNode("//p[@class='copyright']/a");
+            element.InnerHtml = configurationKeyValues["CompanyName"];
+            element.SetAttributeValue("href", configurationKeyValues["CompanyLink"]);
+
             return document.DocumentNode.OuterHtml;
         }
 
