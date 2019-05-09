@@ -11,12 +11,15 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.DeepPurple.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            
             <FontFamily x:Key="Poppins">pack://application:,,,/Fonts/#Poppins</FontFamily>
+            
             <SolidColorBrush x:Key="MainColor" Color="#7944dd"/>
             <SolidColorBrush x:Key="SecondColor" Color="#dddddd"/>
             <SolidColorBrush x:Key="WatermarkColor" Color="#545454"/>
-
             <SolidColorBrush x:Key="AccentDark" Color="#383838"/>
+            <SolidColorBrush x:Key="WarningColor" Color="#f44242"/>
+
         </ResourceDictionary>
     </Application.Resources>
 
