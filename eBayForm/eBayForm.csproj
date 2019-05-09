@@ -77,6 +77,9 @@
     <Compile Include="Windows\PropertiesToolBox.xaml.cs">
       <DependentUpon>PropertiesToolBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\SetupDialog.xaml.cs">
+      <DependentUpon>SetupDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\YNDialog.xaml.cs">
       <DependentUpon>YNDialog.xaml</DependentUpon>
     </Compile>
@@ -104,6 +107,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\PropertiesToolBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\SetupDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -154,6 +161,9 @@
   <ItemGroup>
     <Resource Include="Images\logo64.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="HtmlTemplates\Tea.html" />
+    <Resource Include="Images\tea_markup.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
