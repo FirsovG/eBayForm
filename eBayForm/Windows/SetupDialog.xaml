@@ -1,0 +1,69 @@
+﻿<Window x:Class="eBayForm.Windows.SetupDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:eBayForm.Windows"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen" Foreground="{StaticResource SecondColor}"
+        FontFamily="Popins" Background="{DynamicResource AccentDark}"
+        Height="400" Width="800" WindowStyle="None" ResizeMode="NoResize">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+
+        <Frame Grid.Row="0" Name="Taskbar"/>
+        
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="1">
+                <Label Content="Logo Link" FontWeight="Bold"/>
+                <TextBox Name="LogoLink" Margin="0,0,0,15"/>
+
+                <Label Content="Product Name" FontWeight="Bold"/>
+                <TextBox Name="ProductName" Margin="0,0,0,15"/>
+
+                <Label Content="Product Image Link" FontWeight="Bold"/>
+                <TextBox Name="ProductImageLink" Margin="0,0,0,15"/>
+
+                <Label Content="Company Name" FontWeight="Bold"/>
+                <TextBox Name="CompanyName" Margin="0,0,0,15"/>
+
+                <Label Content="Company Link" FontWeight="Bold"/>
+                <TextBox Name="CompanyLink" Margin="0,0,0,15"/>
+            </StackPanel>
+
+            <StackPanel Grid.Column="3">
+                <Label Content="Amount of Navigation Links*" FontWeight="Bold"/>
+                <TextBox Name="NavLinkCount" MaxLength="1" KeyDown="TextBox_KeyDown" GotFocus="TextBox_GotFocus"/>
+                <Label Content="Optional 3 / Max 9" Foreground="{StaticResource WatermarkColor}" Margin="0,0,0,12"/>
+                
+                <Label Content="Amount of Arguments*" FontWeight="Bold"/>
+                <TextBox Name="ArgumentsCount" MaxLength="2" KeyDown="TextBox_KeyDown" GotFocus="TextBox_GotFocus"/>
+                <Label Content="Optional 10" Foreground="{StaticResource WatermarkColor}" Margin="0,0,0,12"/>
+
+                <Label Content="Amount of Textboxes*" FontWeight="Bold"/>
+                <TextBox Name="TexboxCount" MaxLength="2" KeyDown="TextBox_KeyDown" GotFocus="TextBox_GotFocus"/>
+                <Label Content="Optional 6" Foreground="{StaticResource WatermarkColor}" Margin="0,0,0,12"/>
+
+                <Label Content="Amount of Footer Links*" FontWeight="Bold"/>
+                <TextBox Name="FooterLinkCount" MaxLength="2" KeyDown="TextBox_KeyDown" GotFocus="TextBox_GotFocus"/>
+                <Label Content="Optional 6" Foreground="{StaticResource WatermarkColor}" Margin="0,0,0,12"/>
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <Button Name="btnSubmit" Content="Ok" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="15, 0" Width="150" Click="BtnSubmit_Click"/>
+        </Grid>
+    </Grid>
+</Window>
