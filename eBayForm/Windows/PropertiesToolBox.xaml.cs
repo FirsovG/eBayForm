@@ -35,6 +35,8 @@ namespace eBayForm.Windows
                 label.Content = element.Element;
 
                 TextBox textBox = new TextBox();
+                textBox.TextWrapping = TextWrapping.Wrap;
+                textBox.AcceptsReturn = true;
                 textBox.Name = element.Element;
                 textBox.Text = element.Value == "" ? "Enter text here..." : element.Value;
                 textBoxList.Add(textBox);
