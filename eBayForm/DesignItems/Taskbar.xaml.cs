@@ -36,7 +36,14 @@ namespace eBayForm.DesignItems
 
         private void BtnClose_Click(object sender, RoutedEventArgs e)
         {
-            currentWindow.Close();
+            if (this.currentWindow.GetType().ToString().EndsWith("ToolBox"))
+            {
+                currentWindow.Hide();
+            }
+            else
+            {
+                currentWindow.Close();
+            }
         }
 
         private void BtnMinimize_Click(object sender, RoutedEventArgs e)
