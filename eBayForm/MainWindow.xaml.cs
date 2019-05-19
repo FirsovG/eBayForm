@@ -3,6 +3,7 @@ using eBayForm.LogicUnits.Exceptions;
 using eBayForm.Windows;
 using Microsoft.Win32;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -47,7 +48,7 @@ namespace eBayForm
         //    //}
         //}
 
-        private void BtnImport_Click(object sender, RoutedEventArgs e)
+        private async void BtnImport_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -57,24 +58,20 @@ namespace eBayForm
                 bool? result = openFileDialog.ShowDialog();
                 if (result == true)
                 {
-                    wbWorkspace.NavigateToString(lc.ImportHtml(openFileDialog.FileName));
+                    wbWorkspace.NavigateToString(await lc.ImportHtmlAsync(openFileDialog.FileName));
                     wbWorkspace.Visibility = Visibility.Visible;
                     if (toolBox != null)
                     {
                         toolBox.Close();
                     }
-                    toolBox = new PropertiesToolBox(lc, wbWorkspace);
+                    toolBox = new PropertiesToolBox(lc, wbWorkspace, btnShowToolBox);
                     toolBox.Show();
                     tabControll.SelectedIndex = 0;
                 }
             }
-            catch (NotATemplateException exception)
+            catch (TemplateException exception)
             {
                 CustomMessageBox.Show(exception.Message);
-            }
-            catch (UnknownTemplateException exception)
-            {
-                MessageBox.Show(exception.Message);
             }
         }
         #endregion
@@ -122,7 +119,7 @@ namespace eBayForm
                 {
                     toolBox.Close();
                 }
-                toolBox = new PropertiesToolBox(lc, wbWorkspace);
+                toolBox = new PropertiesToolBox(lc, wbWorkspace, btnShowToolBox);
                 toolBox.Show();
                 tabControll.SelectedIndex = 0;
             }
@@ -181,7 +178,7 @@ namespace eBayForm
 
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
         {
-            if (lc.Document != null)
+            if (lc.Document != null && toolBox != null)
             {
                 bool? result = CustomMessageBox.Dialog("Do you want to export the file?");
                 if (result == true)
@@ -202,5 +199,11 @@ namespace eBayForm
         }
 
         #endregion
+
+        private void BtnShowToolBox_Click(object sender, RoutedEventArgs e)
+        {
+            toolBox.Show();
+            ((Button)sender).Visibility = Visibility.Collapsed;
+        }
     }
 }
