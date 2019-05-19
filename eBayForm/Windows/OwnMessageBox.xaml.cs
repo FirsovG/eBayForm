@@ -24,6 +24,10 @@ namespace eBayForm.Windows
         {
             InitializeComponent();
             Taskbar.Content = new DesignItems.Taskbar(this);
+            if (message.Length > 70)
+            {
+                tbMessage.TextAlignment = TextAlignment.Left;
+            }
             tbMessage.Text = message;
         }
     }
