@@ -65,7 +65,7 @@ namespace eBayForm.Windows
             {
                 if(textBox.Name.EndsWith("Count"))
                 {
-                    if (textBox.Text == "")
+                    if (textBox.Text == "" || (textBox.Name == "NavLinkCount" && Int32.Parse(textBox.Text) > 5))
                     {
                         textBox.BorderBrush = (Brush)FindResource("WarningColor");
                         isFilled = false;

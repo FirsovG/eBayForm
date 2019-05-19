@@ -20,13 +20,10 @@
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
-                <ColumnDefinition Width="4*"/>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="4*"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <StackPanel Grid.Column="1">
+            <StackPanel Grid.Column="0" Margin="20, 10">
                 <Label Content="Logo Link" FontWeight="Bold"/>
                 <TextBox Name="LogoLink" Margin="0,0,0,15"/>
 
@@ -43,26 +40,23 @@
                 <TextBox Name="CompanyLink" Margin="0,0,0,15"/>
             </StackPanel>
 
-            <StackPanel Grid.Column="3">
-                <Label Content="Amount of Navigation Links*" FontWeight="Bold"/>
+            <StackPanel Grid.Column="1" Margin="20,42">
+                <Label Content="*Amount of Navigation Links" FontWeight="Bold"/>
                 <TextBox Name="NavLinkCount" MaxLength="1" KeyDown="TextBox_KeyDown" GotFocus="TextBox_GotFocus"/>
-                <Label Content="Optional 3 / Max 9" Foreground="{StaticResource WatermarkColor}" Margin="0,0,0,12"/>
+                <Label Content="Optional 3 / Max 5" Foreground="{StaticResource WatermarkColor}" Margin="0,0,0,12"/>
                 
-                <Label Content="Amount of Arguments*" FontWeight="Bold"/>
+                <Label Content="*Amount of Arguments" FontWeight="Bold"/>
                 <TextBox Name="ArgumentsCount" MaxLength="2" KeyDown="TextBox_KeyDown" GotFocus="TextBox_GotFocus"/>
                 <Label Content="Optional 10" Foreground="{StaticResource WatermarkColor}" Margin="0,0,0,12"/>
 
-                <Label Content="Amount of Textboxes*" FontWeight="Bold"/>
+                <Label Content="*Amount of Textboxes" FontWeight="Bold"/>
                 <TextBox Name="TexboxCount" MaxLength="2" KeyDown="TextBox_KeyDown" GotFocus="TextBox_GotFocus"/>
-                <Label Content="Optional 6" Foreground="{StaticResource WatermarkColor}" Margin="0,0,0,12"/>
-
-                <Label Content="Amount of Footer Links*" FontWeight="Bold"/>
-                <TextBox Name="FooterLinkCount" MaxLength="2" KeyDown="TextBox_KeyDown" GotFocus="TextBox_GotFocus"/>
-                <Label Content="Optional 6" Foreground="{StaticResource WatermarkColor}" Margin="0,0,0,12"/>
+                <Label Content="Optional 6" Foreground="{StaticResource WatermarkColor}" Margin="0"/>
             </StackPanel>
         </Grid>
 
         <Grid Grid.Row="2">
+            <TextBlock Text="* Required Field" FontSize="16" Margin="15,0,0,0" VerticalAlignment="Center"/>
             <Button Name="btnSubmit" Content="Ok" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="15, 0" Width="150" Click="BtnSubmit_Click"/>
         </Grid>
     </Grid>
