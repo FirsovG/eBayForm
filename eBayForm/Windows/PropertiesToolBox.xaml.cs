@@ -5,24 +5,40 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Text.RegularExpressions;
+using System.Windows.Input;
 
 namespace eBayForm.Windows
 {
     /// <summary>
     /// Логика взаимодействия для PropertiesToolBox.xaml
     /// </summary>
+    /// 
+
     public partial class PropertiesToolBox : Window
     {
+        public static RoutedCommand cmdSaveChanges = new RoutedCommand();
+
         private LogicController lc;
         private WebBrowser wbWorkspace;
         private List<TextBox> textBoxList;
-        public PropertiesToolBox(LogicController lc, WebBrowser wbWorkspace)
+        private Button btnShowToolBox;
+
+        public PropertiesToolBox(LogicController lc, WebBrowser wbWorkspace, Button btnShowToolBox)
         {
             InitializeComponent();
+
+            this.Left = 5;
+            this.Top = (SystemParameters.PrimaryScreenHeight / 2) - (this.Height / 2);
+
+            cmdSaveChanges.InputGestures.Add(new KeyGesture(Key.S, ModifierKeys.Control));
+            IsVisibleChanged += OnClose;
+
             Taskbar.Content = new DesignItems.Taskbar(this);
             this.lc = lc;
             this.wbWorkspace = wbWorkspace;
             textBoxList = new List<TextBox>();
+            this.btnShowToolBox = btnShowToolBox;
 
             List<IHtmlTagElement> elements = lc.GetTags();
 
@@ -30,15 +46,13 @@ namespace eBayForm.Windows
 
             foreach (IHtmlTagElement element in elements)
             {
-
                 Label label = new Label();
                 label.Content = element.Element;
 
                 TextBox textBox = new TextBox();
-                textBox.TextWrapping = TextWrapping.Wrap;
                 textBox.AcceptsReturn = true;
                 textBox.Name = element.Element;
-                textBox.Text = element.Value == "" ? "Enter text here..." : element.Value;
+                textBox.Text = element.Value == "" ? "Enter text here..." : Regex.Replace(element.Value, @"\s+", " ");
                 textBoxList.Add(textBox);
 
 
@@ -46,6 +60,7 @@ namespace eBayForm.Windows
                 label.FontSize = 14;
                 label.Foreground = (Brush)FindResource("MainColor");
 
+                textBox.TextWrapping = TextWrapping.Wrap;
                 textBox.FontSize = 18;
                 textBox.BorderThickness = new Thickness(0, 0, 0, 1.5);
                 textBox.Margin = new Thickness(10, 2.5, 12.5, 10);
@@ -131,20 +146,7 @@ namespace eBayForm.Windows
             spMain.Children.Add(btnExport);
         }
 
-        private void BtnOpenMenu_Click(object sender, RoutedEventArgs e)
-        {
-            StackPanel panel = (StackPanel)((Button)sender).Tag;
-            if (panel.Visibility == Visibility.Collapsed)
-            {
-                panel.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                panel.Visibility = Visibility.Collapsed;
-            }
-        }
-
-        private void BtnSaveChanges_Click(object sender, RoutedEventArgs e)
+        public void SaveChanges()
         {
             List<IHtmlTagElement> htmlTags = new List<IHtmlTagElement>();
             foreach (TextBox textBox in textBoxList)
@@ -163,6 +165,24 @@ namespace eBayForm.Windows
                 }
             }
             wbWorkspace.NavigateToString(lc.SaveChanges(htmlTags));
+        }
+
+        private void BtnOpenMenu_Click(object sender, RoutedEventArgs e)
+        {
+            StackPanel panel = (StackPanel)((Button)sender).Tag;
+            if (panel.Visibility == Visibility.Collapsed)
+            {
+                panel.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                panel.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void BtnSaveChanges_Click(object sender, RoutedEventArgs e)
+        {
+            SaveChanges();
         }
 
         private void BtnExport_Click(object sender, RoutedEventArgs e)
@@ -200,6 +220,19 @@ namespace eBayForm.Windows
                     textBox.Text = "Enter text here...";
                 }
             }
+        }
+
+        private void OnClose(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (((Window)sender).Visibility == Visibility.Hidden)
+            {
+                btnShowToolBox.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void CbSaveChanges_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            SaveChanges();
         }
     }
 }
