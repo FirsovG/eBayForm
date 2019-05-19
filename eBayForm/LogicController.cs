@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Configuration;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows.Controls;
 using eBayForm.LogicUnits.Exceptions;
 using eBayForm.LogicUnits.HtmlTags;
@@ -19,7 +21,7 @@ namespace eBayForm
         public string Document { get => document.DocumentNode.InnerText == "" ? null : document.DocumentNode.OuterHtml; }
 
         // TODO: Check if the IE meta-tag at the beginn of the file
-        public string ImportHtml(string path)
+        public async Task<string> ImportHtmlAsync(string path)
         {
             // string which contain htmlCode
             string htmlCode;
@@ -27,38 +29,14 @@ namespace eBayForm
             using (StreamReader reader = new StreamReader(path))
             {
                 // Insert content into htmlCode
-                htmlCode = reader.ReadToEnd();
+                htmlCode = await reader.ReadToEndAsync();
             }
             // Compress htmlHode
-            htmlCode = Regex.Replace(htmlCode, @"( |\t|\r?\n)\1+", "$1");
+            htmlCode = Regex.Replace(htmlCode, @"\r\n?|\n", "");
             // Loading the Code
             document.LoadHtml(htmlCode);
+
             // To diplay the content rightly we need to check compatibility to InternetExplorer
-
-            // Searching for Template meta tag
-            HtmlNode templateTag = document.DocumentNode.SelectSingleNode("//head/meta/@itemprop");
-            if (templateTag == null)
-            {
-                throw new NotATemplateException("Doesn't find meta tag, which contain the Templatename");
-            }
-            else if (templateTag.Attributes["content"].Value == "Tea")
-            {
-                templatename = "Tea";
-            }
-            else
-            {
-                throw new UnknownTemplateException("Unknown Template");
-            }
-
-            //// Searching IE meta tag 
-            //foreach (var element in document.DocumentNode.SelectNodes("//meta/@http-equiv"))
-            //{
-            //    // If found we don't to change htmlCode
-            //    if (element.Attributes["content"].Value == "IE=10")
-            //    {
-            //        return htmlCode;
-            //    }
-            //}
             if (document.DocumentNode.SelectSingleNode("//meta/@http-equiv") == null)
             {
                 // Select the head-tag
@@ -71,56 +49,106 @@ namespace eBayForm
                 meta.SetAttributeValue("http-equiv", "X-UA-Compatible");
                 meta.SetAttributeValue("content", "IE=11");
             }
-            // Returning the HtmlCode as string
-            return document.DocumentNode.OuterHtml;
+
+            // Searching for Template meta tag
+            HtmlNode templateTag = document.DocumentNode.SelectSingleNode("//body");
+            if (templateTag.Attributes["id"] == null)
+            {
+                throw new TemplateException("Not a Template");
+            }
+            else
+            {
+                foreach(string configTemplatename in ConfigurationManager.AppSettings["Templates"].Split(','))
+                {
+                    if (configTemplatename == templateTag.Attributes["id"].Value)
+                    {
+                        templatename = templateTag.Attributes["id"].Value;
+                        // Returning the HtmlCode as string
+                        return document.DocumentNode.OuterHtml;
+                    }
+                }
+            }
+            throw new TemplateException("Unknown Template");
         }
 
 
         public List<IHtmlTagElement> GetTags()
         {
             List<IHtmlTagElement> htmlTags = new List<IHtmlTagElement>();
-
-            // Getting company logo at the top
-            HtmlNode element = document.DocumentNode.SelectSingleNode("//img[@class='logo']");
-            htmlTags.Add(new HtmlTagElement(false, "TopCompanyLogo", element.Attributes["src"].Value));
+            
+            // Getting name of the product
+            HtmlNode element = document.DocumentNode.SelectSingleNode("//h1[@id='productname']");
+            htmlTags.Add(new HtmlTagElement(false, "ProductName", element.InnerText));
 
             // Getting 
             int i = 1;
-            foreach (HtmlNode node in document.DocumentNode.SelectNodes("//nav//li//a"))
+            if (templatename == "Tea")
             {
-                htmlTags.Add(new HtmlLinkTagElement(true, "SimilarProductsLink" + i++, node.InnerText, node.Attributes["href"].Value));
+
+                // Getting company logo at the top
+                element = document.DocumentNode.SelectSingleNode("//header/img");
+                htmlTags.Add(new HtmlTagElement(false, "TopCompanyLogo", element.Attributes["src"].Value));
+
+                foreach (HtmlNode node in document.DocumentNode.SelectNodes("//nav//li//a"))
+                {
+                    htmlTags.Add(new HtmlLinkTagElement(true, "SimilarProductsLink" + i++, node.InnerText, node.Attributes["href"].Value));
+                }
+
+                // Getting source of the product main image
+                element = document.DocumentNode.SelectSingleNode("//img[@id='product_image']");
+                htmlTags.Add(new HtmlTagElement(false, "ProductMainImage", element.Attributes["src"].Value));
+
+                // Getting arguments of the product
+                i = 1;
+                foreach (HtmlNode node in document.DocumentNode.SelectNodes("//ul[@id='arguments']/li"))
+                {
+                    htmlTags.Add(new HtmlTagElement(true, "Argument" + i++, node.InnerText));
+                }
+
+                i = 1;
+                foreach (HtmlNode node in document.DocumentNode.SelectNodes("//div[@id='info_items']/div"))
+                {
+                    element = node.SelectSingleNode("h2");
+                    htmlTags.Add(new HtmlTagElement(true, "Headline" + i, element.InnerText));
+
+                    element = node.SelectSingleNode("p");
+                    htmlTags.Add(new HtmlTagElement(true, "Text" + i, element.InnerText));
+                    i++;
+                }
             }
-
-            // Getting source of the product main image
-            element = document.DocumentNode.SelectSingleNode("//img[@class='product_image']");
-            htmlTags.Add(new HtmlTagElement(false, "ProductMainImage", element.Attributes["src"].Value));
-
-            // Getting name of the product
-            element = document.DocumentNode.SelectSingleNode("//h1[@class='productname']");
-            htmlTags.Add(new HtmlTagElement(false, "ProductName", element.InnerText));
-
-            // Getting arguments of the product
-            i = 1;
-            foreach (HtmlNode node in document.DocumentNode.SelectNodes("//ul[@class='arguments']/li"))
+            else if (templatename == "CoffeeBean")
             {
-                htmlTags.Add(new HtmlTagElement(true, "Argument" + i++, node.InnerText));
-            }
+                foreach (HtmlNode node in document.DocumentNode.SelectNodes("//ul[@id='image-list']/li/img"))
+                {
+                    htmlTags.Add(new HtmlTagElement(true, "GallaryImage" + i++, node.Attributes["src"].Value));
+                }
 
-            i = 1;
-            foreach (HtmlNode node in document.DocumentNode.SelectNodes("//div[@class='info_item']"))
-            {
-                element = node.SelectSingleNode("h2[@class='headline']");
-                htmlTags.Add(new HtmlTagElement(true, "Headline" + i, element.InnerText));
+                i = 1;
+                foreach (HtmlNode node in document.DocumentNode.SelectNodes("//ul[@id='arguments']/li"))
+                {
+                    htmlTags.Add(new HtmlTagElement(true, "Argument" + i++, node.InnerText));
+                }
 
-                element = node.SelectSingleNode("p[@class='text']");
-                htmlTags.Add(new HtmlTagElement(true, "Text" + i, element.InnerText));
-                i++;
-            }
+                i = 1;
+                foreach (HtmlNode node in document.DocumentNode.SelectNodes("//div[@id='buttons']/button"))
+                {
+                    htmlTags.Add(new HtmlTagElement(true, "Button" + i++, node.InnerText));
+                }
 
-            i = 1;
-            foreach (HtmlNode node in document.DocumentNode.SelectNodes("//footer//li//a"))
-            {
-                    htmlTags.Add(new HtmlLinkTagElement(true, "FooterNavigationLink" + i++, node.InnerText, node.Attributes["href"].Value));
+                i = 1;
+                foreach (HtmlNode node in document.DocumentNode.SelectNodes("//div[@id='info_tabs']/div"))
+                {
+                    htmlTags.Add(new HtmlTagElement(true, "Tab" + i++, node.InnerText));
+                }
+
+                i = 1;
+                foreach (HtmlNode node in document.DocumentNode.SelectNodes("//div[@id='similar_products']/a"))
+                {
+                    element = node.SelectSingleNode("img");
+                    string imageLink = element.Attributes["src"].Value;
+                    element = node.SelectSingleNode("div[@class='similar_product_name_wrapper']/p");
+                    htmlTags.Add(new HtmlLinkTagElement(true, "SimilarProductLink" + i++, element.InnerText, imageLink));
+                }
             }
 
             element = document.DocumentNode.SelectSingleNode("//p[@class='copyright']/a");
@@ -150,11 +178,17 @@ namespace eBayForm
 
         public string SaveChanges(List<IHtmlTagElement> htmlTags)
         {
+
+            int counter = 0;
+
+            // Getting name of the product
+            HtmlNode element = document.DocumentNode.SelectSingleNode("//h1[@id='productname']");
+            element.InnerHtml = htmlTags[counter++].Value;
+
             if (templatename == "Tea")
             {
-                int counter = 0;
                 // Getting company logo at the top
-                HtmlNode element = document.DocumentNode.SelectSingleNode("//img[@class='logo']");
+                element = document.DocumentNode.SelectSingleNode("//header/img");
                 element.SetAttributeValue("src", htmlTags[counter++].Value);
 
                 // Getting 
@@ -166,40 +200,61 @@ namespace eBayForm
                 }
 
                 // Getting source of the product main image
-                element = document.DocumentNode.SelectSingleNode("//img[@class='product_image']");
+                element = document.DocumentNode.SelectSingleNode("//img[@id='product_image']");
                 element.SetAttributeValue("src", htmlTags[counter++].Value);
 
-                // Getting name of the product
-                element = document.DocumentNode.SelectSingleNode("//h1[@class='productname']");
-                element.InnerHtml = htmlTags[counter++].Value;
-
                 // Getting arguments of the product
-                foreach (HtmlNode node in document.DocumentNode.SelectNodes("//ul[@class='arguments']/li"))
+                foreach (HtmlNode node in document.DocumentNode.SelectNodes("//ul[@id='arguments']/li"))
                 {
                     node.InnerHtml = htmlTags[counter++].Value;
                 }
 
-                foreach (HtmlNode node in document.DocumentNode.SelectNodes("//div[@class='info_item']"))
+                foreach (HtmlNode node in document.DocumentNode.SelectNodes("//div[@id='info_items']/div"))
                 {
-                    element = node.SelectSingleNode("h2[@class='headline']");
+                    element = node.SelectSingleNode("h2");
                     element.InnerHtml = htmlTags[counter++].Value;
 
-                    element = node.SelectSingleNode("p[@class='text']");
+                    element = node.SelectSingleNode("p");
                     element.InnerHtml = htmlTags[counter++].Value;
                 }
-
-                foreach (HtmlNode node in document.DocumentNode.SelectNodes("//footer//li//a"))
-                {
-                    HtmlLinkTagElement htmlFooterLinkTag = (HtmlLinkTagElement)htmlTags[counter++];
-                    node.InnerHtml = htmlFooterLinkTag.Value;
-                    node.SetAttributeValue("href", htmlFooterLinkTag.Link);
-                }
-
-                element = document.DocumentNode.SelectSingleNode("//p[@class='copyright']/a");
-                HtmlLinkTagElement htmlCopyrightLinkTag = (HtmlLinkTagElement)htmlTags[counter];
-                element.InnerHtml = htmlCopyrightLinkTag.Value;
-                element.SetAttributeValue("href", htmlCopyrightLinkTag.Link);
             }
+            else if (templatename == "CoffeeBean")
+            {
+                foreach (HtmlNode node in document.DocumentNode.SelectNodes("//ul[@id='image-list']/li/img"))
+                {
+                    node.SetAttributeValue("src", htmlTags[counter++].Value);
+                }
+                
+                foreach (HtmlNode node in document.DocumentNode.SelectNodes("//ul[@id='arguments']/li"))
+                {
+                    node.InnerHtml = htmlTags[counter++].Value;
+                }
+                
+                foreach (HtmlNode node in document.DocumentNode.SelectNodes("//div[@id='buttons']/button"))
+                {
+                    node.InnerHtml = htmlTags[counter++].Value;
+                }
+
+                foreach (HtmlNode node in document.DocumentNode.SelectNodes("//div[@id='info_tabs']/div"))
+                {
+                    node.InnerHtml = htmlTags[counter++].Value;
+                }
+
+                foreach (HtmlNode node in document.DocumentNode.SelectNodes("//div[@id='similar_products']/a"))
+                {
+                    HtmlLinkTagElement htmlSimilarLinkTag = (HtmlLinkTagElement)htmlTags[counter++];
+                    element = node.SelectSingleNode("img");
+                    element.SetAttributeValue("src", htmlSimilarLinkTag.Link);
+                    element = node.SelectSingleNode("div[@class='similar_product_name_wrapper']/p");
+                    element.InnerHtml = htmlSimilarLinkTag.Value;
+                }
+            }
+
+            element = document.DocumentNode.SelectSingleNode("//p[@class='copyright']/a");
+            HtmlLinkTagElement htmlCopyrightLinkTag = (HtmlLinkTagElement)htmlTags[counter];
+            element.InnerHtml = htmlCopyrightLinkTag.Value;
+            element.SetAttributeValue("href", htmlCopyrightLinkTag.Link);
+
             return document.DocumentNode.OuterHtml;
         }
 
@@ -215,7 +270,7 @@ namespace eBayForm
 
             document.LoadHtml(htmlCode);
 
-            HtmlNode element = document.DocumentNode.SelectSingleNode("//img[@class='logo']");
+            HtmlNode element = document.DocumentNode.SelectSingleNode("//header/img");
             element.SetAttributeValue("src", configurationKeyValues["LogoLink"]);
 
             HtmlNode parentElement = document.DocumentNode.SelectSingleNode("//nav/ul");
@@ -228,13 +283,13 @@ namespace eBayForm
                 parentElement.AppendChild(element);
             }
 
-            element = document.DocumentNode.SelectSingleNode("//img[@class='product_image']");
+            element = document.DocumentNode.SelectSingleNode("//img[@id='product_image']");
             element.SetAttributeValue("src", configurationKeyValues["ProductImageLink"]);
 
-            element = document.DocumentNode.SelectSingleNode("//h1[@class='productname']");
+            element = document.DocumentNode.SelectSingleNode("//h1[@id='productname']");
             element.InnerHtml = configurationKeyValues["ProductName"];
 
-            parentElement = document.DocumentNode.SelectSingleNode("//ul[@class='arguments']");
+            parentElement = document.DocumentNode.SelectSingleNode("//ul[@id='arguments']");
 
             count = Convert.ToInt16(configurationKeyValues["ArgumentsCount"]);
 
@@ -244,16 +299,16 @@ namespace eBayForm
                 parentElement.AppendChild(element);
             }
 
-            parentElement = document.DocumentNode.SelectSingleNode("//div[@id='textbox_1']");
-            HtmlNode parentElementSecond = document.DocumentNode.SelectSingleNode("//div[@id='textbox_2']");
+            parentElement = document.DocumentNode.SelectSingleNode("//div[@id='info_items_row_1']/div[@class='wrapper']/div[@id='info_items']");
+            HtmlNode parentElementSecond = document.DocumentNode.SelectSingleNode("//div[@id='info_items_row_2']/div[@class='wrapper']/div[@id='info_items']");
 
             count = Convert.ToInt16(configurationKeyValues["TexboxCount"]);
 
             for (int i = 0; i < count; i++)
             {
-                element = HtmlNode.CreateNode("<div class='info_item'><h2 class='headline'>Headline</h2>" +
-                                              "<p class='text'>Text</p></div>");
-                if (i % 2 == 1)
+                element = HtmlNode.CreateNode("<div><h2>Headline</h2>" +
+                                              "<p>Text</p></div>");
+                if (i % 2 == 0)
                 {
                     parentElement.AppendChild(element);
                 }
