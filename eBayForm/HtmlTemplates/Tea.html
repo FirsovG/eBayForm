@@ -1,20 +1,18 @@
 ﻿<!DOCTYPE html>
 <html>
-<head itemscope>
+<head>
     <meta http-equiv="X-UA-Compatible" content="IE=11">
-    <meta itemprop="ebFTemplate" content="Tea">
     <meta charset="UTF-8">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
 </head>
-<body>
+<body id="Tea">
     <style type="text/css">
         body
         {
             margin: 0;
             padding: 0;
             background-color: rgb(233, 233, 233);
-            font-family: 'Roboto', sans-serif;
+            font-family: sans-serif;
             overflow-x: hidden; 
         }
         .row 
@@ -64,9 +62,15 @@
 
 
 
-        .logo
+        header 
         {
             padding: 1em 0;
+            text-align: center;
+        }
+
+        header img 
+        {
+            max-width: 100%;
         }
 
         nav 
@@ -88,7 +92,7 @@
         {
             text-decoration: none;
             color: #D4AA00;
-            margin: 0 1.5em;
+            margin: 0 1em;
             padding: 0.5em;
         }
 
@@ -106,25 +110,31 @@
             margin: 3em 0;
         }
 
-        .col-5 .product_image
+        .col-5 #product_image
         {
             max-width: 90%;
         }
 
-        .productname
+        #productname
         {
             color: #D4AA00;
             font-weight: 700;
         }
 
-        .arguments li
+        #arguments
+        {
+            padding: 0;
+        }
+
+        #arguments li 
         {
             list-style: none;
             font-weight: 500;
             color: #4e4e4e;
             padding-bottom: 10px
-		}
-		.arguments li:before 
+        }
+
+		#arguments li:before 
         {
             font-family: "Font Awesome 5 Free"; font-weight: 900; content: "\f00c";
             padding-right: 5px
@@ -138,50 +148,28 @@
             margin: 0 auto;
         }
 
-        .headline
+        #info_items div h2
         {
             color: #D4AA00;
         }
 
-        .text
+        #info_items div p
         {
             color: #2e2e2e;
         }
 
 
 
-        footer
+        footer 
         {
+            padding: .5em 0;
             margin-top: 2em;
             background-color: #2e2e2e;
-        }
-        
-
-        footer ul
-        {
-            list-style-type: none;
-            padding: 1em 0;
-        }
-
-        footer ul li
-        {
-            padding: 0.25em 0;
-        }
-
-        footer ul li a
-        {
-            text-decoration: none;
-            color: #cacaca;
-        }
-
-        .copyright_box
-        {
-            background-color: #D4AA00;
             text-align: center;
-            color: #2e2e2e;
+            color: #D4AA00;
         }
 
-        .copyright_box a
+        footer a 
         {
             text-decoration: none;
             color: #fff;
@@ -202,86 +190,58 @@
             }
 
             .col-6,
-            .col-3
+            .col-3,
+            .col-7,
+            .col-5
             {
                 flex: 0 0 100%;
+            }
+
+            .col-7 h1
+            {
+                text-align: center;
             }
         }
     </style>
 
     <div class="row">
         <div class="col-12">
-            <div class="row">
-                <img class="logo" src="" alt="Logo">
-            </div>
+            <header>
+                <img src="" alt="Logo">
+            </header>
             <nav class="row">
-                <ul>
-                    
-                </ul>
+                <ul></ul>
             </nav>
         </div>
         <div class="col-5">
-            <img class="product_image" src="" alt="ProductImage">
+            <img id="product_image" src="" alt="ProductImage">
         </div>
+        
         <div class="col-7">
-            <h1 class="productname">
-                
-            </h1>
-            <ul class="arguments">
-                
-            </ul>
-        </div>
-
-        <div id="textbox_1" class="col-6">
             <div class="wrapper">
-                
+                <h1 id="productname"></h1>
+                <ul id="arguments"></ul>
             </div>
         </div>
-        <div id="textbox_2" class="col-6">
-            <div class="wrapper">
 
-            </div>
-        </div>
-        <footer class="col-12">
+        <div id="info_items_row_1" class="col-6">
             <div class="wrapper">
-                <div class="row">
-                    <div class="col-3">
-                        <ul>
-                            <li><a href="https://www.ebay.de/itm/Augenpads-Wimpernverlangerung-Hydrogel-Gel-Pads-Lashes-Einzelwimpern-5-1000-Paar/123748180242"> 1Augenpads Wimpernverlängerung</a></li>
-                            <li><a href="https://www.ebay.de/itm/Tape-Extensions-Echthaar-Best-Remy-Human-Hair-Extensions-1A-Haarverlangerung/123702128127">Tape Extensions Echthaar</a></li>
-                            <li><a href="https://www.ebay.de/itm/Wimpernverlangerung-Pinzette-Volumen-VETUS-Twezzers-Wimpernpinzette-ST-10-15/123737842016">Wimpernverlängerung Pinzette</a></li>
-                            <li><a href="https://www.ebay.de/itm/Tape-Extensions-Echthaar-Best-Remy-Human-Hair-Extensions-1A-Haarverlangerung/123702128127">Tape Extensions Echthaar</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-3">
-                        <ul>
-                            <li><a href="https://www.ebay.de/itm/Augenpads-Wimpernverlangerung-Hydrogel-Gel-Pads-Lashes-Einzelwimpern-5-1000-Paar/123748180242"> 2Augenpads Wimpernverlängerung</a></li>
-                            <li><a href="https://www.ebay.de/itm/Tape-Extensions-Echthaar-Best-Remy-Human-Hair-Extensions-1A-Haarverlangerung/123702128127">Tape Extensions Echthaar</a></li>
-                            <li><a href="https://www.ebay.de/itm/Wimpernverlangerung-Pinzette-Volumen-VETUS-Twezzers-Wimpernpinzette-ST-10-15/123737842016">Wimpernverlängerung Pinzette</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-3">
-                        <ul>
-                            <li><a href="https://www.ebay.de/itm/Augenpads-Wimpernverlangerung-Hydrogel-Gel-Pads-Lashes-Einzelwimpern-5-1000-Paar/123748180242"> 3Augenpads Wimpernverlängerung</a></li>
-                            <li><a href="https://www.ebay.de/itm/Tape-Extensions-Echthaar-Best-Remy-Human-Hair-Extensions-1A-Haarverlangerung/123702128127">Tape Extensions Echthaar</a></li>
-                            <li><a href="https://www.ebay.de/itm/Wimpernverlangerung-Pinzette-Volumen-VETUS-Twezzers-Wimpernpinzette-ST-10-15/123737842016">Wimpernverlängerung Pinzette</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-3">
-                        <ul>
-                            <li><a href="https://www.ebay.de/itm/Augenpads-Wimpernverlangerung-Hydrogel-Gel-Pads-Lashes-Einzelwimpern-5-1000-Paar/123748180242"> 4Augenpads Wimpernverlängerung</a></li>
-                            <li><a href="https://www.ebay.de/itm/Tape-Extensions-Echthaar-Best-Remy-Human-Hair-Extensions-1A-Haarverlangerung/123702128127">Tape Extensions Echthaar</a></li>
-                            <li><a href="https://www.ebay.de/itm/Wimpernverlangerung-Pinzette-Volumen-VETUS-Twezzers-Wimpernpinzette-ST-10-15/123737842016">Wimpernverlängerung Pinzette</a></li>
-                            <li><a href="https://www.ebay.de/itm/Tape-Extensions-Echthaar-Best-Remy-Human-Hair-Extensions-1A-Haarverlangerung/123702128127">Tape Extensions Echthaar</a></li>
-                        </ul>
-                    </div>
+                <div id="info_items">
+
                 </div>
             </div>
-        </footer>
-
-        <div class="col-12 copyright_box">
-            <p class="copyright">Copyright by <a href=""></a></p>
         </div>
+        <div id="info_items_row_2" class="col-6">
+            <div class="wrapper">
+                <div id="info_items">
+
+                </div>
+            </div>
+        </div>
+
+        <footer class="col-12">
+            <p class="copyright">Copyright by <a href=""></a></p>
+        </footer>
     </div>
 </body>
 </html>
