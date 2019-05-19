@@ -45,6 +45,7 @@
       <HintPath>..\packages\MaterialDesignThemes.2.5.1\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -66,8 +67,7 @@
     </ApplicationDefinition>
     <Compile Include="LogicController.cs" />
     <Compile Include="LogicUnits\CustomMessageBox.cs" />
-    <Compile Include="LogicUnits\Exceptions\NotATemplateException.cs" />
-    <Compile Include="LogicUnits\Exceptions\UnknownTemplateException.cs" />
+    <Compile Include="LogicUnits\Exceptions\TemplateException.cs" />
     <Compile Include="LogicUnits\HtmlTags\HtmlLinkTagElement.cs" />
     <Compile Include="LogicUnits\HtmlTags\HtmlTagElement.cs" />
     <Compile Include="LogicUnits\HtmlTags\IHtmlTagElement.cs" />
