@@ -25,7 +25,7 @@
             <TextBlock Name="tbMessage" TextAlignment="Center" TextWrapping="WrapWithOverflow" Grid.Row="0" Width="350" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
             <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button IsDefault="True" IsCancel="True" Name="btnYes" Content="Yes" Width="75" Margin="10,0,10,0"/>
+                <Button IsDefault="True" IsCancel="True" Name="btnYes" Content="Ok" Width="75" Margin="10,0,10,0"/>
             </StackPanel>
         </Grid>
     </Grid>

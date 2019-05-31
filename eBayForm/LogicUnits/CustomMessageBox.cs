@@ -25,5 +25,11 @@ namespace eBayForm.LogicUnits
 
             return messageBox.DialogResult;
         }
+
+        public static void Rules()
+        {
+            EBayRules rules = new EBayRules();
+            rules.ShowDialog();
+        }
     }
 }
