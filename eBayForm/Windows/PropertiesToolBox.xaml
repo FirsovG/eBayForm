@@ -10,10 +10,6 @@
         FontFamily="Popins" Background="{StaticResource AccentDark}"
         WindowStyle="None" ResizeMode="NoResize">
 
-    <Window.CommandBindings>
-        <CommandBinding x:Name="cbSaveChanges" Command="{x:Static local:PropertiesToolBox.cmdSaveChanges}" Executed="CbSaveChanges_Executed"/>
-    </Window.CommandBindings>
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>

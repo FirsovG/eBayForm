@@ -1,4 +1,4 @@
-﻿using eBayForm.LogicUnits.HtmlTags;
+﻿using eBayForm.LogicUnits;
 using Microsoft.Win32;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,10 +17,7 @@ namespace eBayForm.Windows
 
     public partial class PropertiesToolBox : Window
     {
-        public static RoutedCommand cmdSaveChanges = new RoutedCommand();
-
-        private LogicController lc;
-        private WebBrowser wbWorkspace;
+        
         private List<TextBox> textBoxList;
         private Button btnShowToolBox;
 
@@ -30,37 +27,45 @@ namespace eBayForm.Windows
 
             this.Left = 5;
             this.Top = (SystemParameters.PrimaryScreenHeight / 2) - (this.Height / 2);
-
-            cmdSaveChanges.InputGestures.Add(new KeyGesture(Key.S, ModifierKeys.Control));
+            
             IsVisibleChanged += OnClose;
 
             Taskbar.Content = new DesignItems.Taskbar(this);
-            this.lc = lc;
-            this.wbWorkspace = wbWorkspace;
             textBoxList = new List<TextBox>();
             this.btnShowToolBox = btnShowToolBox;
 
-            List<IHtmlTagElement> elements = lc.GetTags();
+            List<HtmlTagElement> elements = lc.GetTags();
 
             List<StackPanel> spList = new List<StackPanel>();
 
-            foreach (IHtmlTagElement element in elements)
+            int imageBoxCount = 0;
+            int textBoxCount = 0;
+            int linkBoxCount = 0;
+            foreach (HtmlTagElement element in elements)
             {
                 Label label = new Label();
                 label.Content = element.Element;
 
                 TextBox textBox = new TextBox();
-                textBox.AcceptsReturn = true;
-                textBox.Name = element.Element;
-                textBox.Text = element.Value == "" ? "Enter text here..." : Regex.Replace(element.Value, @"\s+", " ");
                 textBoxList.Add(textBox);
 
 
                 label.FontWeight = FontWeights.Bold;
                 label.FontSize = 14;
                 label.Foreground = (Brush)FindResource("MainColor");
-
-                textBox.TextWrapping = TextWrapping.Wrap;
+                
+                if (element.Element.Contains("image") || element.Element.Contains("logo"))
+                {
+                    textBox.Name = "tbImage" + imageBoxCount++;
+                    textBox.Text = element.Value == "" ? "Enter source here..." : Regex.Replace(element.Value, @"\s+", " ");
+                }
+                else
+                {
+                    textBox.Name = "tbText" + textBoxCount++;
+                    textBox.Text = element.Value == "" ? "Enter text here..." : Regex.Replace(element.Value, @"\s+", " ");
+                    textBox.AcceptsReturn = true;
+                    textBox.TextWrapping = TextWrapping.Wrap;
+                }
                 textBox.FontSize = 18;
                 textBox.BorderThickness = new Thickness(0, 0, 0, 1.5);
                 textBox.Margin = new Thickness(10, 2.5, 12.5, 10);
@@ -79,7 +84,11 @@ namespace eBayForm.Windows
                 else
                 {
                     textBox.Margin = new Thickness(10, 2.5, 15, 8);
-                    string menuName = new string(element.Element.Where(c => (c < '0' || c > '9')).ToArray()).Replace("Link", "");
+                    string menuName = new string(element.Element.Where(c => (c < '0' || c > '9')).ToArray()).Replace(" ", "");
+                    if (menuName != "Text")
+                    {
+                        menuName += "s";
+                    }
                     if (lc.IsInList(spList, menuName, out panel))
                     {
                         panel.Children.Add(label);
@@ -110,12 +119,11 @@ namespace eBayForm.Windows
                         spMain.Children.Add(elementsStackPanel);
                     }
                 }
-                if (element.Element.Contains("Link"))
+                if (element.Link != null)
                 {
-                    HtmlLinkTagElement linkElement = (HtmlLinkTagElement)element;
                     TextBox linkTextBox = new TextBox();
-                    linkTextBox.Name = "l" + linkElement.Element;
-                    linkTextBox.Text = linkElement.Link == "" ? "Enter link here..." : linkElement.Link;
+                    linkTextBox.Text = element.Link == "" ? "Enter link here..." : element.Link;
+                    linkTextBox.Name = "tbLink" + linkBoxCount++;
 
                     textBox.Tag = linkTextBox;
 
@@ -130,29 +138,15 @@ namespace eBayForm.Windows
                     panel.Children.Add(linkTextBox);
                 }
             }
-
-            Button btnSave = new Button();
-            btnSave.Content = "Save Changes";
-            btnSave.Margin = new Thickness(25, 5, 25, 5);
-            btnSave.BorderBrush = (Brush)FindResource("MainColor");
-            btnSave.Click += BtnSaveChanges_Click;
-            spMain.Children.Add(btnSave);
-
-            Button btnExport = new Button();
-            btnExport.Content = "Export";
-            btnExport.Margin = new Thickness(25, 5, 25, 5);
-            btnExport.BorderBrush = (Brush)FindResource("MainColor");
-            btnExport.Click += BtnExport_Click;
-            spMain.Children.Add(btnExport);
         }
 
-        public void SaveChanges()
+        public List<HtmlTagElement> SaveChanges()
         {
-            List<IHtmlTagElement> htmlTags = new List<IHtmlTagElement>();
+            List<HtmlTagElement> htmlTags = new List<HtmlTagElement>();
             foreach (TextBox textBox in textBoxList)
             {
                 bool isInList = textBox.Parent == spMain ? false : true;
-                string text = textBox.Text == "Enter text here..." ? "" : textBox.Text;
+                string text = textBox.Text == "Enter text here..." ? "" : textBox.Text == "Enter source here..." ? "" : textBox.Text ;
                 if (textBox.Tag == null)
                 {
                     htmlTags.Add(new HtmlTagElement(isInList, textBox.Name, text));
@@ -161,10 +155,10 @@ namespace eBayForm.Windows
                 {
                     TextBox linkTextBox = (TextBox)textBox.Tag;
                     string link = linkTextBox.Text == "Enter link here..." ? "" : linkTextBox.Text;
-                    htmlTags.Add(new HtmlLinkTagElement(isInList, textBox.Name, text, link));
+                    htmlTags.Add(new HtmlTagElement(isInList, textBox.Name, text, link));
                 }
             }
-            wbWorkspace.NavigateToString(lc.SaveChanges(htmlTags));
+            return htmlTags;
         }
 
         private void BtnOpenMenu_Click(object sender, RoutedEventArgs e)
@@ -180,27 +174,10 @@ namespace eBayForm.Windows
             }
         }
 
-        private void BtnSaveChanges_Click(object sender, RoutedEventArgs e)
-        {
-            SaveChanges();
-        }
-
-        private void BtnExport_Click(object sender, RoutedEventArgs e)
-        {
-            SaveFileDialog fileDialog = new SaveFileDialog();
-            fileDialog.Filter = "html files (*.html)|*.html";
-            bool? dialogResult = fileDialog.ShowDialog();
-
-            if (dialogResult == true)
-            {
-                lc.Export(fileDialog.FileName);
-            }
-        }
-
         private void RemoveText(object sender, RoutedEventArgs e)
         {
             TextBox textBox = (TextBox)sender;
-            if (textBox.Text == "Enter text here..." || textBox.Text == "Enter link here...")
+            if (textBox.Text == "Enter text here..." || textBox.Text == "Enter source here..." || textBox.Text == "Enter link here...")
             {
                 textBox.Text = "";
             }
@@ -211,11 +188,15 @@ namespace eBayForm.Windows
             TextBox textBox = (TextBox)sender;
             if (string.IsNullOrWhiteSpace(textBox.Text))
             {
-                if (textBox.Name.StartsWith("l"))
+                if (textBox.Name.StartsWith("tbLink"))
                 {
                     textBox.Text = "Enter link here...";
                 }
-                else
+                else if (textBox.Name.StartsWith("tbImage"))
+                {
+                    textBox.Text = "Enter source here...";
+                }
+                else if (textBox.Name.StartsWith("tbText"))
                 {
                     textBox.Text = "Enter text here...";
                 }
@@ -228,11 +209,6 @@ namespace eBayForm.Windows
             {
                 btnShowToolBox.Visibility = Visibility.Visible;
             }
-        }
-
-        private void CbSaveChanges_Executed(object sender, ExecutedRoutedEventArgs e)
-        {
-            SaveChanges();
         }
     }
 }
