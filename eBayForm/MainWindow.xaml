@@ -9,6 +9,7 @@
         WindowStartupLocation="CenterScreen" Foreground="{StaticResource SecondColor}"
         FontFamily="Popins" Background="{DynamicResource MaterialDesignPaper}"
         Height="720" Width="1200" WindowStyle="None" ResizeMode="NoResize">
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
@@ -20,7 +21,7 @@
 
         <Grid Grid.Row="1">
             <!--Background Fill-->
-            <Rectangle Grid.Row="0" Fill="{StaticResource MainColor}" />
+            <Rectangle Grid.Row="0" Fill="{StaticResource MainColor}"/>
             <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button Name="btnHome" Content="Home" FontSize="12" Width="120" Margin="7.5, 0" Height="22" Background="{x:Null}" BorderBrush="{x:Null}" Click="BtnHome_Click"/>
                 <Button Name="btnTemplates" Content="Templates" FontSize="12" Width="120" Margin="7.5, 0" Height="22" Background="{x:Null}" BorderBrush="{x:Null}" Click="BtnTemplates_Click"/>
@@ -39,9 +40,20 @@
                 </TabControl.ItemContainerStyle>
 
                 <TabItem>
-                    <Grid Margin="30">
-                        <WebBrowser Name="wbWorkspace" HorizontalAlignment="Center" VerticalAlignment="Center" 
-                                    Visibility="Hidden"/>
+                    <Grid Margin="30,10,30,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition Height="50"/>
+                        </Grid.RowDefinitions>
+                        <WebBrowser Grid.Row="0" Name="wbWorkspace" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden">
+                            <WebBrowser.CommandBindings>
+                                <CommandBinding x:Name="cbSaveChanges" Command="{x:Static local:MainWindow.cmdSaveChanges}" Executed="CbSaveChanges_Executed"/>
+                            </WebBrowser.CommandBindings>
+                        </WebBrowser>
+                        <StackPanel Grid.Row="1" Name="spButtons"  Visibility="Hidden" Orientation="Horizontal" HorizontalAlignment="Right">
+                            <Button Name="btnSaveChanges" Content="Save changes" Margin="10,0" Click="BtnSaveChanges_Click"/>
+                            <Button Name="btnExportFile" Content="Export file" Click="BtnExportFile_Click"/>
+                        </StackPanel>
                     </Grid>
                 </TabItem>
 
@@ -50,10 +62,10 @@
 
                         <Grid.RowDefinitions>
                             <RowDefinition/>
-                            <RowDefinition Height="35"/>
+                            <RowDefinition Height="50"/>
                         </Grid.RowDefinitions>
 
-                        <ScrollViewer Grid.Row="0" Margin="50, 10">
+                        <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto" Margin="50, 10">
                             <Grid Name="gTemplates">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="370"/>
@@ -67,40 +79,78 @@
                                     <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
 
-                                <Button Name="Tea" Height="330" Grid.Row="0" Grid.Column="0" Background="{x:Null}" BorderBrush="{x:Null}" Click="BtnTemplate_Click">
+                                <Button Name="Tea" HorizontalAlignment="Center" Height="330" Grid.Row="0" Grid.Column="0" Background="{x:Null}" BorderBrush="{x:Null}" Click="BtnTemplate_Click">
                                     <StackPanel>
                                         <Image HorizontalAlignment="Center" Height="270" Width="350" Source="pack://application:,,,/Images/tea_markup.png"/>
                                         <TextBlock Text="Tea" FontSize="22" HorizontalAlignment="Center" Margin="0,15,0,0"/>
                                     </StackPanel>
                                 </Button>
 
+                                <Button Name="CoffeeBean" HorizontalAlignment="Center" Height="330" Grid.Row="0" Grid.Column="1" Background="{x:Null}" BorderBrush="{x:Null}" Click="BtnTemplate_Click">
+                                    <StackPanel>
+                                        <Image HorizontalAlignment="Center" Height="270" Width="350" Source="pack://application:,,,/Images/coffeebean_markup.png"/>
+                                        <TextBlock Text="CoffeeBean" FontSize="22" HorizontalAlignment="Center" Margin="0,15,0,0"/>
+                                    </StackPanel>
+                                </Button>
                             </Grid>
                         </ScrollViewer>
-                        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <Ellipse Margin="5,0,0,0" Width="8" Height="8" Fill="#607BFF" Canvas.Left="135" Canvas.Top="25" VerticalAlignment="Center"/>
-                            <Label Margin="0,1,5,0" Content="Background" FontSize="16" VerticalAlignment="Center"/>
 
-                            <Ellipse Margin="5,0,0,0" Width="8" Height="8" Fill="#A93AFF" Canvas.Left="135" Canvas.Top="25" VerticalAlignment="Center"/>
-                            <Label Margin="0,1,5,0" Content="Logo" FontSize="16" VerticalAlignment="Center"/>
+                        <materialDesign:PopupBox PlacementMode="TopAndAlignCentres" StaysOpen="False" Grid.Row="1" HorizontalAlignment="Left" Margin="20,0">
+                            <materialDesign:PopupBox.ToggleContent>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="InvertColors" Height="19" Width="19" Margin="0,0,2,0" Foreground="{StaticResource SecondColor}"/>
+                                    <TextBlock FontSize="18" Margin="0,1,0,0" Text="Color meaning" Foreground="{StaticResource SecondColor}"/>
+                                </StackPanel>
+                            </materialDesign:PopupBox.ToggleContent>
+                            <StackPanel Margin="10,0">
+                                <StackPanel Orientation="Horizontal">
+                                    <Ellipse Margin="5,0,0,0" Width="8" Height="8" Fill="#FDCEFF" Canvas.Left="135" Canvas.Top="25" VerticalAlignment="Center"/>
+                                    <Label Margin="0,0,5,0" Content="Similar Products" FontSize="16" VerticalAlignment="Center"/>
+                                </StackPanel>
 
-                            <Ellipse Margin="5,0,0,0" Width="8" Height="8" Fill="#FFFFFF" Canvas.Left="135" Canvas.Top="25" VerticalAlignment="Center"/>
-                            <Label Margin="0,1,5,0" Content="Navigation bar" FontSize="16" VerticalAlignment="Center"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <Ellipse Margin="5,0,0,0" Width="8" Height="8" Fill="#A93AFF" Canvas.Left="135" Canvas.Top="25" VerticalAlignment="Center"/>
+                                    <Label Margin="0,1,5,0" Content="Logo" FontSize="16" VerticalAlignment="Center"/>
+                                </StackPanel>
 
-                            <Ellipse Margin="5,0,0,0" Width="8" Height="8" Fill="#75CEFF" Canvas.Left="135" Canvas.Top="25" VerticalAlignment="Center"/>
-                            <Label Margin="0,1,5,0" Content="Product image" FontSize="16" VerticalAlignment="Center"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <Ellipse Margin="5,0,0,0" Width="8" Height="8" Fill="#75CEFF" Canvas.Left="135" Canvas.Top="25" VerticalAlignment="Center"/>
+                                    <Label Margin="0,1,5,0" Content="Product image" FontSize="16" VerticalAlignment="Center"/>
+                                </StackPanel>
 
-                            <Ellipse Margin="5,0,0,0" Width="8" Height="8" Fill="#FFCDB7" Canvas.Left="135" Canvas.Top="25" VerticalAlignment="Center"/>
-                            <Label Margin="0,1,5,0" Content="Product name" FontSize="16" VerticalAlignment="Center"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <Ellipse Margin="5,0,0,0" Width="8" Height="8" Fill="#FFCDB7" Canvas.Left="135" Canvas.Top="25" VerticalAlignment="Center"/>
+                                    <Label Margin="0,1,5,0" Content="Product name" FontSize="16" VerticalAlignment="Center"/>
+                                </StackPanel>
 
-                            <Ellipse Margin="5,0,0,0" Width="8" Height="8" Fill="#F8FFAD" Canvas.Left="135" Canvas.Top="25" VerticalAlignment="Center"/>
-                            <Label Margin="0,0,5,0" Content="Arguments" FontSize="16" VerticalAlignment="Center"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <Ellipse Margin="5,0,0,0" Width="8" Height="8" Fill="#F8FFAD" Canvas.Left="135" Canvas.Top="25" VerticalAlignment="Center"/>
+                                    <Label Margin="0,0,5,0" Content="Arguments" FontSize="16" VerticalAlignment="Center"/>
+                                </StackPanel>
 
-                            <Ellipse Margin="5,0,0,0" Width="8" Height="8" Fill="#CBFF91" Canvas.Left="135" Canvas.Top="25" VerticalAlignment="Center"/>
-                            <Label Margin="0,0,5,0" Content="Headline" FontSize="16" VerticalAlignment="Center"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <Ellipse Margin="5,0,0,0" Width="8" Height="8" Fill="#CBFF91" Canvas.Left="135" Canvas.Top="25" VerticalAlignment="Center"/>
+                                    <Label Margin="0,0,5,0" Content="Headline" FontSize="16" VerticalAlignment="Center"/>
+                                </StackPanel>
 
-                            <Ellipse Margin="5,0,0,0" Width="8" Height="8" Fill="#FFBD54" Canvas.Left="135" Canvas.Top="25" VerticalAlignment="Center"/>
-                            <Label Margin="0,0,5,0" Content="Text" FontSize="16" VerticalAlignment="Center"/>
-                        </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Ellipse Margin="5,0,0,0" Width="8" Height="8" Fill="#FFBD54" Canvas.Left="135" Canvas.Top="25" VerticalAlignment="Center"/>
+                                    <Label Margin="0,0,5,0" Content="Text" FontSize="16" VerticalAlignment="Center"/>
+                                </StackPanel>
+                                
+                                <StackPanel Orientation="Horizontal">
+                                    <Ellipse Margin="5,0,0,0" Width="8" Height="8" Fill="#607BFF" Canvas.Left="135" Canvas.Top="25" VerticalAlignment="Center"/>
+                                    <Label Margin="0,1,5,0" Content="Background" FontSize="16" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </materialDesign:PopupBox>
+
+                        <Button Grid.Row="1" Name="btnEBayRules" Margin="75,0" HorizontalAlignment="Right" Width="150" Click="BtnEBayRules_Click">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="AlertDecagram" Height="19" Width="19" Margin="0,0,2,0" Foreground="{StaticResource SecondColor}"/>
+                                <TextBlock FontSize="15" Margin="0,1,0,0" FontWeight="Bold" Text="eBayRules"/>
+                            </StackPanel>
+                        </Button>
                     </Grid>
                 </TabItem>
             </TabControl>
