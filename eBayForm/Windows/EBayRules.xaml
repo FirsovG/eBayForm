@@ -1,0 +1,212 @@
+﻿<Window x:Class="eBayForm.Windows.EBayRules"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:eBayForm.Windows"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen" Foreground="{StaticResource SecondColor}"
+        FontFamily="Popins" Background="{DynamicResource AccentDark}"
+        Height="440" Width="800" WindowStyle="None" ResizeMode="NoResize">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+
+        <Frame Grid.Row="0" Name="Taskbar"/>
+
+        <ScrollViewer Grid.Row="1">
+            <StackPanel Margin="10">
+                <Label Margin="0,10,0,0" Content="Description requirements" FontSize="16" FontWeight="Bold" Foreground="{StaticResource MainColor}"/>
+                <TextBlock Margin="15,5" TextWrapping="WrapWithOverflow" Text="General description requirements are listed here while requirements related to the wording of your catalog descriptions are given in the section that follows:"/>
+
+                <BulletDecorator Margin="15,5">
+                    <BulletDecorator.Bullet>
+                        <Ellipse Height="5" Width="5" Fill="{StaticResource MainColor}"/>
+                    </BulletDecorator.Bullet>
+                    <TextBlock Margin="10,0,0,0" Text="Descriptions can have a maximum of 4000 characters."/>
+                </BulletDecorator>
+
+                <BulletDecorator Margin="15,5">
+                    <BulletDecorator.Bullet>
+                        <Ellipse Height="5" Width="5" Fill="{StaticResource MainColor}"/>
+                    </BulletDecorator.Bullet>
+                    <TextBlock Margin="10,0,0,0" Text="Descriptions must be 100% factual, you cannot declare anything that cannot be proven true."/>
+                </BulletDecorator>
+
+                <BulletDecorator Margin="15,5">
+                    <BulletDecorator.Bullet>
+                        <Ellipse Height="5" Width="5" Fill="{StaticResource MainColor}"/>
+                    </BulletDecorator.Bullet>
+                    <TextBlock Margin="10,0,0,0" TextWrapping="Wrap" Text="Descriptions must be unique to the specific product being described and they must contain information that is related only to that product."/>
+                </BulletDecorator>
+
+                <BulletDecorator Margin="15,5">
+                    <BulletDecorator.Bullet>
+                        <Ellipse Height="5" Width="5" Fill="{StaticResource MainColor}"/>
+                    </BulletDecorator.Bullet>
+                    <TextBlock Margin="10,0,0,0" TextWrapping="Wrap" Text="Descriptions must be written by you, unless a third party explicitly gave you permission to use its description. For example, you cannot copy a description from the manufacturer or brand without getting its permission to use the description on eBay."/>
+                </BulletDecorator>
+
+                <BulletDecorator Margin="15,5">
+                    <BulletDecorator.Bullet>
+                        <Ellipse Height="5" Width="5" Fill="{StaticResource MainColor}"/>
+                    </BulletDecorator.Bullet>
+                    <TextBlock Margin="10,0,0,0" Text="Descriptions should be worded in a familiar tone that uses proper, and not offensive, language."/>
+                </BulletDecorator>
+
+                <BulletDecorator Margin="15,5">
+                    <BulletDecorator.Bullet>
+                        <Ellipse Height="5" Width="5" Fill="{StaticResource MainColor}"/>
+                    </BulletDecorator.Bullet>
+                    <TextBlock Margin="10,0,0,0" Text="Descriptions should not include information that is irrelevant to the description of the product itself."/>
+                </BulletDecorator>
+
+                <TextBlock Margin="30,0,10,0" TextWrapping="Wrap" Text="For example, descriptions must not include information on pricing, discounts, deals, individual seller information, item conditions, shipping options, packaging, and warranty details."/>
+
+                <BulletDecorator Margin="15,5">
+                    <BulletDecorator.Bullet>
+                        <Ellipse Height="5" Width="5" Fill="{StaticResource MainColor}"/>
+                    </BulletDecorator.Bullet>
+                    <TextBlock Margin="10,0,0,0" TextWrapping="Wrap" Text="Descriptions should highlight the benefits of using the product features and must not contain just a list of product features (such as a list of values separated by commas, or simply a bullet list of product features)."/>
+                </BulletDecorator>
+
+                <BulletDecorator Margin="15,5">
+                    <BulletDecorator.Bullet>
+                        <Ellipse Height="5" Width="5" Fill="{StaticResource MainColor}"/>
+                    </BulletDecorator.Bullet>
+                    <TextBlock Margin="10,0,0,0" Text="Descriptions should not contain any negative comments."/>
+                </BulletDecorator>
+
+                <BulletDecorator Margin="15,5">
+                    <BulletDecorator.Bullet>
+                        <Ellipse Height="5" Width="5" Fill="{StaticResource MainColor}"/>
+                    </BulletDecorator.Bullet>
+                    <TextBlock Margin="10,0,0,0" TextWrapping="Wrap" Text="Descriptions must not contain any descriptive language that might bring into question the legality of the product by either governmental or eBay standards."/>
+                </BulletDecorator>
+
+                <BulletDecorator Margin="15,5">
+                    <BulletDecorator.Bullet>
+                        <Ellipse Height="5" Width="5" Fill="{StaticResource MainColor}"/>
+                    </BulletDecorator.Bullet>
+                    <TextBlock Margin="10,0,0,0" Text="Descriptions must not contain prohibited, banned, illegal, outlawed, or restricted content."/>
+                </BulletDecorator>
+
+                <Label Margin="0,10,0,0" Content="Content requirements for descriptions" FontSize="16" FontWeight="Bold" Foreground="{StaticResource MainColor}"/>
+                <TextBlock Margin="15,5" TextWrapping="WrapWithOverflow" Text="The following guidelines address the wording and phrasing of your catalog entry descriptions:"/>
+
+                <BulletDecorator Margin="15,5">
+                    <BulletDecorator.Bullet>
+                        <Ellipse Height="5" Width="5" Fill="{StaticResource MainColor}"/>
+                    </BulletDecorator.Bullet>
+                    <TextBlock Margin="10,0,0,0" TextWrapping="Wrap" Text="Descriptions must not include special formatting such as bullet lists, bold and italic character styling, all caps, multiple fonts and font colors, hyphenated cut-offs, and so on. "/>
+                </BulletDecorator>
+
+                <BulletDecorator Margin="15,5">
+                    <BulletDecorator.Bullet>
+                        <Ellipse Height="5" Width="5" Fill="{StaticResource MainColor}"/>
+                    </BulletDecorator.Bullet>
+                    <TextBlock Margin="10,0,0,0" TextWrapping="Wrap" Text="Descriptions must not include HTML such as HTML links, website addresses, email addresses, phone numbers, hyphenated cut-offs, and extra white spaces."/>
+                </BulletDecorator>
+
+                <BulletDecorator Margin="15,5">
+                    <BulletDecorator.Bullet>
+                        <Ellipse Height="5" Width="5" Fill="{StaticResource MainColor}"/>
+                    </BulletDecorator.Bullet>
+                    <TextBlock Margin="10,0,0,0" Text="Descriptions must not contain embedded pictures."/>
+                </BulletDecorator>
+
+                <BulletDecorator Margin="15,5">
+                    <BulletDecorator.Bullet>
+                        <Ellipse Height="5" Width="5" Fill="{StaticResource MainColor}"/>
+                    </BulletDecorator.Bullet>
+                    <TextBlock Margin="10,0,0,0" TextWrapping="Wrap" Text="Descriptions must not include information about the manufacturer, company, or brand. For example, do not include information about where the company is located, which year it was founded, and so on."/>
+                </BulletDecorator>
+
+                <BulletDecorator Margin="15,5">
+                    <BulletDecorator.Bullet>
+                        <Ellipse Height="5" Width="5" Fill="{StaticResource MainColor}"/>
+                    </BulletDecorator.Bullet>
+                    <TextBlock Margin="10,0,0,0" Text="Descriptions should contain complete sentences that use correct spelling and grammar."/>
+                </BulletDecorator>
+
+                <BulletDecorator Margin="15,5">
+                    <BulletDecorator.Bullet>
+                        <Ellipse Height="5" Width="5" Fill="{StaticResource MainColor}"/>
+                    </BulletDecorator.Bullet>
+                    <TextBlock Margin="10,0,0,0" Text="Descriptions should be worded in the second person or third person (for example, &quot;You can ...&quot; or &quot;They can ...&quot;)."/>
+                </BulletDecorator>
+
+                <BulletDecorator Margin="15,5">
+                    <BulletDecorator.Bullet>
+                        <Ellipse Height="5" Width="5" Fill="{StaticResource MainColor}"/>
+                    </BulletDecorator.Bullet>
+                    <TextBlock Margin="10,0,0,0" TextWrapping="Wrap" Text="Descriptions should not include special, foreign, or gimmicky characters, unless the symbol is a part of the factual data for the product. For example, do not use exclamation marks (!), trademark symbols (™), or other special characters (such as (*, ^, $, @, #) to emphasize an attribute of the product."/>
+                </BulletDecorator>
+
+                <BulletDecorator Margin="15,5">
+                    <BulletDecorator.Bullet>
+                        <Ellipse Height="5" Width="5" Fill="{StaticResource MainColor}"/>
+                    </BulletDecorator.Bullet>
+                    <TextBlock Margin="10,0,0,0" TextWrapping="Wrap" Text="Descriptions should not contain foreign language words unless they are common and well understood, or are a part of the product name (based on the targeted country). For example, &quot;Versace Pour Homme&quot; can be used since this is the product name."/>
+                </BulletDecorator>
+
+                <BulletDecorator Margin="15,5">
+                    <BulletDecorator.Bullet>
+                        <Ellipse Height="5" Width="5" Fill="{StaticResource MainColor}"/>
+                    </BulletDecorator.Bullet>
+                    <TextBlock Margin="10,0,0,0" TextWrapping="Wrap" Text="Descriptions should not include superlative adjectives (for example, &quot;finest,&quot; &quot;best,&quot; and &quot;greatest&quot;). Such adjectives can be used only if they are considered as awards and the product did in fact win this award; for example, &quot;Best Seller.&quot;"/>
+                </BulletDecorator>
+
+                <BulletDecorator Margin="15,5">
+                    <BulletDecorator.Bullet>
+                        <Ellipse Height="5" Width="5" Fill="{StaticResource MainColor}"/>
+                    </BulletDecorator.Bullet>
+                    <TextBlock Margin="10,0,0,0" TextWrapping="Wrap" Text="Descriptions should not include time-sensitive adjectives such as &quot;latest,&quot; &quot;new,&quot; &quot;next-generation,&quot; &quot;most advanced,&quot; and so on."/>
+                </BulletDecorator>
+
+                <BulletDecorator Margin="15,5">
+                    <BulletDecorator.Bullet>
+                        <Ellipse Height="5" Width="5" Fill="{StaticResource MainColor}"/>
+                    </BulletDecorator.Bullet>
+                    <TextBlock Margin="10,0,0,0" Text="Descriptions should not contain any personal opinions or comparisons."/>
+                </BulletDecorator>
+
+                <BulletDecorator Margin="15,5">
+                    <BulletDecorator.Bullet>
+                        <Ellipse Height="5" Width="5" Fill="{StaticResource MainColor}"/>
+                    </BulletDecorator.Bullet>
+                    <TextBlock Margin="10,0,0,0" Text="Descriptions must not contain profane or obscene language."/>
+                </BulletDecorator>
+
+                <BulletDecorator Margin="15,5">
+                    <BulletDecorator.Bullet>
+                        <Ellipse Height="5" Width="5" Fill="{StaticResource MainColor}"/>
+                    </BulletDecorator.Bullet>
+                    <TextBlock Margin="10,0,0,0" Text="Descriptions must not include promotional text or irrelevant search keywords."/>
+                </BulletDecorator>
+
+                <BulletDecorator Margin="15,5">
+                    <BulletDecorator.Bullet>
+                        <Ellipse Height="5" Width="5" Fill="{StaticResource MainColor}"/>
+                    </BulletDecorator.Bullet>
+                    <TextBlock Margin="10,0,0,0" Text="Descriptions must not mention competitor sites such as Best Buy or Amazon."/>
+                </BulletDecorator>
+
+                <TextBlock HorizontalAlignment="Right" Margin="10,5" FontSize="14">           
+                    <Hyperlink NavigateUri="https://developer.ebay.com/devzone/merchant-products/catalog-best-practices/content/descriptions.html" RequestNavigate="Hyperlink_RequestNavigate">
+                        More info
+                    </Hyperlink>
+                </TextBlock>
+
+            </StackPanel>
+        </ScrollViewer>
+
+        <Grid Grid.Row="2">
+            <Button HorizontalAlignment="Right" IsDefault="True" IsCancel="True" Content="Ok" Width="100" Margin="20,0"/>
+        </Grid>
+    </Grid>
+</Window>
