@@ -1,4 +1,5 @@
-﻿using System;
+﻿using eBayForm.LogicUnits;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,7 +28,7 @@ namespace eBayForm.Windows
 
         private void TextBox_KeyDown(object sender, KeyEventArgs e)
         {
-            if ((e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9) || (e.Key >= Key.D0 && e.Key <= Key.D9))
+            if ((e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9) || (e.Key >= Key.D0 && e.Key <= Key.D9) || e.Key == Key.Tab)
             {
                 e.Handled = false;
             }
@@ -37,45 +38,9 @@ namespace eBayForm.Windows
             }
         }
 
-        // Function to get all Childs from this Window
-        public static IEnumerable<T> FindVisualChildren<T>(DependencyObject depObj) where T : DependencyObject
-        {
-            if (depObj != null)
-            {
-                for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
-                {
-                    DependencyObject child = VisualTreeHelper.GetChild(depObj, i);
-                    if (child != null && child is T)
-                    {
-                        yield return (T)child;
-                    }
-
-                    foreach (T childOfChild in FindVisualChildren<T>(child))
-                    {
-                        yield return childOfChild;
-                    }
-                }
-            }
-        }
-
         private void BtnSubmit_Click(object sender, RoutedEventArgs e)
         {
-            bool isFilled = true;
-            foreach (TextBox textBox in FindVisualChildren<TextBox>(this))
-            {
-                if(textBox.Name.EndsWith("Count"))
-                {
-                    if (textBox.Text == "" || (textBox.Name == "NavLinkCount" && Int32.Parse(textBox.Text) > 5))
-                    {
-                        textBox.BorderBrush = (Brush)FindResource("WarningColor");
-                        isFilled = false;
-                    }
-                }
-            }
-            if (isFilled)
-            {
                 this.DialogResult = true;
-            }
         }
 
         private void TextBox_GotFocus(object sender, RoutedEventArgs e)

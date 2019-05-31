@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen" Foreground="{StaticResource SecondColor}"
         FontFamily="Popins" Background="{DynamicResource AccentDark}"
-        Height="400" Width="800" WindowStyle="None" ResizeMode="NoResize">
+        Height="400" Width="400" WindowStyle="None" ResizeMode="NoResize">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
@@ -16,48 +16,26 @@
         </Grid.RowDefinitions>
 
         <Frame Grid.Row="0" Name="Taskbar"/>
-        
-        <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
 
-            <StackPanel Grid.Column="0" Margin="20, 10">
-                <Label Content="Logo Link" FontWeight="Bold"/>
-                <TextBox Name="LogoLink" Margin="0,0,0,15"/>
+        <StackPanel Grid.Row="1" Margin="22, 10">
+            <Label Content="Logo link" FontWeight="Bold"/>
+            <TextBox Name="LogoLink" Margin="0,0,0,15"/>
 
-                <Label Content="Product Name" FontWeight="Bold"/>
-                <TextBox Name="ProductName" Margin="0,0,0,15"/>
+            <Label Content="Product name" FontWeight="Bold"/>
+            <TextBox Name="ProductName" Margin="0,0,0,15"/>
 
-                <Label Content="Product Image Link" FontWeight="Bold"/>
-                <TextBox Name="ProductImageLink" Margin="0,0,0,15"/>
+            <Label Content="Product image link" FontWeight="Bold"/>
+            <TextBox Name="ProductImageLink" Margin="0,0,0,15"/>
 
-                <Label Content="Company Name" FontWeight="Bold"/>
-                <TextBox Name="CompanyName" Margin="0,0,0,15"/>
+            <Label Content="Company name" FontWeight="Bold"/>
+            <TextBox Name="CompanyName" Margin="0,0,0,15"/>
 
-                <Label Content="Company Link" FontWeight="Bold"/>
-                <TextBox Name="CompanyLink" Margin="0,0,0,15"/>
-            </StackPanel>
-
-            <StackPanel Grid.Column="1" Margin="20,42">
-                <Label Content="*Amount of Navigation Links" FontWeight="Bold"/>
-                <TextBox Name="NavLinkCount" MaxLength="1" KeyDown="TextBox_KeyDown" GotFocus="TextBox_GotFocus"/>
-                <Label Content="Optional 3 / Max 5" Foreground="{StaticResource WatermarkColor}" Margin="0,0,0,12"/>
-                
-                <Label Content="*Amount of Arguments" FontWeight="Bold"/>
-                <TextBox Name="ArgumentsCount" MaxLength="2" KeyDown="TextBox_KeyDown" GotFocus="TextBox_GotFocus"/>
-                <Label Content="Optional 10" Foreground="{StaticResource WatermarkColor}" Margin="0,0,0,12"/>
-
-                <Label Content="*Amount of Textboxes" FontWeight="Bold"/>
-                <TextBox Name="TexboxCount" MaxLength="2" KeyDown="TextBox_KeyDown" GotFocus="TextBox_GotFocus"/>
-                <Label Content="Optional 6" Foreground="{StaticResource WatermarkColor}" Margin="0"/>
-            </StackPanel>
-        </Grid>
+            <Label Content="Company link" FontWeight="Bold"/>
+            <TextBox Name="CompanyLink" Margin="0,0,0,15"/>
+        </StackPanel>
 
         <Grid Grid.Row="2">
-            <TextBlock Text="* Required Field" FontSize="16" Margin="15,0,0,0" VerticalAlignment="Center"/>
-            <Button Name="btnSubmit" Content="Ok" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="15, 0" Width="150" Click="BtnSubmit_Click"/>
+            <Button Name="btnSubmit" Content="Next" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="15, 0" Width="150" Click="BtnSubmit_Click"/>
         </Grid>
     </Grid>
 </Window>
