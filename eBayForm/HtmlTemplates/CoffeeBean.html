@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=11">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
 </head>
@@ -69,148 +69,148 @@
             padding: 0;
         }
 
+        .product_arguments {
+            padding: 2em 0;
+        }
+
         header {
             border-bottom: 1px;
-            border-bottom-style:solid;
+            border-bottom-style: solid;
             padding: 1em 0;
-            margin-bottom: 2em;
             text-align: center;
         }
 
             header img {
                 max-width: 100%;
-            }
-
-        .gallery #selected_image {
-            position: relative;
-            height: 30em;
-            text-align: center;
-            margin: 1em;
-        }
-
-            .gallery #selected_image img {
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                max-width: 100%;
                 max-height: 100%;
             }
 
-        #image_list {
-            display: inline-flex;
-            align-items: center;
-            margin: 1em;
+        .img_wrapper {
+            position: relative;
+            overflow: hidden;
+            height: 5em;
         }
 
-            #image_list li {
-                margin: 1em;
-            }
-
-                #image_list li img {
-                    height: 100px;
-                    width: 100%;
-                    height: 100%;
-                    cursor: pointer;
-                }
-
-        #productname {
-            font-size: 3em;
-        }
-
-        #arguments li {
-            font-size: 1.2em;
-            margin: .5em 0;
-        }
-
-            #arguments li:before {
-                font-family: "Font Awesome 5 Free";
-                font-weight: 900;
-                content: "\f00c";
-                padding-right: 10px;
-            }
-
-        #buttons {
-            margin-top: 5em;
-            height: 3em;
-            text-align: center;
-        }
-
-            #buttons button {
-                height: 100%;
-                float: left;
-                border: none;
-                outline: none;
-                cursor: pointer;
-                padding: 10px;
-                font-size: 1em;
-            }
-
-        #info_tabs div {
-            min-height: 5em;
-            padding: 2em 1em;
-            display: none;
-        }
-
-        .ie_wrapper {
-            width: 80%;
-        }
-
-        #similar_products {
-            margin: 3em 0;
-            display: inline-flex;
-        }
-
-            #similar_products a {
-                position: relative;
-                display: block;
-                height: 10em;
-                width: 15em;
-                margin: .5em;
-            }
-
-                #similar_products a img {
-                    position: absolute;
-                    top: 50%;
-                    left: 50%;
-                    transform: translate(-50%, -50%);
-                    max-width: 100%;
-                    max-height: 100%;
-                }
-
-            #similar_products .similar_product_name_wrapper p {
-                margin: 0 auto;
-                opacity: 0;
-                overflow: hidden;
+            .img_wrapper img {
                 position: absolute;
                 top: 50%;
                 left: 50%;
-                transform: translate(-50%, -50%);
+                transform: translate(-50%,-50%);
             }
 
-            #similar_products a:hover .similar_product_name_wrapper {
+        #productname {
+            font-weight: 700;
+            font-size: 2.75em;
+            margin: .5em 0 1em 0;
+        }
+
+        #arguments li {
+            font-size: 1.1em;
+            margin: .5em 0;
+        }
+
+            #arguments li i {
+                padding-right: 1em;
+                -webkit-touch-callout: none;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+            }
+
+        #price {
+            font-weight: bold;
+            font-size: 2em;
+            margin: 1em 0.5em;
+        }
+
+        input {
+            display: none;
+        }
+
+        #description_items label {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            padding: .75em 0;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        #info_tabs {
+            margin: 3em;
+        }
+
+            #info_tabs #tab_p {
+                min-height: 5em;
+                padding: 2em 1em;
+                padding-top: 4em;
+                text-align: left;
+            }
+
+        .ie_wrapper {
+            width: 80%;
+            text-align: center;
+        }
+
+        .similar {
+            padding: 1em 0;
+        }
+
+        #similar_products {
+            padding: 1em 2em;
+            margin: 2em 1em;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+            #similar_products a {
+                display: block;
+                width: 12.5em;
+                min-height: 12.5em;
+                margin: 1em .5em;
+                padding: 3vh;
                 text-align: center;
-                position: absolute;
-                height: 100%;
-                width: 100%;
-                background-color: rgba(65, 65, 65, 0.849);
-                transition: 1s;
+                text-decoration: none;
+                border: 1px solid #000;
             }
 
-            #similar_products a:hover p {
-                opacity: 1;
-                transition: 1s ease-in;
-            }
+                #similar_products a img {
+                    max-height: 60%;
+                    max-width: 100%;
+                }
+
+                #similar_products a p {
+                    font-weight: bold;
+                }
 
         footer {
-            margin-top: 2em;
-            padding: .15em;
+            padding: .2em;
             text-align: center;
         }
 
             footer a {
+                margin: 0.5em 0;
                 text-decoration: none;
             }
+
+        #mobile_header,
+        #mobile_title {
+            display: none;
+            text-align: left;
+            padding: 0.25em;
+        }
+
+        #mobile_title {
+            font-size: 1em;
+            margin: 0;
+            padding: 0;
+        }
 
         @media only screen and (max-width: 900px) {
             .col-7 {
@@ -237,72 +237,164 @@
                 text-align: center;
             }
 
+            #price {
+                display: none;
+            }
+
             #similar_products a {
                 width: 13em;
+            }
+
+            button {
+                height: 120%;
             }
         }
 
         @media only screen and (max-width: 550px) {
-            .selected_image {
-                height: 15em;
+            .gallery #selected_image {
+                height: 275px;
             }
 
-            .image_list {
+            #arguments li {
+                font-size: 0.8em;
+            }
+
+            #description_items label {
                 display: none;
+            }
+
+            #info_tabs #info_tab,
+            #mobile_header,
+            #mobile_title {
+                display: block;
+            }
+
+            .ie_wrapper {
+                width: 100%;
+            }
+
+            .description #description_items {
+                background-color: transparent;
+            }
+
+            #info_tabs #tab_p {
+                display: block;
+                font-size: 0.8em;
+                padding: 0;
+            }
+
+            #similar_products a {
+                width: 7.5em;
+                height: auto;
+                margin: 1em .1em;
+                padding: 5vh;
             }
         }
     </style>
-    <div class="wrapper">
-        <header style="border-color: #b3b3b3;">
-            <img src="" alt="Logo">
-        </header>
+
+    <style id="tab_item_style">
+        #description_items label {
+            color: #2e2e2e;
+            background-color: #D4AA00;
+        }
+
+        #description_items {
+            background-color: rgba(104, 104, 104, 0.116);
+        }
+
+            #description_items [id^='tab_button']:checked + label {
+                color: #D4AA00;
+                background-color: #2e2e2e;
+            }
+    </style>
+
+    <style id="tab_item_tech">
+    </style>
+
+    <style id="gallery_style">
+
+        .gallery {
+            -webkit-transform: scaleY(-1);
+            transform: scaleY(-1);
+            text-align: center;
+        }
+
+        #selected_image {
+            border: 2px solid #000;
+            height: 400px;
+            width: 100%;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            margin: .5vh;
+            -webkit-transform: scaleY(-1);
+            transform: scaleY(-1);
+        }
+
+        .gallery label {
+            height: 10em;
+            margin: 0 0.15em;
+            cursor: pointer;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            -webkit-transform: scaleY(-1);
+            transform: scaleY(-1);
+            display: inline-block;
+        }
+    </style>
+
+    <style id="gallery_tech">
+    </style>
+
+    <style id="gallery_pictures">
+    </style>
+
+    <div class="header" style="background-color: #e9e9e9;">
+        <div class="wrapper">
+            <header style="border-color: #b3b3b3;">
+                <div class="img_wrapper">
+                    <img src="" alt="Logo">
+                </div>
+            </header>
+        </div>
     </div>
 
-    <div class="row product_info">
-        <div class="col-7">
-            <div class="wrapper">
-                <div class="gallery">
-                    <div id="selected_image" style="background-color: rgba(255,255,246,0.02);">
-                        <img>
+    <div class="product_arguments" style="background-color: #e9e9e9;">
+        <div class="row product_info">
+            <div class="col-7">
+                <div class="wrapper">
+                    <div class="gallery">
+                        <div id="selected_image" style="background-color: rgba(255,255,246,0.02);"></div>
                     </div>
-                    <ul id="image_list" style="background-color: rgba(255,255,246,0.02);">
-                        <li>
-                            <img id="product_image" src="">
-                        </li>
-                    </ul>
+                </div>
+            </div>
+            <div class="col-5">
+                <h1 id="productname" style="color: #D4AA00;"></h1>
+                <ul id="arguments"></ul>
+                <p id='price' style='color: #3B3B3B;'></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="description" style="background-color: #e9e9e9;">
+        <div class="row">
+            <h3 id="mobile_header" style="color:#D4AA00;">Description</h3>
+            <div class="ie_wrapper">
+                <div id="description_items">
+                    <div id="info_tabs">
+
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-5">
-            <h1 id="productname" style="color: #D4AA00;">
-
-            </h1>
-            <!-- li-Tag color: #3b3b3b;-->
-            <ul id="arguments">
-
-            </ul>
-        </div>
     </div>
 
-    <div class="row">
-        <div class="ie_wrapper">
-            <!--color: #ffffff; background-color: #D4AA00;-->
-            <div id="buttons">
-
-            </div>
-            <!-- background-color: #ffffff65; color: #3b3b3b;-->
-            <div id="info_tabs">
-                
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="ie_wrapper">
-            <!-- a-Tag background-color: #ffffff65;-->
-            <!-- similar-name p-Tag color: #ffffff; -->
+    <div class="similar" style="background-color: #e9e9e9;">
+        <div class="row">
+            <h3 id="mobile_header" style="color:#D4AA00;">Similar Products</h3>
             <div id="similar_products">
-                
+
             </div>
         </div>
     </div>
@@ -310,62 +402,5 @@
     <footer style="background-color: #2e2e2e;">
         <p class="copyright" style="color: #D4AA00;">Copyright by <a href="" style="color: #ffffff;"></a></p>
     </footer>
-
-    <script>
-        const activeImage = document.querySelector("#selected_image img");
-        const productImages = document.querySelectorAll("#image_list img");
-
-        activeImage.src = productImages[0].src;
-
-        function changeImage(e)
-        {
-            activeImage.src = e.target.src;
-        }
-
-        for (let i = 0; i < productImages.length; i++)
-        {
-            productImages[i].addEventListener("click", changeImage);
-        }
-
-        var info_buttons = document.querySelectorAll("#buttons button");
-        var info_tabs = document.querySelectorAll("#info_tabs  div");
-
-        var previousButton = info_buttons[0];
-        previousButton.style.background = "rgba(255, 255, 255, 0.171)";
-        previousButton.style.color = "#D4AA00";
-        var previousContainer = info_tabs[0];
-        previousContainer.style.display = "block";
-
-
-
-        function changeInfoTab(e)
-        {
-            let index = 0;
-            for (; index < info_buttons.length; index++)
-            {
-                if (info_buttons[index] == e.target)
-                {
-                    break;
-                }
-            }
-
-            previousButton.style.background = "#D4AA00";
-            previousButton.style.color = "#ffffff";
-            previousContainer.style.display = "none";
-
-            var container = info_tabs[index];
-            container.style.display = "block";
-            e.target.style.background = "rgba(255, 255, 255, 0.171)";
-            e.target.style.color = "#D4AA00";
-
-            previousButton = e.target;
-            previousContainer = container;
-        }
-
-        for (let i = 0; i < info_buttons.length; i++)
-        {
-            info_buttons[i].addEventListener("click", changeInfoTab);
-        }
-    </script>
 </body>
 </html>

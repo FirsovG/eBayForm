@@ -13,8 +13,8 @@
             font-family: sans-serif;
             overflow-x: hidden;
         }
-        .row 
-        {
+
+        .row {
             display: -webkit-box;
             display: -webkit-flex;
             display: -ms-flexbox;
@@ -24,203 +24,259 @@
             justify-content: center;
         }
 
-        .col-12 
-        {
+        .col-12 {
             -webkit-flex: 0 0 100%;
             -ms-flex: 0 0 100%;
             flex: 0 0 100%;
         }
 
-        .col-7 
-        {
-            -webkit-flex: 0 0 58.333%;
-            -ms-flex: 0 0 58.333%;
-            flex: 0 0 58.333%
-        }
-
-        .col-6 
-        {
+        .col-6 {
             -webkit-flex: 0 0 50%;
             -ms-flex: 0 0 50%;
             flex: 0 0 50%
         }
 
-        .col-5 
-        {
-            -webkit-flex: 0 0 41.666%;
-            -ms-flex: 0 0 41.666%;
-            flex: 0 0 41.666%
-        }
-
-        .col-3
-        {
+        .col-3 {
             flex: 0 0 25%;
             align-self: flex-start;
         }
 
 
 
-        header 
-        {
+        header {
             padding: 1em 0;
             text-align: center;
         }
 
-        header img 
+        header img
         {
             max-width: 100%;
+            max-height: 100%;
         }
 
-        nav 
+        .img_wrapper
         {
+            position: relative;
+            overflow: hidden;
+            height: 5em;
+        }
+
+        .img_wrapper img
+        {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+        }
+
+        nav {
             background-color: #ffffff;
         }
 
-        nav ul
+            nav ul {
+                margin: 0;
+                list-style-type: none;
+                padding: 1em 0;
+                text-align: center;
+            }
+
+                nav ul li {
+                    display: inline;
+                }
+
+                    nav ul li a {
+                        text-decoration: none;
+                        margin: 0 1em;
+                        padding: 0.5em;
+                    }
+
+        .product_arguments
         {
-            list-style-type: none;
+            padding: 2em 0;
         }
 
-        nav ul li
+        .product_image_wrapper
         {
-            display: inline;
+            display: flex;
+            margin: 1vh 3vh;
         }
 
-        nav ul li a
+        .product_image_wrapper img
         {
-            text-decoration: none;
-            margin: 0 1em;
-            padding: 0.5em;
+            object-fit: contain;
+            margin: auto;
         }
 
-
-
-        .col-5
-        {
-            text-align: center;
-            margin: 3em 0;
-        }
-
-        .col-5 #product_image
-        {
-            max-width: 90%;
-        }
-
-        #productname
-        {
+        #productname {
             font-weight: 700;
         }
 
-        #arguments
-        {
+        #arguments {
             padding: 0;
+            text-align: left;
         }
 
-        #arguments li 
-        {
-            list-style: none;
-            font-weight: 500;
-            padding-bottom: 10px
+            #arguments li {
+                list-style: none;
+                font-weight: 500;
+                padding-bottom: 10px
+            }
+
+                #arguments li i {
+                    padding-right: 1em;
+                }
+
+        #price {
+            font-weight: bold;
+            font-size: 2em;
+            margin: 1em 0.5em;
         }
 
-		#arguments li:before 
-        {
-            font-family: "Font Awesome 5 Free"; font-weight: 900; content: "\f00c";
-            padding-right: 5px
-		}
 
 
-
-        .wrapper
-        {
+        .wrapper {
             width: 80%;
             margin: 0 auto;
         }
 
 
-        footer 
-        {
+        footer {
             padding: .5em 0;
             margin-top: 2em;
             text-align: center;
         }
 
-        footer a 
-        {
-            text-decoration: none;
-        }
+            footer a {
+                margin: 0.5em 0;
+                text-decoration: none;
+            }
 
 
 
-        @media only screen and (max-width: 900px)
-        {
-            nav ul
+        @media only screen and (max-width: 900px) {
+            nav ul 
             {
                 display: none;
             }
 
-            .col-7
+            .col-6 
             {
-                margin: 1em 0; 
+            -webkit-flex: 0 0 100%;
+            -ms-flex: 0 0 100%;
+            flex: 0 0 100%;
             }
 
-            .col-6,
-            .col-3,
-            .col-7,
-            .col-5
-            {
-                flex: 0 0 100%;
-            }
-
-            .col-7 h1
+            #productname
             {
                 text-align: center;
+            }
+
+            #price {
+                display: none;
+            }
+        }
+
+        @media only screen and (max-width: 550px)
+        {
+            #arguments li 
+            {
+                font-size: 0.9em;
+            }
+
+            .title
+            {
+                font-size: 1.1em;
+            }
+
+            .text
+            {
+                font-size: 0.9em;
             }
         }
     </style>
 
-    <div class="row">
-        <div class="col-12">
-            <header>
-                <img src="" alt="Logo">
-            </header>
-            <nav class="row">
-                <!-- a-Tag color: #D4AA00;-->
-                <ul></ul>
-            </nav>
-        </div>
-        <div class="col-5">
-            <img id="product_image" src="" alt="ProductImage">
-        </div>
-        
-        <div class="col-7">
-            <div class="wrapper">
-                <h1 id="productname" style="color: #D4AA00;"></h1>
-                <!-- li-Tag color: #4e4e4e;-->
-                <ul id="arguments"></ul>
-            </div>
-        </div>
-
-        <div id="info_items_row_1" class="col-6">
-            <div class="wrapper">
-                <!-- div-h2-Tag color: #D4AA00;-->
-                <!-- div-p-Tag color: #2e2e2e;-->
-                <div id="info_items">
-
+    <div class="header" style="background-color: #e9e9e9;">
+        <div class="row">
+            <div class="col-12">
+                <div class="wrapper">
+                    <header>
+                        <div class="img_wrapper">
+                            <img src="" alt="Logo">
+                        </div>
+                    </header>
                 </div>
+                <nav>
+                    <ul>
+                        
+                    </ul>
+                </nav>
             </div>
         </div>
-        <div id="info_items_row_2" class="col-6">
-            <div class="wrapper">
-                <div id="info_items">
-
-                </div>
-            </div>
-        </div>
-
-        <footer class="col-12" style="background-color: #2e2e2e;">
-            <p class="copyright" style="color: #D4AA00;">Copyright by <a href="" style="color: #ffffff;"></a></p>
-        </footer>
     </div>
+
+    <div class="product_arguments" style="background-color: #e9e9e9;">
+        <div class="row">
+            <div class="col-6">
+                <div class="wrapper">
+                    <div class="product_image_wrapper">
+                        <img id="product_image" src="" alt="ProductImage">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6">
+                <div class="wrapper">
+                    <h1 id="productname" style="color: #D4AA00;"></h1>
+                    <ul id="arguments"></ul>
+                    <p id='price' style='color: #3B3B3B;'></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="description" style="background-color: #e9e9e9;">
+        <div class="row">
+            <div id="info_items_row_1" class="col-6">
+                <div class="wrapper">
+                    <div id="info_items">
+                        
+                    </div>
+                </div>
+            </div>
+            <div id="info_items_row_2" class="col-6">
+                <div class="wrapper">
+                    <div id="info_items">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="col-12" style="background-color: #2e2e2e;">
+        <p class="copyright" style="color: #D4AA00;">Copyright by <a href="" style="color: #ffffff;"></a></p>
+    </footer>
+
+    <script>
+        var nav_tabs = document.querySelectorAll("nav ul li a");
+
+        function enterNav(e)
+        {
+            e.target.style.borderTop = "1px solid " + e.target.style.backgroundColor;
+            e.target.style.borderBottom = "1px solid " + e.target.style.backgroundColor;
+        }
+
+        function leaveNav(e)
+        {
+            e.target.style.borderTop = "";
+            e.target.style.borderBottom = "";
+        }
+
+        for (let i = 0; i < nav_tabs.length; i++)
+        {
+            nav_tabs[i].addEventListener("mouseover", enterNav);
+            nav_tabs[i].addEventListener("mouseout", leaveNav);
+        }
+    </script>
 </body>
 </html>
