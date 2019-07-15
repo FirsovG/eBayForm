@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:eBayForm.Windows"
-        mc:Ignorable="d"
+        mc:Ignorable="d" Title="Message"
         WindowStartupLocation="CenterScreen" Foreground="{StaticResource SecondColor}"
         FontFamily="Popins" Background="{StaticResource AccentDark}"
         Height="180" Width="400" WindowStyle="None" ResizeMode="NoResize">
@@ -25,7 +25,7 @@
             <TextBlock Name="tbMessage" TextAlignment="Center" TextWrapping="WrapWithOverflow" Grid.Row="0" Width="350" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
             <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button IsDefault="True" IsCancel="True" Name="btnYes" Content="Ok" Width="75" Margin="10,0,10,0"/>
+                <Button IsDefault="True" Name="btnOk" Content="Ok" Width="75" Margin="10,0,10,0"/>
             </StackPanel>
         </Grid>
     </Grid>

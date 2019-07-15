@@ -1,27 +1,71 @@
 ﻿
+using System.Collections.Generic;
+
 namespace eBayForm.LogicUnits
 {
     public struct HtmlTagElement
     {
-        public bool IsInList { get; set; }
-        public string Element { get; set; }
-        public string Value { get; set; }
-        public string Link { get; set; }
+        public string Type { get; }
+        public bool IsInList { get; }
+        public string Name { get; set; }
+        public List<string> Values { get; set; }
 
-        public HtmlTagElement(bool isInList, string element, string value)
+        // For the GetTags function
+        public HtmlTagElement(bool isInList, string name, params string[] values)
         {
             IsInList = isInList;
-            Element = element;
-            Value = value.Trim();
-            Link = null;
+            Name = name;
+            Type = "Unknown";
+            Values = new List<string>();
+
+            for (int i = 0; i < values.Length; i++)
+            {
+                Values.Add(values[i]);
+            }
+
+            if (Values.Count == 1)
+            {
+                if (Values[0].StartsWith("http") || Values[0] == "#")
+                {
+                    Type = "Image";
+                }
+                else
+                {
+                    Type = "Text";
+                }
+            }
+            else if(Values.Count == 2)
+            {
+                if (Values[1].StartsWith("http") || Values[1] == "#")
+                {
+                    Type = "Link";
+                }
+                else
+                {
+                    Type = "Textblock";
+                }
+            }
+            else if(Values.Count == 3)
+            {
+                if ((Values[1].StartsWith("http") || Values[1] == "#") && (Values[2].StartsWith("http") || Values[2] == "#"))
+                {
+                    Type = "ImageAndLink";
+                }
+            }
         }
 
-        public HtmlTagElement(bool isInList, string element, string value, string link)
+        // For the SaveChanges function
+        public HtmlTagElement(params string[] values)
         {
-            IsInList = isInList;
-            Element = element;
-            Value = value.Trim();
-            Link = link;
+            IsInList = false;
+            Name = null;
+            Type = null;
+            Values = new List<string>();
+
+            for (int i = 0; i < values.Length; i++)
+            {
+                Values.Add(values[i]);
+            }
         }
     }
 }

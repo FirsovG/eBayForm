@@ -11,17 +11,17 @@
       Title="Taskbar" Background="{DynamicResource MaterialDesignPaper}">
 
     <Grid>
-        <StackPanel HorizontalAlignment="Left" Margin="10, 0">
-            <Image Source="pack://application:,,,/Images/logo64.png" Height="20" Margin="5"/>
+        <StackPanel Name="spLogo" HorizontalAlignment="Left" Orientation="Horizontal" Margin="10, 0">
+            <materialDesign:PackIcon Kind="CartOutline" Foreground="{StaticResource MainColor}" Margin="0,0,5,0" VerticalAlignment="Center"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10, 0">
 
             <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Name="btnMinimize" 
-                    Height="25" Width="25" BorderBrush="Transparent" 
+                    Height="25" Width="25" BorderBrush="Transparent"
                     Background="Transparent" Click="BtnMinimize_Click">
                 <materialDesign:PackIcon Kind="WindowMinimize" Foreground="{StaticResource MainColor}" Margin="0,5,0,0"/>
             </Button>
-            <Grid>
+            <Grid Name="grMaximizeRestore" Visibility="Collapsed">
                 <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Name="btnMaximize" 
                         Height="25" Width="25" BorderBrush="Transparent" 
                         Background="Transparent" Click="BtnMaximize_Click">
@@ -35,10 +35,9 @@
             </Grid>
             <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"  Name="btnClose" 
                     Height="25" Width="25" BorderBrush="Transparent" 
-                    Background="Transparent" Click="BtnClose_Click">
+                    Background="Transparent">
                 <materialDesign:PackIcon Kind="Close" Foreground="{StaticResource MainColor}"/>
             </Button>
-
         </StackPanel>
     </Grid>
 </Page>

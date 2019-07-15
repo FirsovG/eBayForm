@@ -21,29 +21,60 @@ namespace eBayForm.DesignItems
     public partial class Taskbar : Page
     {
         private Window currentWindow;
+        private Button showButton;
 
         public Taskbar(Window window)
         {
-            this.currentWindow = window;
             InitializeComponent();
-            if (this.currentWindow.GetType().ToString() != "eBayForm.MainWindow")
+            currentWindow = window;
+            if (currentWindow.Name == "MainWindow")
             {
-                btnMinimize.Visibility = Visibility.Hidden;
-                btnMaximize.Visibility = Visibility.Hidden;
-            }
+                this.MouseDown += Taskbar_Fullscreen;
+                grMaximizeRestore.Visibility = Visibility.Visible;
 
+                TextBlock logoname = new TextBlock();
+                logoname.Text = "eBayForm";
+                logoname.FontWeight = FontWeights.Bold;
+                logoname.FontSize = 13;
+                logoname.VerticalAlignment = VerticalAlignment.Center;
+                logoname.Foreground = (Brush)FindResource("SecondColor");
+                spLogo.Children.Add(logoname);
+            }
+            btnClose.Click += Close;
         }
 
-        private void BtnClose_Click(object sender, RoutedEventArgs e)
+        public Taskbar(Window window, Button showButton)
         {
-            if (this.currentWindow.GetType().ToString().EndsWith("ToolBox"))
+            InitializeComponent();
+            currentWindow = window;
+            this.showButton = showButton;
+            btnClose.Click += Hidde;
+        }
+
+        private void Taskbar_Fullscreen(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ClickCount == 2)
             {
-                currentWindow.Hide();
+                if (currentWindow.WindowState == System.Windows.WindowState.Maximized)
+                {
+                    currentWindow.WindowState = System.Windows.WindowState.Normal;
+                }
+                else
+                {
+                    currentWindow.WindowState = System.Windows.WindowState.Maximized;
+                }
             }
-            else
-            {
-                currentWindow.Close();
-            }
+        }
+
+        public void Close(object sender, RoutedEventArgs e)
+        {
+            currentWindow.Close();
+        }
+
+        public void Hidde(object sender, RoutedEventArgs e)
+        {
+            currentWindow.Hide();
+            showButton.Visibility = Visibility.Visible;
         }
 
         private void BtnMinimize_Click(object sender, RoutedEventArgs e)

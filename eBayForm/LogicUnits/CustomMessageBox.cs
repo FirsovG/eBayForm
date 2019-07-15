@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows;
 
 namespace eBayForm.LogicUnits
@@ -30,6 +31,12 @@ namespace eBayForm.LogicUnits
         {
             EBayRules rules = new EBayRules();
             rules.ShowDialog();
+        }
+
+        public static void ShowTipp(string tipp)
+        {
+            OwnMessageBox messageBox = new OwnMessageBox(tipp, 3000);
+            messageBox.Show();
         }
     }
 }

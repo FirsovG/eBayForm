@@ -27,6 +27,7 @@ namespace eBayForm.Windows
             InitializeComponent();
             Taskbar.Content = new DesignItems.Taskbar(this);
             this.templatename = templatename;
+            this.Title = templatename + " " + "setup";
 
             if (templatename == "Tea")
             {
@@ -95,7 +96,7 @@ namespace eBayForm.Windows
             textBox.MaxLength = 2;
 
             optionalLabel = new Label();
-            optionalLabel.Content = "optional 10";
+            optionalLabel.Content = "optional 6";
 
             spMain.Children.Add(textBlock);
             spMain.Children.Add(textBox);
@@ -143,7 +144,7 @@ namespace eBayForm.Windows
             textBox.MaxLength = 2;
 
             optionalLabel = new Label();
-            optionalLabel.Content = "optional 10";
+            optionalLabel.Content = "optional 5";
 
             spMain.Children.Add(textBlock);
             spMain.Children.Add(textBox);

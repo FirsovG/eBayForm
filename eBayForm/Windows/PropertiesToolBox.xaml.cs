@@ -7,155 +7,268 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
+using eBayForm.DesignItems;
 
 namespace eBayForm.Windows
 {
-    /// <summary>
-    /// Логика взаимодействия для PropertiesToolBox.xaml
-    /// </summary>
-    /// 
 
     public partial class PropertiesToolBox : Window
     {
         
-        private List<TextBox> textBoxList;
-        private Button btnShowToolBox;
+        private List<WatermarkTextBox> textBoxList;
+        private List<WatermarkTextBox> htmlTextBoxList;
+        private LogicController lc;
+        public static RoutedCommand cmdSaveChanges = new RoutedCommand();
+        public event DataChangedDelegate DataChanged;
+        public Button btnTextImport;
 
-        public PropertiesToolBox(LogicController lc, WebBrowser wbWorkspace, Button btnShowToolBox)
+        public PropertiesToolBox(MainWindow mainWindow, LogicController lc, WebBrowser wbWorkspace, Button showButton)
         {
             InitializeComponent();
 
+            this.lc = lc;
+            this.Owner = mainWindow;
+            cmdSaveChanges.InputGestures.Add(new KeyGesture(Key.S, ModifierKeys.Control));
+
             this.Left = 5;
             this.Top = (SystemParameters.PrimaryScreenHeight / 2) - (this.Height / 2);
-            
-            IsVisibleChanged += OnClose;
 
-            Taskbar.Content = new DesignItems.Taskbar(this);
-            textBoxList = new List<TextBox>();
-            this.btnShowToolBox = btnShowToolBox;
+            Taskbar.Content = new Taskbar(this, showButton);
+            textBoxList = new List<WatermarkTextBox>();
+            htmlTextBoxList = new List<WatermarkTextBox>();
 
             List<HtmlTagElement> elements = lc.GetTags();
 
             List<StackPanel> spList = new List<StackPanel>();
-
-            int imageBoxCount = 0;
-            int textBoxCount = 0;
-            int linkBoxCount = 0;
             foreach (HtmlTagElement element in elements)
             {
-                Label label = new Label();
-                label.Content = element.Element;
-
-                TextBox textBox = new TextBox();
-                textBoxList.Add(textBox);
-
-
-                label.FontWeight = FontWeights.Bold;
-                label.FontSize = 14;
-                label.Foreground = (Brush)FindResource("MainColor");
                 
-                if (element.Element.Contains("image") || element.Element.Contains("logo"))
-                {
-                    textBox.Name = "tbImage" + imageBoxCount++;
-                    textBox.Text = element.Value == "" ? "Enter source here..." : Regex.Replace(element.Value, @"\s+", " ");
-                }
-                else
-                {
-                    textBox.Name = "tbText" + textBoxCount++;
-                    textBox.Text = element.Value == "" ? "Enter text here..." : Regex.Replace(element.Value, @"\s+", " ");
-                    textBox.AcceptsReturn = true;
-                    textBox.TextWrapping = TextWrapping.Wrap;
-                }
-                textBox.FontSize = 18;
-                textBox.BorderThickness = new Thickness(0, 0, 0, 1.5);
-                textBox.Margin = new Thickness(10, 2.5, 12.5, 10);
-                textBox.Foreground = (Brush)FindResource("SecondColor");
-                textBox.BorderBrush = (Brush)FindResource("SecondColor");
-                textBox.GotFocus += RemoveText;
-                textBox.LostFocus += AddText;
-
                 StackPanel panel = spMain;
 
-                if (!element.IsInList)
+                if (element.IsInList)
                 {
-                    panel.Children.Add(label);
-                    panel.Children.Add(textBox);
-                }
-                else
-                {
-                    textBox.Margin = new Thickness(10, 2.5, 15, 8);
-                    string menuName = new string(element.Element.Where(c => (c < '0' || c > '9')).ToArray()).Replace(" ", "");
+                    string menuName = new string(element.Name.Where(c => (c < '0' || c > '9')).ToArray()).Replace(" ", "");
                     if (menuName != "Text")
                     {
                         menuName += "s";
                     }
-                    if (lc.IsInList(spList, menuName, out panel))
+
+                    foreach (StackPanel currentPanel in spList)
                     {
-                        panel.Children.Add(label);
-                        panel.Children.Add(textBox);
+                        if (currentPanel.Name == "sp" + menuName)
+                        {
+                            panel = currentPanel;
+                            continue;
+                        }
                     }
-                    else
+                    if (panel == spMain)
                     {
                         Button btnForStackPanel = new Button();
                         btnForStackPanel.Content = menuName;
-                        btnForStackPanel.Margin = new Thickness(5, 5, 5, 5);
-                        btnForStackPanel.BorderBrush = (Brush)FindResource("MainColor");
                         btnForStackPanel.Click += BtnOpenMenu_Click;
 
                         StackPanel elementsStackPanel = new StackPanel();
                         elementsStackPanel.Name = "sp" + menuName;
-                        elementsStackPanel.Margin = new Thickness(0, 0, 0, 10);
-                        elementsStackPanel.Background = (Brush)FindResource("MaterialDesignPaper");
                         elementsStackPanel.Visibility = Visibility.Collapsed;
                         spList.Add(elementsStackPanel);
 
                         panel = elementsStackPanel;
 
-                        panel.Children.Add(label);
-                        panel.Children.Add(textBox);
+                        if (menuName == "Textblocks")
+                        {
+                            btnTextImport = new Button();
+                            btnTextImport.Content = "Import text";
+                            btnTextImport.Background = Brushes.Transparent;
+                            btnTextImport.Click += BtnTextImport_Click;
+                            panel.Children.Add(btnTextImport);
+                        }
 
                         btnForStackPanel.Tag = elementsStackPanel;
                         spMain.Children.Add(btnForStackPanel);
                         spMain.Children.Add(elementsStackPanel);
                     }
                 }
-                if (element.Link != null)
+
+                Label label = new Label();
+                label.Content = element.Name;
+                panel.Children.Add(label);
+
+                WatermarkTextBox tmpTextBox;
+
+                if (element.Type == "Text")
                 {
-                    TextBox linkTextBox = new TextBox();
-                    linkTextBox.Text = element.Link == "" ? "Enter link here..." : element.Link;
-                    linkTextBox.Name = "tbLink" + linkBoxCount++;
+                    WatermarkTextBox textBox = new WatermarkTextBox("Enter text here...");
+                    textBox.Text = element.Values[0];
+                    textBox.AcceptsReturn = true;
+                    textBox.TextWrapping = TextWrapping.Wrap;
 
-                    textBox.Tag = linkTextBox;
-
-                    linkTextBox.FontSize = 18;
-                    linkTextBox.BorderThickness = new Thickness(0, 0, 0, 1.5);
-                    linkTextBox.Margin = new Thickness(10, 2.5, 15, 8);
-                    linkTextBox.Foreground = (Brush)FindResource("SecondColor");
-                    linkTextBox.BorderBrush = (Brush)FindResource("SecondColor");
-                    linkTextBox.GotFocus += RemoveText;
-                    linkTextBox.LostFocus += AddText;
-
-                    panel.Children.Add(linkTextBox);
+                    textBox.LostFocus += TextBox_LostFocus;
+                    textBoxList.Add(textBox);
+                    panel.Children.Add(textBox);
                 }
+                else if (element.Type == "Image")
+                {
+                    WatermarkTextBox textBox = new WatermarkTextBox("Enter source here...");
+                    textBox.Text = element.Values[0];
+                    textBox.WatermarkHideString = "https://i.imgur.com/ko8F6LC.png";
+                    textBox.MouseDoubleClick += DoubleClickOnLink;
+
+                    textBox.LostFocus += TextBox_LostFocus;
+                    textBoxList.Add(textBox);
+                    panel.Children.Add(textBox);
+                }
+                else if (element.Type == "Link")
+                {
+                    WatermarkTextBox textBox = new WatermarkTextBox("Enter text here...");
+                    textBox.Text = element.Values[0];
+                    textBox.AcceptsReturn = true;
+                    textBox.TextWrapping = TextWrapping.Wrap;
+
+                    textBox.LostFocus += TextBox_LostFocus;
+                    textBoxList.Add(textBox);
+                    panel.Children.Add(textBox);
+
+
+                    tmpTextBox = textBox;
+                    textBox = new WatermarkTextBox("Enter link here...");
+                    textBox.Text = element.Values[1];
+                    textBox.WatermarkHideString = "#";
+                    textBox.MouseDoubleClick += DoubleClickOnLink;
+
+                    textBox.LostFocus += TextBox_LostFocus;
+                    tmpTextBox.Tag = textBox;
+                    textBoxList.Add(textBox);
+                    panel.Children.Add(textBox);
+                }
+                else if (element.Type == "Textblock")
+                {
+                    WatermarkTextBox textBox = new WatermarkTextBox("Enter text here...");
+                    textBox.Text = element.Values[0];
+                    textBox.AcceptsReturn = true;
+                    textBox.TextWrapping = TextWrapping.Wrap;
+
+                    textBox.LostFocus += TextBox_LostFocus;
+                    textBoxList.Add(textBox);
+                    panel.Children.Add(textBox);
+
+
+                    tmpTextBox = textBox;
+                    textBox = new WatermarkTextBox("Enter text here...");
+                    textBox.Text = element.Values[1];
+                    textBox.AcceptsReturn = true;
+                    textBox.TextWrapping = TextWrapping.Wrap;
+
+                    textBox.LostFocus += TextBox_LostFocus;
+                    tmpTextBox.Tag = textBox;
+                    textBoxList.Add(textBox);
+                    panel.Children.Add(textBox);
+
+                    htmlTextBoxList.Add(tmpTextBox);
+                    htmlTextBoxList.Add(textBox);
+                }
+                else if (element.Type == "ImageAndLink")
+                {
+                    WatermarkTextBox textBox = new WatermarkTextBox("Enter text here...");
+                    textBox.Text = element.Values[0];
+                    textBox.AcceptsReturn = true;
+                    textBox.TextWrapping = TextWrapping.Wrap;
+
+                    textBox.LostFocus += TextBox_LostFocus;
+                    textBoxList.Add(textBox);
+                    panel.Children.Add(textBox);
+
+
+                    tmpTextBox = textBox;
+                    textBox = new WatermarkTextBox("Enter link here...");
+                    textBox.Text = element.Values[1];
+                    textBox.WatermarkHideString = "#";
+                    textBox.MouseDoubleClick += DoubleClickOnLink;
+
+                    textBox.LostFocus += TextBox_LostFocus;
+                    tmpTextBox.Tag = textBox;
+                    textBoxList.Add(textBox);
+                    panel.Children.Add(textBox);
+
+
+                    tmpTextBox = textBox;
+                    textBox = new WatermarkTextBox("Enter image source here...");
+                    textBox.Text = element.Values[2];
+                    textBox.WatermarkHideString = "https://i.imgur.com/ko8F6LC.png";
+                    textBox.MouseDoubleClick += DoubleClickOnLink;
+
+                    textBox.LostFocus += TextBox_LostFocus;
+                    tmpTextBox.Tag = textBox;
+                    textBoxList.Add(textBox);
+                    panel.Children.Add(textBox);
+                }
+            }
+        }
+
+        private void BtnTextImport_Click(object sender, RoutedEventArgs e)
+        {
+            ImportTextDialog importTextDialog = new ImportTextDialog();
+            importTextDialog.ShowDialog();
+            if (importTextDialog.DialogResult == true)
+            {
+                char textSpliter = importTextDialog.tbSeparatorHT.Text[0];
+                char textBoxSpliter = importTextDialog.tbSeparatorTT.Text[0];
+
+                string textToSplit = importTextDialog.tbText.Text.Replace("\r\n", "");
+
+                string[] textBlocks = textToSplit.Split(textBoxSpliter);
+                if (textBlocks.Length == (htmlTextBoxList.Count / 2))
+                {
+                    int i = 0;
+                    string[] splitedTextBlock;
+                    foreach (string textBlock in textBlocks)
+                    {
+                        splitedTextBlock = textBlock.Split(textSpliter);
+                        htmlTextBoxList[i++].Text = splitedTextBlock[0];
+                        htmlTextBoxList[i++].Text = splitedTextBlock[1];
+                    }
+                }
+                else
+                {
+                    CustomMessageBox.Show("Split the text rightly");
+                }
+            }
+        }
+
+        private void TextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            DataChanged(sender);
+        }
+
+        private void DoubleClickOnLink(object sender, MouseButtonEventArgs e)
+        {
+            WatermarkTextBox textBox = (WatermarkTextBox)sender;
+            if (textBox != null)
+            {
+                textBox.SelectAll();
             }
         }
 
         public List<HtmlTagElement> SaveChanges()
         {
             List<HtmlTagElement> htmlTags = new List<HtmlTagElement>();
-            foreach (TextBox textBox in textBoxList)
+            for (int i = 0; i < textBoxList.Count; i++)
             {
-                bool isInList = textBox.Parent == spMain ? false : true;
-                string text = textBox.Text == "Enter text here..." ? "" : textBox.Text == "Enter source here..." ? "" : textBox.Text ;
-                if (textBox.Tag == null)
+                if (textBoxList[i].Tag == null)
                 {
-                    htmlTags.Add(new HtmlTagElement(isInList, textBox.Name, text));
+                    htmlTags.Add(new HtmlTagElement(textBoxList[i].Text));
                 }
                 else
                 {
-                    TextBox linkTextBox = (TextBox)textBox.Tag;
-                    string link = linkTextBox.Text == "Enter link here..." ? "" : linkTextBox.Text;
-                    htmlTags.Add(new HtmlTagElement(isInList, textBox.Name, text, link));
+                    if (textBoxList[i + 1].Tag == null)
+                    {
+                        htmlTags.Add(new HtmlTagElement(textBoxList[i].Text, textBoxList[i + 1].Text));
+                        i += 1;
+                    }
+                    else
+                    {
+                        htmlTags.Add(new HtmlTagElement(textBoxList[i].Text, textBoxList[i + 1].Text, textBoxList[i + 2].Text));
+                        i += 2;
+                    }
                 }
             }
             return htmlTags;
@@ -174,41 +287,9 @@ namespace eBayForm.Windows
             }
         }
 
-        private void RemoveText(object sender, RoutedEventArgs e)
+        private void CbSaveChanges_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            TextBox textBox = (TextBox)sender;
-            if (textBox.Text == "Enter text here..." || textBox.Text == "Enter source here..." || textBox.Text == "Enter link here...")
-            {
-                textBox.Text = "";
-            }
-        }
-
-        private void AddText(object sender, RoutedEventArgs e)
-        {
-            TextBox textBox = (TextBox)sender;
-            if (string.IsNullOrWhiteSpace(textBox.Text))
-            {
-                if (textBox.Name.StartsWith("tbLink"))
-                {
-                    textBox.Text = "Enter link here...";
-                }
-                else if (textBox.Name.StartsWith("tbImage"))
-                {
-                    textBox.Text = "Enter source here...";
-                }
-                else if (textBox.Name.StartsWith("tbText"))
-                {
-                    textBox.Text = "Enter text here...";
-                }
-            }
-        }
-
-        private void OnClose(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            if (((Window)sender).Visibility == Visibility.Hidden)
-            {
-                btnShowToolBox.Visibility = Visibility.Visible;
-            }
+            (this.Owner as MainWindow).SaveChanges();
         }
     }
 }

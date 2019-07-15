@@ -1,0 +1,46 @@
+﻿<Window x:Class="eBayForm.Windows.ImportTextDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:eBayForm.Windows"
+        xmlns:designitems="clr-namespace:eBayForm.DesignItems"
+        mc:Ignorable="d" WindowStyle="None" ResizeMode="NoResize" FontSize="14"
+        Title="ImportTextDialog" Height="180" Width="500" Background="{StaticResource AccentDark}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+
+        <Frame Grid.Row="0" Name="Taskbar"/>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="220"/>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="20"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Separator (Headline-Text):" Foreground="{StaticResource SecondColor}" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                    <TextBox Name="tbSeparatorHT" MaxLength="1" TextAlignment="Center" Foreground="{StaticResource SecondColor}" Width="15" VerticalAlignment="Center" Background="Transparent"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Separator (Textblock-Textblock):" Foreground="{StaticResource SecondColor}" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                    <TextBox Name="tbSeparatorTT" MaxLength="1" TextAlignment="Center" Foreground="{StaticResource SecondColor}" Width="15" VerticalAlignment="Center" Background="Transparent"/>
+                </StackPanel>
+            </StackPanel>
+
+            <ScrollViewer Margin="0,5" Grid.Column="3" VerticalScrollBarVisibility="Auto">
+                <designitems:WatermarkTextBox TextWrapping="Wrap" AcceptsReturn="True" x:Name="tbText" Foreground="{StaticResource SecondColor}" Watermark="Enter text here" WatermarkColor="{StaticResource SecondColor}" VerticalAlignment="Center"/>
+            </ScrollViewer>
+        </Grid>
+
+        <Button Name="btnOk" Content="Ok" Grid.Row="2" HorizontalAlignment="Right" Margin="0,0,15,0" Width="50" Click="BtnOk_Click"/>
+    </Grid>
+</Window>

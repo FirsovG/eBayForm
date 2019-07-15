@@ -5,10 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:eBayForm.Windows"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        mc:Ignorable="d" Height="600" Width="300"
-        WindowStartupLocation="Manual"
+        xmlns:designitems="clr-namespace:eBayForm.DesignItems"
+        mc:Ignorable="d" Title="Properties toolbox"
+        Height="600" Width="300" WindowStartupLocation="Manual"
         FontFamily="Popins" Background="{StaticResource AccentDark}"
         WindowStyle="None" ResizeMode="NoResize">
+
+    <Window.CommandBindings>
+        <CommandBinding x:Name="cbSaveChanges" Command="{x:Static local:PropertiesToolBox.cmdSaveChanges}" Executed="CbSaveChanges_Executed"/>
+    </Window.CommandBindings>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -18,9 +23,31 @@
 
         <Frame Grid.Row="0" Name="Taskbar"/>
 
-        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-            <StackPanel  Name="spMain" Margin="0, 10, 0, 25">
-                
+        <ScrollViewer Grid.Row="1" Margin="0,5,2,5" VerticalScrollBarVisibility="Auto">
+            <StackPanel  Name="spMain">
+                <StackPanel.Resources>
+                    <Style TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
+                        <Setter Property="FontWeight" Value="Bold"/>
+                        <Setter Property="FontSize" Value="13"/>
+                        <Setter Property="Foreground" Value="{StaticResource SecondColor}"/>
+                    </Style>
+
+                    <Style TargetType="designitems:WatermarkTextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+                        <Setter Property="FontSize" Value="17"/>
+                        <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                        <Setter Property="Margin" Value="10, 2.5, 12.5, 10"/>
+                        <Setter Property="BorderBrush" Value="{StaticResource SecondColor}"/>
+                    </Style>
+
+                    <Style TargetType="StackPanel">
+                        <Setter Property="Margin" Value="0,0,0,10"/>
+                    </Style>
+
+                    <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                        <Setter Property="Margin" Value="5"/>
+                        <Setter Property="BorderBrush" Value="{StaticResource MainColor}"/>
+                    </Style>
+                </StackPanel.Resources>
             </StackPanel>
         </ScrollViewer>
     </Grid>

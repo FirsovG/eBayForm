@@ -40,7 +40,7 @@ namespace eBayForm.Windows
 
         private void BtnSubmit_Click(object sender, RoutedEventArgs e)
         {
-                this.DialogResult = true;
+            this.DialogResult = true;
         }
 
         private void TextBox_GotFocus(object sender, RoutedEventArgs e)
