@@ -5,10 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:eBayForm"
-        mc:Ignorable="d"
+        mc:Ignorable="d" Title="eBayForm"
         WindowStartupLocation="CenterScreen" Foreground="{StaticResource SecondColor}"
         FontFamily="Popins" Background="{DynamicResource MaterialDesignPaper}"
-        Height="720" Width="1200" WindowStyle="None" ResizeMode="NoResize">
+        Height="720" Width="1200" WindowStyle="None" ResizeMode="CanResize">
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome 
+        CaptionHeight="0"
+        ResizeBorderThickness="5" />
+    </WindowChrome.WindowChrome>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -20,13 +26,11 @@
         <Frame Grid.Row="0" Name="Taskbar"/>
 
         <Grid Grid.Row="1">
-            <!--Background Fill-->
             <Rectangle Grid.Row="0" Fill="{StaticResource MainColor}"/>
             <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button Name="btnHome" Content="Home" FontSize="12" Width="120" Margin="7.5, 0" Height="22" Background="{x:Null}" BorderBrush="{x:Null}" Click="BtnHome_Click"/>
                 <Button Name="btnTemplates" Content="Templates" FontSize="12" Width="120" Margin="7.5, 0" Height="22" Background="{x:Null}" BorderBrush="{x:Null}" Click="BtnTemplates_Click"/>
                 <Button Name="btnImport" Content="Import" FontSize="12" Width="120" Margin="7.5, 0" Height="22" Background="{x:Null}" BorderBrush="{x:Null}" Click="BtnImport_Click"/>
-                <Button Name="btnShowToolBox" Visibility="Collapsed" Content="Show Toolbox" FontSize="12" Width="120" Margin="7.5, 0" Height="22" Background="{x:Null}" BorderBrush="{x:Null}" Click="BtnShowToolBox_Click"/>
             </StackPanel>
         </Grid>
 
@@ -50,49 +54,71 @@
                                 <CommandBinding x:Name="cbSaveChanges" Command="{x:Static local:MainWindow.cmdSaveChanges}" Executed="CbSaveChanges_Executed"/>
                             </WebBrowser.CommandBindings>
                         </WebBrowser>
-                        <StackPanel Grid.Row="1" Name="spButtons"  Visibility="Hidden" Orientation="Horizontal" HorizontalAlignment="Right">
-                            <Button Name="btnSaveChanges" Content="Save changes" Margin="10,0" Click="BtnSaveChanges_Click"/>
-                            <Button Name="btnExportFile" Content="Export file" Click="BtnExportFile_Click"/>
-                        </StackPanel>
+                        <Grid Grid.Row="1">
+                            <StackPanel Name="spButtons"  Visibility="Hidden" Orientation="Horizontal" HorizontalAlignment="Right">
+                                <Button Name="btnShowStyleBox" Content="Show stylebox" Margin="5,0" Visibility="Collapsed" Click="BtnShowStyleBox_Click"/>
+                                <Button Name="btnShowToolBox"  Content="Show textbox" Margin="5,0" Visibility="Collapsed" Click="BtnShowToolBox_Click"/>
+                                <Button Name="btnSaveChanges"  Content="Save changes" Margin="5,0" Click="BtnSaveChanges_Click"/>
+                                <Button Name="btnExportFile"   Content="Export file" Margin="5,0" Click="BtnExportFile_Click"/>
+                            </StackPanel>
+
+                            <StackPanel Name="spPhoneButtons" Visibility="Hidden" Orientation="Horizontal" HorizontalAlignment="Left">
+                                <Button Name="btnShowPhone" Margin="5,0" Click="BtnShowPhone_Click">
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="CellphoneText" Foreground="{StaticResource SecondColor}"/>
+                                        <TextBlock Text="Show phone" Margin="0,.7,0,0"/>
+                                    </StackPanel>
+                                </Button>
+                            </StackPanel>
+                        </Grid>
                     </Grid>
                 </TabItem>
 
                 <TabItem>
                     <Grid>
-
                         <Grid.RowDefinitions>
                             <RowDefinition/>
                             <RowDefinition Height="50"/>
                         </Grid.RowDefinitions>
 
-                        <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto" Margin="50, 10">
-                            <Grid Name="gTemplates">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="370"/>
-                                    <RowDefinition Height="370"/>
-                                    <RowDefinition Height="370"/>
-                                </Grid.RowDefinitions>
+                        <ScrollViewer Name="sv" Grid.Row="0" VerticalScrollBarVisibility="Auto" Margin="50, 5">
+                            <ScrollViewer.Resources>
+                                <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Setter Property="Height" Value="300"/>
+                                    <Setter Property="Width" Value="350"/>
+                                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                                    <Setter Property="Background" Value="{x:Null}"/>
+                                    <Setter Property="BorderBrush" Value="{x:Null}"/>
+                                </Style>
 
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
+                                <Style TargetType="Image">
+                                    <Setter Property="Height" Value="250"/>
+                                    <Setter Property="Width" Value="320"/>
+                                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                                </Style>
 
-                                <Button Name="Tea" HorizontalAlignment="Center" Height="330" Grid.Row="0" Grid.Column="0" Background="{x:Null}" BorderBrush="{x:Null}" Click="BtnTemplate_Click">
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="FontSize" Value="22"/>
+                                    <Setter Property="Margin" Value="0,5,0,0"/>
+                                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                                </Style>
+                            </ScrollViewer.Resources>
+                            <WrapPanel Name="wpTemplates">
+                                <Button Name="Tea" Click="BtnTemplate_Click">
                                     <StackPanel>
-                                        <Image HorizontalAlignment="Center" Height="270" Width="350" Source="pack://application:,,,/Images/tea_markup.png"/>
-                                        <TextBlock Text="Tea" FontSize="22" HorizontalAlignment="Center" Margin="0,15,0,0"/>
+                                        <Image Source="pack://application:,,,/Images/tea_markup.png"/>
+                                        <TextBlock Text="Tea"/>
                                     </StackPanel>
                                 </Button>
 
-                                <Button Name="CoffeeBean" HorizontalAlignment="Center" Height="330" Grid.Row="0" Grid.Column="1" Background="{x:Null}" BorderBrush="{x:Null}" Click="BtnTemplate_Click">
+                                <Button Name="CoffeeBean" Click="BtnTemplate_Click">
                                     <StackPanel>
-                                        <Image HorizontalAlignment="Center" Height="270" Width="350" Source="pack://application:,,,/Images/coffeebean_markup.png"/>
-                                        <TextBlock Text="CoffeeBean" FontSize="22" HorizontalAlignment="Center" Margin="0,15,0,0"/>
+                                        <Image Source="pack://application:,,,/Images/coffeebean_markup.png"/>
+                                        <TextBlock Text="CoffeeBean"/>
                                     </StackPanel>
                                 </Button>
-                            </Grid>
+                            </WrapPanel>
                         </ScrollViewer>
 
                         <materialDesign:PopupBox PlacementMode="TopAndAlignCentres" StaysOpen="False" Grid.Row="1" HorizontalAlignment="Left" Margin="20,0">

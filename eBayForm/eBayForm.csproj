@@ -14,6 +14,8 @@
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -34,9 +36,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>cart.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="HtmlAgilityPack, Version=1.11.4.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
-      <HintPath>..\packages\HtmlAgilityPack.1.11.4\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    <Reference Include="HtmlAgilityPack, Version=1.11.8.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.11.8\lib\Net45\HtmlAgilityPack.dll</HintPath>
     </Reference>
     <Reference Include="MaterialDesignColors, Version=1.1.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MaterialDesignColors.1.1.3\lib\net45\MaterialDesignColors.dll</HintPath>
@@ -80,17 +85,25 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DesignItems\OwnColorCanvas.cs" />
+    <Compile Include="DesignItems\WatermarkTextBox.cs" />
     <Compile Include="LogicController.cs" />
     <Compile Include="LogicUnits\CustomMessageBox.cs" />
     <Compile Include="LogicUnits\ElementFinder.cs" />
     <Compile Include="LogicUnits\Exceptions\TemplateException.cs" />
     <Compile Include="LogicUnits\HtmlTagElement.cs" />
-    <Compile Include="LogicUnits\TagStyleElement.cs" />
+    <Compile Include="LogicUnits\StyleTagElement.cs" />
     <Compile Include="Windows\EBayRules.xaml.cs">
       <DependentUpon>EBayRules.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\ImportTextDialog.xaml.cs">
+      <DependentUpon>ImportTextDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\OwnMessageBox.xaml.cs">
       <DependentUpon>OwnMessageBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Phone.xaml.cs">
+      <DependentUpon>Phone.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\PropertiesToolBox.xaml.cs">
       <DependentUpon>PropertiesToolBox.xaml</DependentUpon>
@@ -107,6 +120,14 @@
     <Compile Include="Windows\YNDialog.xaml.cs">
       <DependentUpon>YNDialog.xaml</DependentUpon>
     </Compile>
+    <Page Include="DesignItems\Icons.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DesignItems\PhoneButtons.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="DesignItems\Taskbar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -130,7 +151,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Windows\ImportTextDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\OwnMessageBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\Phone.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -194,16 +223,13 @@
     <Resource Include="Fonts\Poppins-Regular.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\logo256.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\logo64.png" />
-  </ItemGroup>
-  <ItemGroup>
+    <Resource Include="cart.ico" />
+    <Resource Include="HtmlTemplates\black_square.png" />
     <Content Include="HtmlTemplates\CoffeeBean.html" />
     <Content Include="HtmlTemplates\Tea.html" />
     <Resource Include="Images\tea_markup.png" />
     <Resource Include="Images\coffeebean_markup.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
