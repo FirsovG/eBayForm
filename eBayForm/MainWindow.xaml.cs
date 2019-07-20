@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using WpfScreenHelper;
 
 namespace eBayForm
 {
@@ -19,21 +20,36 @@ namespace eBayForm
         StylesToolBox stylesToolBox;
         LogicController lc;
         Phone phone;
+
+        List<Screen> screens;
+
         public static RoutedCommand cmdSaveChanges = new RoutedCommand();
 
         bool documentIsChanged = false;
         // TODO: export file
         //bool wasExported = false;
-
         public MainWindow()
         {
+            screens = new List<Screen>();
+            foreach (Screen screen in Screen.AllScreens)
+            {
+                screens.Add(screen);
+            }
+
             InitializeComponent();
+
             this.Name = "MainWindow";
+
+            this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
+            this.LocationChanged += MainWindow_LocationChanged;
+            this.StateChanged += MainWindow_StateChanged;
+
             Taskbar.Content = new DesignItems.Taskbar(this);
             lc = new LogicController();
             wbWorkspace.Navigating += WbWorkspace_Navigating;
+            
 
-            if(lc.Templates != null)
+            if (lc.Templates != null)
             {
                 foreach (Button button in ElementFinder.FindVisualChildren<Button>(wpTemplates))
                 {
@@ -47,7 +63,30 @@ namespace eBayForm
                 }
             }
         }
-        
+
+        private void MainWindow_StateChanged(object sender, System.EventArgs e)
+        {
+
+        }
+
+        private void MainWindow_LocationChanged(object sender, System.EventArgs e)
+        {
+            if (screens.Count > 1)
+            {
+                MainWindow window = (MainWindow)sender;
+
+                int windowMiddleState = (int)(window.Left + window.Width / 2);
+                for (int i = 0; i < screens.Count; i++)
+                {
+                    if ((screens[i].Bounds.Left < windowMiddleState) && (windowMiddleState < (screens[i].Bounds.Left + screens[i].Bounds.Width)))
+                    {
+                        window.MaxHeight = screens[i].WorkingArea.Height + 16;
+                        return;
+                    }
+                }
+            }
+        }
+
 
         #region Workspace
 
@@ -62,25 +101,38 @@ namespace eBayForm
         public void ShowWorkspace(string htmlCode)
         {
             wbWorkspace.NavigateToString(htmlCode);
-            
-            if (phone == null)
-            {
-                phone = new Phone(btnShowPhone);
-            }
-            phone.wbWorkspace.NavigateToString(htmlCode);
-            spPhoneButtons.Visibility = Visibility.Visible;
 
-            wbWorkspace.Visibility = Visibility.Visible;
+            spPhoneButtons.Visibility = Visibility.Visible;
             spButtons.Visibility = Visibility.Visible;
+            wbWorkspace.Visibility = Visibility.Visible;
 
             cmdSaveChanges.InputGestures.Add(new KeyGesture(Key.S, ModifierKeys.Control));
-            
+
+            phone = new Phone(btnShowPhone);
+            phone.wbWorkspace.NavigateToString(htmlCode);
+
             stylesToolBox = new StylesToolBox(this, lc, wbWorkspace, btnShowStyleBox);
-            stylesToolBox.Show();
             stylesToolBox.DataChanged += DataChangedHandler; 
+
             toolBox = new PropertiesToolBox(this, lc, wbWorkspace, btnShowToolBox);
-            toolBox.Show();
             toolBox.DataChanged += DataChangedHandler;
+
+            if (screens.Count > 1)
+            {
+                toolBox.Top = screens[1].Bounds.Top;
+                stylesToolBox.Top = screens[1].Bounds.Top;
+
+                toolBox.Height = screens[1].WorkingArea.Height;
+                stylesToolBox.Height = screens[1].WorkingArea.Height;
+
+                toolBox.Width = screens[1].Bounds.Width / 2;
+                stylesToolBox.Width = screens[1].Bounds.Width / 2;
+
+                toolBox.Left = screens[1].Bounds.Left;
+                stylesToolBox.Left = screens[1].Bounds.Left + screens[1].Bounds.Width / 2;
+
+                this.WindowState = WindowState.Maximized;
+            }
 
             CustomMessageBox.ShowTipp("Ctrl+S to save changes");
 

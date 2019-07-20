@@ -47,7 +47,7 @@
                     <Grid Margin="30,10,30,0">
                         <Grid.RowDefinitions>
                             <RowDefinition/>
-                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="65"/>
                         </Grid.RowDefinitions>
                         <WebBrowser Grid.Row="0" Name="wbWorkspace" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden">
                             <WebBrowser.CommandBindings>
