@@ -35,7 +35,7 @@ namespace eBayForm.LogicUnits
 
         public static void ShowTipp(string tipp)
         {
-            OwnMessageBox messageBox = new OwnMessageBox(tipp, 3000);
+            OwnMessageBox messageBox = new OwnMessageBox(tipp, 1900);
             messageBox.Show();
         }
     }
