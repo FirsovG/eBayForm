@@ -3,9 +3,13 @@
                     xmlns:local="clr-namespace:eBayForm.DesignItems"
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
 
-    <system:String x:Key="CurrentIcons">Arrow,Arrow_Circle,Certificate,Thumb_Up,Check</system:String>
-    <system:String x:Key="CurrentIconsHtmlClasses">fas fa-arrow-right,fas fa-arrow-circle-right,fas fa-certificate,far fa-thumbs-up,fas fa-check</system:String>
-    
+    <system:String x:Key="CurrentIcons">Nothing,Arrow,Arrow_Circle,Certificate,Thumb_Up,Check</system:String>
+    <system:String x:Key="CurrentIconsHtmlClasses"> ,fas fa-arrow-right,fas fa-arrow-circle-right,fas fa-certificate,far fa-thumbs-up,fas fa-check</system:String>
+
+    <Canvas x:Key="Nothing" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Width="512" Height="512">
+        
+    </Canvas>
+
     <Canvas x:Key="Arrow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Width="448" Height="512">
         <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path3743" Fill="#FFDDDDDD" Data="M190.5 66.9l22.2-22.2c9.4-9.4 24.6-9.4 33.9 0L441 239c9.4 9.4 9.4 24.6 0 33.9L246.6 467.3c-9.4 9.4-24.6 9.4-33.9 0l-22.2-22.2c-9.5-9.5-9.3-25 .4-34.3L311.4 296H24c-13.3 0-24-10.7-24-24v-32c0-13.3 10.7-24 24-24h287.4L190.9 101.2c-9.8-9.3-10-24.8-.4-34.3z"/>
         <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path4564" Fill="#FFDDDDDD" StrokeThickness="2.16949153" Data="m 223.06041 471.81592 c -7.04735 -1.92844 -30.18413 -23.53911 -35.02161 -32.71157 -3.58595 -6.79943 -3.99119 -15.522 -0.98233 -21.14411 1.15902 -2.16565 29.47089 -30.03231 62.91525 -61.92592 33.44436 -31.89361 60.80794 -58.85752 60.80794 -59.91981 0 -1.11 -62.72844 -1.93146 -147.49119 -1.93146 H 15.797268 L 8.7121931 287.85603 C 1.7311369 281.62189 1.6162634 281.21077 0.88771883 259.85334 0.32414937 243.33218 0.96888342 236.44847 3.5989497 230.90601 10.439153 216.49136 1.9451327 217.27555 164.17242 216.08136 l 147.35886 -1.08475 -49.73175 -47.44007 C 183.32259 92.695849 184.94915 94.469662 184.94915 83.748931 c 0 -8.397442 1.25968 -10.446084 15.37267 -25.000866 16.7349 -17.258766 24.68576 -21.848212 33.94115 -19.591703 4.04086 0.985181 39.57305 34.975589 108.51381 103.805248 109.45896 109.28257 108.94626 108.66683 101.75963 122.21213 -5.77235 10.87965 -201.33214 204.51566 -208.61072 206.55854 -3.57608 1.0037 -9.36545 1.04132 -12.86528 0.0835 z"/>
