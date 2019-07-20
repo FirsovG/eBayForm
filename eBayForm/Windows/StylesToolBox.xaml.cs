@@ -28,13 +28,13 @@ namespace eBayForm.Windows
         {
             InitializeComponent();
 
-            this.Owner = mainWindow;
+            this.Tag = mainWindow;
             cmdSaveChanges.InputGestures.Add(new KeyGesture(Key.S, ModifierKeys.Control));
 
             this.Left = SystemParameters.PrimaryScreenWidth - this.Width - 5;
             this.Top = (SystemParameters.PrimaryScreenHeight / 2) - (this.Height / 2);
 
-            Taskbar.Content = new DesignItems.Taskbar(this, showButton);
+            Taskbar.Content = new DesignItems.Taskbar(this, showButton, true);
             
             toggleButtonList = new List<ToggleButton>();
 
@@ -211,7 +211,7 @@ namespace eBayForm.Windows
 
         private void CbSaveChanges_Executed(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
         {
-            (this.Owner as MainWindow).SaveChanges();
+            (this.Tag as MainWindow).SaveChanges();
         }
     }
 }

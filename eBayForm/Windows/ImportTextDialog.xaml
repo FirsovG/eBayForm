@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:eBayForm.Windows"
         xmlns:designitems="clr-namespace:eBayForm.DesignItems"
-        mc:Ignorable="d" WindowStyle="None" ResizeMode="NoResize" FontSize="14"
-        Title="ImportTextDialog" Height="180" Width="500" Background="{StaticResource AccentDark}">
+        mc:Ignorable="d" WindowStyle="None" ResizeMode="NoResize" FontSize="14" WindowStartupLocation="CenterScreen"
+        Title="ImportTextDialog" Height="230" Width="700" Background="{StaticResource AccentDark}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
@@ -27,20 +27,22 @@
 
             <StackPanel Grid.Column="1" VerticalAlignment="Center">
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Separator (Headline-Text):" Foreground="{StaticResource SecondColor}" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                    <TextBlock Text="Separator (Headline-Text)" Foreground="{StaticResource SecondColor}" VerticalAlignment="Center" Margin="0,0,5,0"/>
                     <TextBox Name="tbSeparatorHT" MaxLength="1" TextAlignment="Center" Foreground="{StaticResource SecondColor}" Width="15" VerticalAlignment="Center" Background="Transparent"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Separator (Textblock-Textblock):" Foreground="{StaticResource SecondColor}" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                    <TextBlock Text="Separator (Textblock-Textblock)" Foreground="{StaticResource SecondColor}" VerticalAlignment="Center" Margin="0,0,5,0"/>
                     <TextBox Name="tbSeparatorTT" MaxLength="1" TextAlignment="Center" Foreground="{StaticResource SecondColor}" Width="15" VerticalAlignment="Center" Background="Transparent"/>
                 </StackPanel>
             </StackPanel>
 
-            <ScrollViewer Margin="0,5" Grid.Column="3" VerticalScrollBarVisibility="Auto">
-                <designitems:WatermarkTextBox TextWrapping="Wrap" AcceptsReturn="True" x:Name="tbText" Foreground="{StaticResource SecondColor}" Watermark="Enter text here" WatermarkColor="{StaticResource SecondColor}" VerticalAlignment="Center"/>
-            </ScrollViewer>
+            <designitems:WatermarkTextBox x:Name="tbText" Grid.Column="3" TextWrapping="Wrap" AcceptsReturn="True" ScrollViewer.VerticalScrollBarVisibility="Auto" Foreground="{StaticResource SecondColor}" Watermark="Enter text here" WatermarkColor="{StaticResource SecondColor}" VerticalAlignment="Center"/>
         </Grid>
 
+        <StackPanel Grid.Row="2" Width="300px" HorizontalAlignment="Left" Margin="10,0,0,0">
+            <TextBlock Text="*Only needed count of text blocks, gonna be read" Foreground="{StaticResource WatermarkColor}" FontSize="13" Height="18" Margin="0,2,0,1"/>
+            <TextBlock Text="*Good practice is to use ':' for H-T and ';' for T-T" Foreground="{StaticResource WatermarkColor}" FontSize="13" Height="18" Margin="0,1,0,2"/>
+        </StackPanel>
         <Button Name="btnOk" Content="Ok" Grid.Row="2" HorizontalAlignment="Right" Margin="0,0,15,0" Width="50" Click="BtnOk_Click"/>
     </Grid>
 </Window>

@@ -9,7 +9,14 @@
         mc:Ignorable="d" Title="Style toolbox"
         Height="600" Width="300" WindowStartupLocation="Manual"
         FontFamily="Popins" Background="{StaticResource AccentDark}"
-        WindowStyle="None" ResizeMode="NoResize">
+        WindowStyle="None" ResizeMode="CanResize">
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome 
+        CaptionHeight="0"
+        ResizeBorderThickness="5" />
+    </WindowChrome.WindowChrome>
+
     <Window.Resources>
         <Style TargetType="xctk:ByteUpDown">
             <Setter Property="Foreground" Value="{StaticResource MainColor}"/>

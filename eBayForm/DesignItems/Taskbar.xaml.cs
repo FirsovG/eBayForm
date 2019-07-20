@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -18,10 +19,16 @@ namespace eBayForm.DesignItems
     /// <summary>
     /// Логика взаимодействия для Taskbar.xaml
     /// </summary>
+    /// 
+
+
     public partial class Taskbar : Page
     {
         private Window currentWindow;
         private Button showButton;
+
+        [DllImport("User32.dll")]
+        private static extern bool SetCursorPos(int X, int Y);
 
         public Taskbar(Window window)
         {
@@ -43,11 +50,20 @@ namespace eBayForm.DesignItems
             btnClose.Click += Close;
         }
 
-        public Taskbar(Window window, Button showButton)
+        public Taskbar(Window window, Button showButton, bool showWindowFirst)
         {
             InitializeComponent();
             currentWindow = window;
             this.showButton = showButton;
+            if (showWindowFirst)
+            {
+                currentWindow.Show();
+                showButton.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                showButton.Visibility = Visibility.Visible;
+            }
             btnClose.Click += Hidde;
         }
 
@@ -96,11 +112,18 @@ namespace eBayForm.DesignItems
             btnMaximize.Visibility = Visibility.Visible;
             btnRestore.Visibility = Visibility.Hidden;
         }
-
+        
         private void Window_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
+                if (currentWindow.WindowState == System.Windows.WindowState.Maximized)
+                {
+                    Point mousePoint = PointToScreen(Mouse.GetPosition(currentWindow));
+                    currentWindow.Top = mousePoint.Y - 15;
+                    currentWindow.Left = mousePoint.X - currentWindow.Width / 2;
+                    currentWindow.WindowState = System.Windows.WindowState.Normal;
+                }
                 currentWindow.DragMove();
             }
         }

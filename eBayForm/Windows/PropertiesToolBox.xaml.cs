@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
 using eBayForm.DesignItems;
+using System;
 
 namespace eBayForm.Windows
 {
@@ -27,13 +28,13 @@ namespace eBayForm.Windows
             InitializeComponent();
 
             this.lc = lc;
-            this.Owner = mainWindow;
+            this.Tag = mainWindow;
             cmdSaveChanges.InputGestures.Add(new KeyGesture(Key.S, ModifierKeys.Control));
 
             this.Left = 5;
             this.Top = (SystemParameters.PrimaryScreenHeight / 2) - (this.Height / 2);
 
-            Taskbar.Content = new Taskbar(this, showButton);
+            Taskbar.Content = new Taskbar(this, showButton, true);
             textBoxList = new List<WatermarkTextBox>();
             htmlTextBoxList = new List<WatermarkTextBox>();
 
@@ -216,20 +217,27 @@ namespace eBayForm.Windows
                 string textToSplit = importTextDialog.tbText.Text.Replace("\r\n", "");
 
                 string[] textBlocks = textToSplit.Split(textBoxSpliter);
-                if (textBlocks.Length == (htmlTextBoxList.Count / 2))
+
+                if (string.IsNullOrWhiteSpace(textBlocks[textBlocks.Length - 1]))
                 {
-                    int i = 0;
+                    Array.Resize(ref textBlocks, textBlocks.Length - 1);
+                }
+
+                int neededTextBlocksCount = htmlTextBoxList.Count / 2;
+                if (textBlocks.Length >= neededTextBlocksCount)
+                {
+                    int j = 0;
                     string[] splitedTextBlock;
-                    foreach (string textBlock in textBlocks)
+                    for (int i = 0; i < neededTextBlocksCount; i++)
                     {
-                        splitedTextBlock = textBlock.Split(textSpliter);
-                        htmlTextBoxList[i++].Text = splitedTextBlock[0];
-                        htmlTextBoxList[i++].Text = splitedTextBlock[1];
+                        splitedTextBlock = textBlocks[i].Split(textSpliter);
+                        htmlTextBoxList[j++].Text = splitedTextBlock[0];
+                        htmlTextBoxList[j++].Text = splitedTextBlock[1];
                     }
                 }
                 else
                 {
-                    CustomMessageBox.Show("Split the text rightly");
+                    CustomMessageBox.Show("Not enough textblocks");
                 }
             }
         }
@@ -289,7 +297,7 @@ namespace eBayForm.Windows
 
         private void CbSaveChanges_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            (this.Owner as MainWindow).SaveChanges();
+            (this.Tag as MainWindow).SaveChanges();
         }
     }
 }

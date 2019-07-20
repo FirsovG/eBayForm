@@ -22,7 +22,7 @@ namespace eBayForm.Windows
         public Phone(Button showButton)
         {
             InitializeComponent();
-            Taskbar.Content = new DesignItems.Taskbar(this, showButton);
+            Taskbar.Content = new DesignItems.Taskbar(this, showButton, false);
         }
     }
 }

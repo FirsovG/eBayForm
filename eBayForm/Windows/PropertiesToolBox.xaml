@@ -9,8 +9,14 @@
         mc:Ignorable="d" Title="Properties toolbox"
         Height="600" Width="300" WindowStartupLocation="Manual"
         FontFamily="Popins" Background="{StaticResource AccentDark}"
-        WindowStyle="None" ResizeMode="NoResize">
+        WindowStyle="None" ResizeMode="CanResize">
 
+    <WindowChrome.WindowChrome>
+        <WindowChrome 
+        CaptionHeight="0"
+        ResizeBorderThickness="5" />
+    </WindowChrome.WindowChrome>
+    
     <Window.CommandBindings>
         <CommandBinding x:Name="cbSaveChanges" Command="{x:Static local:PropertiesToolBox.cmdSaveChanges}" Executed="CbSaveChanges_Executed"/>
     </Window.CommandBindings>
