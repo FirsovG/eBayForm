@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
 </head>
-<body id="Tea" style="background-color: #e9e9e9;">
+<body id="Tea">
     <style type="text/css">
         body {
             margin: 0;
@@ -41,6 +41,11 @@
             align-self: flex-start;
         }
 
+        #short_description
+        {
+            display:none;
+        }
+
 
 
         header {
@@ -48,26 +53,23 @@
             text-align: center;
         }
 
-        header img
-        {
-            max-width: 100%;
-            max-height: 100%;
-        }
+            header img {
+                max-width: 100%;
+                max-height: 100%;
+            }
 
-        .img_wrapper
-        {
+        .img_wrapper {
             position: relative;
             overflow: hidden;
             height: 5em;
         }
 
-        .img_wrapper img
-        {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%,-50%);
-        }
+            .img_wrapper img {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%,-50%);
+            }
 
         nav {
             background-color: #ffffff;
@@ -90,22 +92,21 @@
                         padding: 0.5em;
                     }
 
-        .product_arguments
-        {
+
+
+        .product_arguments {
             padding: 2em 0;
         }
 
-        .product_image_wrapper
-        {
+        .product_image_wrapper {
             display: flex;
             margin: 1vh 3vh;
         }
 
-        .product_image_wrapper img
-        {
-            object-fit: contain;
-            margin: auto;
-        }
+            .product_image_wrapper img {
+                object-fit: contain;
+                margin: auto;
+            }
 
         #productname {
             font-weight: 700;
@@ -132,7 +133,9 @@
             margin: 1em 0.5em;
         }
 
-
+        .description {
+            padding: 2em 0;
+        }
 
         .wrapper {
             width: 80%;
@@ -142,7 +145,6 @@
 
         footer {
             padding: .5em 0;
-            margin-top: 2em;
             text-align: center;
         }
 
@@ -154,20 +156,17 @@
 
 
         @media only screen and (max-width: 900px) {
-            nav ul 
-            {
+            nav ul {
                 display: none;
             }
 
-            .col-6 
-            {
-            -webkit-flex: 0 0 100%;
-            -ms-flex: 0 0 100%;
-            flex: 0 0 100%;
+            .col-6 {
+                -webkit-flex: 0 0 100%;
+                -ms-flex: 0 0 100%;
+                flex: 0 0 100%;
             }
 
-            #productname
-            {
+            #productname {
                 text-align: center;
             }
 
@@ -176,22 +175,25 @@
             }
         }
 
-        @media only screen and (max-width: 550px)
-        {
-            #arguments li 
-            {
+        @media only screen and (max-width: 550px) {
+            #arguments li {
                 font-size: 0.9em;
             }
 
-            .title
-            {
+            .title {
                 font-size: 1.1em;
             }
 
-            .text
-            {
+            .text {
                 font-size: 0.9em;
             }
+        }
+    </style>
+
+    <style id="similar_products_style">
+        nav ul li a:hover {
+            border-top: 1px solid #D4AA00;
+            border-bottom: 1px solid #D4AA00;
         }
     </style>
 
@@ -206,9 +208,7 @@
                     </header>
                 </div>
                 <nav>
-                    <ul>
-                        
-                    </ul>
+                    <ul></ul>
                 </nav>
             </div>
         </div>
@@ -239,14 +239,14 @@
             <div id="info_items_row_1" class="col-6">
                 <div class="wrapper">
                     <div id="info_items">
-                        
+
                     </div>
                 </div>
             </div>
             <div id="info_items_row_2" class="col-6">
                 <div class="wrapper">
                     <div id="info_items">
-                        
+
                     </div>
                 </div>
             </div>
@@ -257,26 +257,10 @@
         <p class="copyright" style="color: #D4AA00;">Copyright by <a href="" style="color: #ffffff;"></a></p>
     </footer>
 
-    <script>
-        var nav_tabs = document.querySelectorAll("nav ul li a");
-
-        function enterNav(e)
-        {
-            e.target.style.borderTop = "1px solid " + e.target.style.backgroundColor;
-            e.target.style.borderBottom = "1px solid " + e.target.style.backgroundColor;
-        }
-
-        function leaveNav(e)
-        {
-            e.target.style.borderTop = "";
-            e.target.style.borderBottom = "";
-        }
-
-        for (let i = 0; i < nav_tabs.length; i++)
-        {
-            nav_tabs[i].addEventListener("mouseover", enterNav);
-            nav_tabs[i].addEventListener("mouseout", leaveNav);
-        }
-    </script>
+    <div id="short_description" vocab="https://schema.org/" typeof="Product">
+        <span property="description"> 
+            
+        </span>
+    </div>
 </body>
 </html>

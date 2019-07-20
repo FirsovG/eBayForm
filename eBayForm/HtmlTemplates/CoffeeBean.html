@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
 </head>
-<body id="CoffeeBean" style="background-color: #e9e9e9;">
+<body id="CoffeeBean">
     <style>
 
         body {
@@ -52,6 +52,10 @@
         .col-3 {
             flex: 0 0 25%;
             align-self: flex-start;
+        }
+
+        #short_description {
+            display: none;
         }
 
         .product_info {
@@ -105,6 +109,7 @@
         }
 
         #arguments li {
+            display: flex;
             font-size: 1.1em;
             margin: .5em 0;
         }
@@ -120,8 +125,8 @@
 
         #price {
             font-weight: bold;
-            font-size: 2em;
-            margin: 1em 0.5em;
+            font-size: 1.9em;
+            margin: 1em 0.25em;
         }
 
         input {
@@ -162,8 +167,7 @@
         }
 
         #similar_products {
-            padding: 1em 2em;
-            margin: 2em 1em;
+            padding: 2em 0em;
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
@@ -172,16 +176,14 @@
             #similar_products a {
                 display: block;
                 width: 12.5em;
-                min-height: 12.5em;
                 margin: 1em .5em;
                 padding: 3vh;
                 text-align: center;
                 text-decoration: none;
-                border: 1px solid #000;
             }
 
                 #similar_products a img {
-                    max-height: 60%;
+                    max-height: 10em;
                     max-width: 100%;
                 }
 
@@ -199,15 +201,20 @@
                 text-decoration: none;
             }
 
-        #mobile_header,
-        #mobile_title {
+        #mobile_header {
+            width: 100%;
+            text-align: center;
+        }
+
+        .description #mobile_header
+        {
             display: none;
-            text-align: left;
-            padding: 0.25em;
         }
 
         #mobile_title {
+            display: none;
             font-size: 1em;
+            text-align: left;
             margin: 0;
             padding: 0;
         }
@@ -237,8 +244,41 @@
                 text-align: center;
             }
 
+            .product_arguments {
+                padding: 1em 0;
+            }
+
             #price {
+                text-align: center;
+            }
+
+            #arguments
+            {
+                width: 60%;
+            }
+
+            #arguments li {
+                font-size: 1em;
+            }
+
+            .description #description_items {
+                background-color: transparent;
+            }
+
+            #description_items label {
                 display: none;
+            }
+
+            #info_tabs #info_tab,
+            .description #mobile_header,
+            #mobile_title {
+                display: block;
+            }
+
+            #info_tabs #tab_p {
+                display: block;
+                font-size: 0.8em;
+                padding: 0;
             }
 
             #similar_products a {
@@ -251,43 +291,33 @@
         }
 
         @media only screen and (max-width: 550px) {
+
             .gallery #selected_image {
                 height: 275px;
             }
 
-            #arguments li {
-                font-size: 0.8em;
-            }
-
-            #description_items label {
+            .gallery [id^='image_'] {
                 display: none;
-            }
-
-            #info_tabs #info_tab,
-            #mobile_header,
-            #mobile_title {
-                display: block;
             }
 
             .ie_wrapper {
                 width: 100%;
             }
 
-            .description #description_items {
-                background-color: transparent;
+            #selected_image {
+                margin: 0;
             }
 
-            #info_tabs #tab_p {
-                display: block;
-                font-size: 0.8em;
-                padding: 0;
+            #arguments {
+                width: 90%;
             }
 
             #similar_products a {
                 width: 7.5em;
                 height: auto;
-                margin: 1em .1em;
+                margin: .5vh .25vw;
                 padding: 5vh;
+                padding-bottom: 1.5vh;
             }
         }
     </style>
@@ -320,13 +350,12 @@
         }
 
         #selected_image {
-            border: 2px solid #000;
             height: 400px;
             width: 100%;
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
-            margin: .5vh;
+            margin: 2vh 0;
             -webkit-transform: scaleY(-1);
             transform: scaleY(-1);
         }
@@ -372,7 +401,7 @@
             <div class="col-5">
                 <h1 id="productname" style="color: #D4AA00;"></h1>
                 <ul id="arguments"></ul>
-                <p id='price' style='color: #3B3B3B;'></p>
+                <p id='price' style='color: #F1C100;'></p>
             </div>
         </div>
     </div>
@@ -402,5 +431,9 @@
     <footer style="background-color: #2e2e2e;">
         <p class="copyright" style="color: #D4AA00;">Copyright by <a href="" style="color: #ffffff;"></a></p>
     </footer>
+
+    <div id="short_description" vocab="https://schema.org/" typeof="Product">
+        <span property="description"></span>
+    </div>
 </body>
 </html>

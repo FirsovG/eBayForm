@@ -49,6 +49,7 @@ namespace eBayForm
             // Compress htmlHode
             htmlCode = Regex.Replace(htmlCode, @"\r\n?|\n", "");
             // Loading the Code
+
             document.LoadHtml(htmlCode);
 
             // To diplay the content rightly we need to check compatibility to InternetExplorer
@@ -96,6 +97,9 @@ namespace eBayForm
 
             element = document.DocumentNode.SelectSingleNode("//p[@id='price']");
             htmlTags.Add(new HtmlTagElement(false, "Productprice", element.InnerText));
+
+            element = document.DocumentNode.SelectSingleNode("//div[@id='short_description']/span");
+            htmlTags.Add(new HtmlTagElement(false, "Mobile: short description", element.InnerText));
 
             // Getting 
             int i = 1;
@@ -196,13 +200,9 @@ namespace eBayForm
             string[] style = element.Attributes["style"].Value.Split(':');
             styleElements.Add(new StyleTagElement("Producttitle color", style[1].Replace(";", "")));
 
-            element = document.DocumentNode.SelectSingleNode("//h1[@id='productname']");
+            element = document.DocumentNode.SelectSingleNode("//p[@id='price']");
             style = element.Attributes["style"].Value.Split(':');
             styleElements.Add(new StyleTagElement("Productprice color", style[1].Replace(";", "")));
-
-            element = document.DocumentNode.SelectSingleNode("//body");
-            style = element.Attributes["style"].Value.Split(':');
-            styleElements.Add(new StyleTagElement("Background of page", style[1].Replace(";", "")));
 
             if (templatename == "Tea")
             {
@@ -213,6 +213,9 @@ namespace eBayForm
                 element = document.DocumentNode.SelectSingleNode("//nav//li//a");
                 style = element.Attributes["style"].Value.Split(':');
                 styleElements.Add(new StyleTagElement("Similar products color", style[1].Replace(";", "")));
+
+                element = document.DocumentNode.SelectSingleNode("//style[@id='similar_products_style']");
+                styleElements.Add(new StyleTagElement("Similar products border color", "#" + element.InnerHtml.Split('{')[1].Split('#')[1].Split(';')[0]));
 
                 element = document.DocumentNode.SelectSingleNode("//div[@class='product_arguments']");
                 style = element.Attributes["style"].Value.Split(':');
@@ -296,8 +299,13 @@ namespace eBayForm
                 styleElements.Add(new StyleTagElement("Background of similarproductsgallery", style[1].Replace(";", "")));
 
                 element = document.DocumentNode.SelectSingleNode("//div[@id='similar_products']/a");
-                style = element.Attributes["style"].Value.Split(':');
-                styleElements.Add(new StyleTagElement("Similar product image background", style[1].Replace(";", "")));
+
+                string[] properties = element.Attributes["style"].Value.Split(';');
+                style = properties[0].Split(':');
+                styleElements.Add(new StyleTagElement("Similar product container background", style[1]));
+
+                style = properties[1].Split(':');
+                styleElements.Add(new StyleTagElement("Similar product border color", "#" + style[1].Split('#')[1]));
 
                 element = document.DocumentNode.SelectSingleNode("//div[@id='similar_products']/a/p");
                 style = element.Attributes["style"].Value.Split(':');
@@ -334,8 +342,8 @@ namespace eBayForm
             element.InnerHtml = htmlTags[tagsCounter++].Values[0];
             element.SetAttributeValue("style", "color: " + styleElements[styleCounter++].Value + ";");
 
-            element = document.DocumentNode.SelectSingleNode("//body");
-            element.SetAttributeValue("style", "background-color: " + styleElements[styleCounter++].Value + ";");
+            element = document.DocumentNode.SelectSingleNode("//div[@id='short_description']/span");
+            element.InnerHtml = htmlTags[tagsCounter++].Values[0];
 
             if (templatename == "Tea")
             {
@@ -353,6 +361,10 @@ namespace eBayForm
                     node.SetAttributeValue("style", "color: " + styleElements[styleCounter].Value + ";");
                 }
                 styleCounter++;
+
+                element = document.DocumentNode.SelectSingleNode("//style[@id='similar_products_style']");
+                element.InnerHtml = "nav ul li a:hover {border-top: 1px solid " + styleElements[styleCounter].Value + ";" +
+                                    "border-bottom: 1px solid " + styleElements[styleCounter++].Value + ";}";
 
                 // Getting source of the product main image
                 element = document.DocumentNode.SelectSingleNode("//img[@id='product_image']");
@@ -474,15 +486,15 @@ namespace eBayForm
 
                 foreach (HtmlNode node in document.DocumentNode.SelectNodes("//div[@id='similar_products']/a"))
                 {
-                    node.SetAttributeValue("style", "background-color: " + styleElements[styleCounter++].Value + ";");
+                    node.SetAttributeValue("style", "background-color: " + styleElements[styleCounter].Value + ";border: 1px solid " + styleElements[styleCounter + 1].Value + ";");
                     node.SetAttributeValue("href", htmlTags[tagsCounter].Values[1]);
                     element = node.SelectSingleNode("img");
                     element.SetAttributeValue("src", htmlTags[tagsCounter].Values[2]);
                     element = node.SelectSingleNode("p");
-                    element.SetAttributeValue("style", "color: " + styleElements[styleCounter--].Value + ";");
+                    element.SetAttributeValue("style", "color: " + styleElements[styleCounter + 2].Value + ";");
                     element.InnerHtml = htmlTags[tagsCounter++].Values[0];
                 }
-                styleCounter += 2;
+                styleCounter += 3;
             }
 
             element = document.DocumentNode.SelectSingleNode("//footer");
@@ -672,10 +684,10 @@ namespace eBayForm
 
                 for (int i = 0; i < count; i++)
                 {
-                    element = HtmlNode.CreateNode("<a href='#' style='background-color: rgba(255,255,246,0.02);'>" +
+                    element = HtmlNode.CreateNode("<a href='#' style='background-color: rgba(255,255,246,0.02);border: 1px solid #000000;'>" +
                                                     "<img src='https://i.imgur.com/ko8F6LC.png'>" +
-                                                    "<p style='color: #ffffff;'>" +
-                                                        "Productname" +
+                                                    "<p style='color: #3B3B3B;'>" +
+                                                        "Blanditiis rerum possimus cum, sapiente quibusdam" +
                                                     "</p>" +
                                                   "</a>");
                     parentElement.AppendChild(element);
