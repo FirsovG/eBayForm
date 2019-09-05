@@ -6,7 +6,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:eBayForm"
         mc:Ignorable="d" Title="eBayForm"
-        WindowStartupLocation="CenterScreen" Foreground="{StaticResource SecondColor}"
+        WindowStartupLocation="CenterScreen" Foreground="{StaticResource PrimaryHueMidForegroundBrush}"
         FontFamily="Popins" Background="{DynamicResource MaterialDesignPaper}"
         Height="720" Width="1200" WindowStyle="None" ResizeMode="CanResize">
 
@@ -26,7 +26,7 @@
         <Frame Grid.Row="0" Name="Taskbar"/>
 
         <Grid Grid.Row="1">
-            <Rectangle Grid.Row="0" Fill="{StaticResource MainColor}"/>
+            <Rectangle Grid.Row="0" Fill="{StaticResource PrimaryHueMidBrush}"/>
             <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button Name="btnHome" Content="Home" FontSize="12" Width="120" Margin="7.5, 0" Height="22" Background="{x:Null}" BorderBrush="{x:Null}" Click="BtnHome_Click"/>
                 <Button Name="btnTemplates" Content="Templates" FontSize="12" Width="120" Margin="7.5, 0" Height="22" Background="{x:Null}" BorderBrush="{x:Null}" Click="BtnTemplates_Click"/>
@@ -65,7 +65,7 @@
                             <StackPanel Name="spPhoneButtons" Visibility="Hidden" Orientation="Horizontal" HorizontalAlignment="Left">
                                 <Button Name="btnShowPhone" Margin="5,0" Click="BtnShowPhone_Click">
                                     <StackPanel Orientation="Horizontal">
-                                        <materialDesign:PackIcon Kind="CellphoneText" Foreground="{StaticResource SecondColor}"/>
+                                        <materialDesign:PackIcon Kind="CellphoneText" Foreground="{StaticResource PrimaryHueMidForegroundBrush}"/>
                                         <TextBlock Text="Show phone" Margin="0,.7,0,0"/>
                                     </StackPanel>
                                 </Button>
@@ -118,14 +118,21 @@
                                         <TextBlock Text="CoffeeBean"/>
                                     </StackPanel>
                                 </Button>
+
+                                <Button Name="CoffeeBeanV2" Click="BtnTemplate_Click">
+                                    <StackPanel>
+                                        <Image Source="pack://application:,,,/Images/coffeebeanV2_markup.png"/>
+                                        <TextBlock Text="CoffeeBean v2"/>
+                                    </StackPanel>
+                                </Button>
                             </WrapPanel>
                         </ScrollViewer>
 
                         <materialDesign:PopupBox PlacementMode="TopAndAlignCentres" StaysOpen="False" Grid.Row="1" HorizontalAlignment="Left" Margin="20,0">
                             <materialDesign:PopupBox.ToggleContent>
                                 <StackPanel Orientation="Horizontal">
-                                    <materialDesign:PackIcon Kind="InvertColors" Height="19" Width="19" Margin="0,0,2,0" Foreground="{StaticResource SecondColor}"/>
-                                    <TextBlock FontSize="18" Margin="0,1,0,0" Text="Color meaning" Foreground="{StaticResource SecondColor}"/>
+                                    <materialDesign:PackIcon Kind="InvertColors" Height="19" Width="19" Margin="0,0,2,0" Foreground="{StaticResource PrimaryHueMidForegroundBrush}"/>
+                                    <TextBlock FontSize="18" Margin="0,1,0,0" Text="Color meaning" Foreground="{StaticResource PrimaryHueMidForegroundBrush}"/>
                                 </StackPanel>
                             </materialDesign:PopupBox.ToggleContent>
                             <StackPanel Margin="10,0">
@@ -173,7 +180,7 @@
 
                         <Button Grid.Row="1" Name="btnEBayRules" Margin="75,0" HorizontalAlignment="Right" Width="150" Click="BtnEBayRules_Click">
                             <StackPanel Orientation="Horizontal">
-                                <materialDesign:PackIcon Kind="AlertDecagram" Height="19" Width="19" Margin="0,0,2,0" Foreground="{StaticResource SecondColor}"/>
+                                <materialDesign:PackIcon Kind="AlertDecagram" Height="19" Width="19" Margin="0,0,2,0" Foreground="{StaticResource PrimaryHueMidForegroundBrush}"/>
                                 <TextBlock FontSize="15" Margin="0,1,0,0" FontWeight="Bold" Text="eBayRules"/>
                             </StackPanel>
                         </Button>

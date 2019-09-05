@@ -120,6 +120,9 @@
     <Compile Include="Windows\TemplateSetupDialog.xaml.cs">
       <DependentUpon>TemplateSetupDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\YNCDialog.xaml.cs">
+      <DependentUpon>YNCDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\YNDialog.xaml.cs">
       <DependentUpon>YNDialog.xaml</DependentUpon>
     </Compile>
@@ -182,6 +185,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Windows\YNCDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\YNDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -226,9 +233,11 @@
     <Resource Include="Fonts\Poppins-Regular.ttf" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\coffeebeanV2_markup.png" />
     <Resource Include="cart.ico" />
     <Resource Include="HtmlTemplates\black_square.png" />
     <Content Include="HtmlTemplates\CoffeeBean.html" />
+    <Content Include="HtmlTemplates\CoffeeBeanV2.html" />
     <Content Include="HtmlTemplates\Tea.html" />
     <Resource Include="Images\tea_markup.png" />
     <Resource Include="Images\coffeebean_markup.png" />

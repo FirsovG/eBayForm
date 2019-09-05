@@ -22,7 +22,7 @@ namespace eBayForm.Windows
 
         private void TextBox_LostFocus(object sender, RoutedEventArgs e)
         {
-            (sender as TextBox).BorderBrush = (Brush)FindResource("SecondColor");
+            (sender as TextBox).BorderBrush = (Brush)FindResource("PrimaryHueMidForegroundBrush");
         }
 
         private void BtnOk_Click(object sender, RoutedEventArgs e)

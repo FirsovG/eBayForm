@@ -6,20 +6,23 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Dark.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.DeepPurple.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Green.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Green.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/eBayForm;component/DesignItems/Icons.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/eBayForm;component/DesignItems/PhoneButtons.xaml" />
             </ResourceDictionary.MergedDictionaries>
             
             <FontFamily x:Key="Poppins">pack://application:,,,/Fonts/#Poppins</FontFamily>
-            
-            <SolidColorBrush x:Key="MainColor" Color="#7944dd"/>
-            <SolidColorBrush x:Key="SecondColor" Color="#dddddd"/>
+
+            <!--<Style TargetType="ScrollBar">
+                <Setter Property="Background" Value="#000000"/>
+                <Setter Property="Opacity" Value="0.9"/>
+            </Style>-->
+
             <SolidColorBrush x:Key="WatermarkColor" Color="#949494"/>
-            <SolidColorBrush x:Key="AccentDark" Color="#383838"/>
+            <SolidColorBrush x:Key="AccentDark" Color="#ededed"/>
             <SolidColorBrush x:Key="WarningColor" Color="#f44242"/>
 
         </ResourceDictionary>

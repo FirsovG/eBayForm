@@ -93,13 +93,16 @@ namespace eBayForm
             
             // Getting name of the product
             HtmlNode element = document.DocumentNode.SelectSingleNode("//h1[@id='productname']");
-            htmlTags.Add(new HtmlTagElement(false, "Productname", element.InnerText));
+            htmlTags.Add(new HtmlTagElement(false, "Productname", element.InnerHtml));
 
             element = document.DocumentNode.SelectSingleNode("//p[@id='price']");
-            htmlTags.Add(new HtmlTagElement(false, "Productprice", element.InnerText));
+            htmlTags.Add(new HtmlTagElement(false, "Product price", element.InnerHtml));
+
+            element = document.DocumentNode.SelectSingleNode("//p[@id='price_info']");
+            htmlTags.Add(new HtmlTagElement(false, "Product price info", element.InnerHtml));
 
             element = document.DocumentNode.SelectSingleNode("//div[@id='short_description']/span");
-            htmlTags.Add(new HtmlTagElement(false, "Mobile: short description", element.InnerText));
+            htmlTags.Add(new HtmlTagElement(false, "Mobile: short description", element.InnerHtml));
 
             // Getting 
             int i = 1;
@@ -111,7 +114,7 @@ namespace eBayForm
 
                 foreach (HtmlNode node in document.DocumentNode.SelectNodes("//nav//li//a"))
                 {
-                    htmlTags.Add(new HtmlTagElement(true, "Similar product " + i++, node.InnerText, node.Attributes["href"].Value));
+                    htmlTags.Add(new HtmlTagElement(true, "Similar product " + i++, node.InnerHtml, node.Attributes["href"].Value));
                 }
 
                 // Getting source of the product main image
@@ -129,10 +132,10 @@ namespace eBayForm
                 foreach (HtmlNode node in document.DocumentNode.SelectNodes("//div[@id='info_items']/div"))
                 {
                     element = node.SelectSingleNode("h2");
-                    string headline = element.InnerText;
+                    string headline = element.InnerHtml;
 
                     element = node.SelectSingleNode("p");
-                    htmlTags.Add(new HtmlTagElement(true, "Textblock " + i, headline, element.InnerText));
+                    htmlTags.Add(new HtmlTagElement(true, "Textblock " + i, headline, element.InnerHtml));
                     i++;
                 }
             }
@@ -162,18 +165,24 @@ namespace eBayForm
                     htmlTags.Add(new HtmlTagElement(true, "Bulletpoint " + i++, node.InnerText));
                 }
 
+                element = document.DocumentNode.SelectSingleNode("//h3[@id='description_header']");
+                htmlTags.Add(new HtmlTagElement(false, "Description products title", element.InnerHtml));
+
                 i = 1;
                 List<string> tmpList = new List<string>();
                 foreach (HtmlNode node in document.DocumentNode.SelectNodes("//div[@id='description_items']/label"))
                 {
-                    tmpList.Add(node.InnerText);
+                    tmpList.Add(node.InnerHtml);
                 }
 
                 i = 1;
                 foreach (HtmlNode node in document.DocumentNode.SelectNodes("//p[@id='tab_p']"))
                 {
-                    htmlTags.Add(new HtmlTagElement(true, "Textblock " + i, tmpList[i++ - 1], node.InnerText));
+                    htmlTags.Add(new HtmlTagElement(true, "Textblock " + i, tmpList[i++ - 1], node.InnerHtml));
                 }
+
+                element = document.DocumentNode.SelectSingleNode("//h3[@id='similar_header']");
+                htmlTags.Add(new HtmlTagElement(false, "Similar products title", element.InnerHtml));
 
                 i = 1;
                 foreach (HtmlNode node in document.DocumentNode.SelectNodes("//div[@id='similar_products']/a"))
@@ -182,12 +191,67 @@ namespace eBayForm
                     element = node.SelectSingleNode("img");
                     string imageLink = element.Attributes["src"].Value;
                     element = node.SelectSingleNode("p");
-                    htmlTags.Add(new HtmlTagElement(true, "Similar product " + i++, element.InnerText, link, imageLink));
+                    htmlTags.Add(new HtmlTagElement(true, "Similar product " + i++, element.InnerHtml, link, imageLink));
+                }
+            }
+            else if (templatename == "CoffeeBeanV2")
+            {
+                // Getting company logo at the top
+                element = document.DocumentNode.SelectSingleNode("//header/div/img");
+                htmlTags.Add(new HtmlTagElement(false, "Company logo", element.Attributes["src"].Value));
+
+                int galleryImageCounter = 0;
+                foreach (HtmlNode node in document.DocumentNode.SelectNodes("//div[@class='gallery']/input"))
+                {
+                    galleryImageCounter++;
+                }
+
+                element = document.DocumentNode.SelectSingleNode("//style[@id='gallery_pictures']");
+
+                i = 1;
+                for (int j = 0; j < galleryImageCounter; j++)
+                {
+                    htmlTags.Add(new HtmlTagElement(true, "Gallary image " + i++, element.InnerHtml.Split('{')[j + 1].Split('}')[0].Split(';')[0].Split('\'')[1]));
+                }
+
+                i = 1;
+                foreach (HtmlNode node in document.DocumentNode.SelectNodes("//ul[@id='arguments']/li"))
+                {
+                    htmlTags.Add(new HtmlTagElement(true, "Bulletpoint " + i++, node.InnerText));
+                }
+
+                element = document.DocumentNode.SelectSingleNode("//h3[@id='description_header']");
+                htmlTags.Add(new HtmlTagElement(false, "Description products title", element.InnerHtml));
+
+                i = 1;
+                List<string> tmpList = new List<string>();
+                foreach (HtmlNode node in document.DocumentNode.SelectNodes("//div[@id='info_tabs']/h4"))
+                {
+                    tmpList.Add(node.InnerHtml);
+                }
+
+                i = 1;
+                foreach (HtmlNode node in document.DocumentNode.SelectNodes("//p[@id='tab_p']"))
+                {
+                    htmlTags.Add(new HtmlTagElement(true, "Textblock " + i, tmpList[i++ - 1], node.InnerHtml));
+                }
+
+                element = document.DocumentNode.SelectSingleNode("//h3[@id='similar_header']");
+                htmlTags.Add(new HtmlTagElement(false, "Similar products title", element.InnerHtml));
+
+                i = 1;
+                foreach (HtmlNode node in document.DocumentNode.SelectNodes("//div[@id='similar_products']/a"))
+                {
+                    string link = node.Attributes["href"].Value;
+                    element = node.SelectSingleNode("img");
+                    string imageLink = element.Attributes["src"].Value;
+                    element = node.SelectSingleNode("p");
+                    htmlTags.Add(new HtmlTagElement(true, "Similar product " + i++, element.InnerHtml, link, imageLink));
                 }
             }
 
             element = document.DocumentNode.SelectSingleNode("//p[@class='copyright']/a");
-            htmlTags.Add(new HtmlTagElement(false, "Companyname", element.InnerText, element.Attributes["href"].Value));
+            htmlTags.Add(new HtmlTagElement(false, "Companyname", element.InnerHtml, element.Attributes["href"].Value));
 
             return htmlTags;
         }
@@ -202,7 +266,11 @@ namespace eBayForm
 
             element = document.DocumentNode.SelectSingleNode("//p[@id='price']");
             style = element.Attributes["style"].Value.Split(':');
-            styleElements.Add(new StyleTagElement("Productprice color", style[1].Replace(";", "")));
+            styleElements.Add(new StyleTagElement("Product price color", style[1].Replace(";", "")));
+
+            element = document.DocumentNode.SelectSingleNode("//p[@id='price_info']");
+            style = element.Attributes["style"].Value.Split(':');
+            styleElements.Add(new StyleTagElement("Product price info color", style[1].Replace(";", "")));
 
             if (templatename == "Tea")
             {
@@ -265,7 +333,7 @@ namespace eBayForm
                 element = element.SelectSingleNode("i");
                 styleElements.Add(new StyleTagElement("Bulletpoints symbol", element.GetAttributeValue("class", "")));
 
-                element = document.DocumentNode.SelectSingleNode("//h3[@id='mobile_header']");
+                element = document.DocumentNode.SelectSingleNode("//h3[@class='mobile_header']");
                 style = element.Attributes["style"].Value.Split(':');
                 styleElements.Add(new StyleTagElement("Mobile: Color of container titles", style[1].Replace(";", "")));
 
@@ -273,7 +341,9 @@ namespace eBayForm
                 style = element.Attributes["style"].Value.Split(':');
                 styleElements.Add(new StyleTagElement("Background of description", style[1].Replace(";", "")));
 
-                //--Tab menu
+                //element = document.DocumentNode.SelectSingleNode("//h3[@id='description_header']");
+                //style = element.Attributes["style"].Value.Split(':');
+                //styleElements.Add(new StyleTagElement("Color of similar products title", style[1].Replace(";", "")));
 
                 element = document.DocumentNode.SelectSingleNode("//style[@id='tab_item_style']");
                 //string[] properties = element.Attributes["style"].Value.Split(';');
@@ -293,6 +363,65 @@ namespace eBayForm
                 style = element.Attributes["style"].Value.Split(':');
                 styleElements.Add(new StyleTagElement("Tab text color", style[1].Replace(";", "")));
                 
+
+                element = document.DocumentNode.SelectSingleNode("//div[@class='similar']");
+                style = element.Attributes["style"].Value.Split(':');
+                styleElements.Add(new StyleTagElement("Background of similarproductsgallery", style[1].Replace(";", "")));
+
+                element = document.DocumentNode.SelectSingleNode("//div[@id='similar_products']/a");
+
+                string[] properties = element.Attributes["style"].Value.Split(';');
+                style = properties[0].Split(':');
+                styleElements.Add(new StyleTagElement("Similar product container background", style[1]));
+
+                style = properties[1].Split(':');
+                styleElements.Add(new StyleTagElement("Similar product border color", "#" + style[1].Split('#')[1]));
+
+                element = document.DocumentNode.SelectSingleNode("//div[@id='similar_products']/a/p");
+                style = element.Attributes["style"].Value.Split(':');
+                styleElements.Add(new StyleTagElement("Similar product name color", style[1].Replace(";", "")));
+            }
+            else if (templatename == "CoffeeBeanV2")
+            {
+                element = document.DocumentNode.SelectSingleNode("//div[@class='header']");
+                style = element.Attributes["style"].Value.Split(':');
+                styleElements.Add(new StyleTagElement("Background of header", style[1].Replace(";", "")));
+
+                element = document.DocumentNode.SelectSingleNode("//header");
+                style = element.Attributes["style"].Value.Split(':');
+                styleElements.Add(new StyleTagElement("Parting line", style[1].Replace(";", "")));
+
+                element = document.DocumentNode.SelectSingleNode("//div[@class='product_arguments']");
+                style = element.Attributes["style"].Value.Split(':');
+                styleElements.Add(new StyleTagElement("Background of productgallery and bulletpoints", style[1].Replace(";", "")));
+
+                //element = document.DocumentNode.SelectSingleNode("//ul[@id='image_list']");
+                //style = element.Attributes["style"].Value.Split(':');
+                //styleElements.Add(new StyleTagElement("Image gallery background", style[1].Replace(";", "")));
+
+                element = document.DocumentNode.SelectSingleNode("//ul[@id='arguments']/li");
+                style = element.Attributes["style"].Value.Split(':');
+                styleElements.Add(new StyleTagElement("Bulletpoints color", style[1].Replace(";", "")));
+
+                element = element.SelectSingleNode("i");
+                styleElements.Add(new StyleTagElement("Bulletpoints symbol", element.GetAttributeValue("class", "")));
+
+                element = document.DocumentNode.SelectSingleNode("//h3[@class='mobile_header']");
+                style = element.Attributes["style"].Value.Split(':');
+                styleElements.Add(new StyleTagElement("Mobile: Color of container titles", style[1].Replace(";", "")));
+
+                element = document.DocumentNode.SelectSingleNode("//div[@class='description']");
+                style = element.Attributes["style"].Value.Split(':');
+                styleElements.Add(new StyleTagElement("Background of description", style[1].Replace(";", "")));
+
+                element = document.DocumentNode.SelectSingleNode("//div[@id='info_tabs']/h4[@id='mobile_title']");
+                style = element.Attributes["style"].Value.Split(':');
+                styleElements.Add(new StyleTagElement("Tab header color", style[1].Replace(";", "")));
+
+                element = document.DocumentNode.SelectSingleNode("//div[@id='info_tabs']/p[@id='tab_p']");
+                style = element.Attributes["style"].Value.Split(':');
+                styleElements.Add(new StyleTagElement("Tab text color", style[1].Replace(";", "")));
+
 
                 element = document.DocumentNode.SelectSingleNode("//div[@class='similar']");
                 style = element.Attributes["style"].Value.Split(':');
@@ -339,6 +468,10 @@ namespace eBayForm
             element.SetAttributeValue("style", "color: " + styleElements[styleCounter++].Value + ";");
 
             element = document.DocumentNode.SelectSingleNode("//p[@id='price']");
+            element.InnerHtml = htmlTags[tagsCounter++].Values[0];
+            element.SetAttributeValue("style", "color: " + styleElements[styleCounter++].Value + ";");
+
+            element = document.DocumentNode.SelectSingleNode("//p[@id='price_info']");
             element.InnerHtml = htmlTags[tagsCounter++].Values[0];
             element.SetAttributeValue("style", "color: " + styleElements[styleCounter++].Value + ";");
 
@@ -442,7 +575,7 @@ namespace eBayForm
                 styleCounter++;
 
                 //-- Tab menu
-                foreach (HtmlNode node in document.DocumentNode.SelectNodes("//h3[@id='mobile_header']"))
+                foreach (HtmlNode node in document.DocumentNode.SelectNodes("//h3[@class='mobile_header']"))
                 {
                     node.SetAttributeValue("style", "color: " + styleElements[styleCounter].Value + ";");
                 }
@@ -450,6 +583,9 @@ namespace eBayForm
 
                 element = document.DocumentNode.SelectSingleNode("//div[@class='description']");
                 element.SetAttributeValue("style", "background-color: " + styleElements[styleCounter++].Value + ";");
+
+                element = document.DocumentNode.SelectSingleNode("//h3[@id='description_header']");
+                element.InnerHtml = htmlTags[tagsCounter++].Values[0];
 
                 int i = tagsCounter;
                 foreach (HtmlNode node in document.DocumentNode.SelectNodes("//style[@id='tab_item_style']"))
@@ -483,6 +619,100 @@ namespace eBayForm
 
                 element = document.DocumentNode.SelectSingleNode("//div[@class='similar']");
                 element.SetAttributeValue("style", "background-color: " + styleElements[styleCounter++].Value + ";");
+
+                element = document.DocumentNode.SelectSingleNode("//h3[@id='similar_header']");
+                element.InnerHtml = htmlTags[tagsCounter++].Values[0];
+
+                foreach (HtmlNode node in document.DocumentNode.SelectNodes("//div[@id='similar_products']/a"))
+                {
+                    node.SetAttributeValue("style", "background-color: " + styleElements[styleCounter].Value + ";border: 1px solid " + styleElements[styleCounter + 1].Value + ";");
+                    node.SetAttributeValue("href", htmlTags[tagsCounter].Values[1]);
+                    element = node.SelectSingleNode("img");
+                    element.SetAttributeValue("src", htmlTags[tagsCounter].Values[2]);
+                    element = node.SelectSingleNode("p");
+                    element.SetAttributeValue("style", "color: " + styleElements[styleCounter + 2].Value + ";");
+                    element.InnerHtml = htmlTags[tagsCounter++].Values[0];
+                }
+                styleCounter += 3;
+            }
+            else if (templatename == "CoffeeBeanV2")
+            {
+                element = document.DocumentNode.SelectSingleNode("//div[@class='header']");
+                element.SetAttributeValue("style", "background-color: " + styleElements[styleCounter++].Value + ";");
+
+                element = document.DocumentNode.SelectSingleNode("//header");
+                element.SetAttributeValue("style", "border-color: " + styleElements[styleCounter++].Value + ";");
+
+                element = document.DocumentNode.SelectSingleNode("//header/div/img");
+                element.SetAttributeValue("src", htmlTags[tagsCounter++].Values[0]);
+
+                element = document.DocumentNode.SelectSingleNode("//div[@class='product_arguments']");
+                element.SetAttributeValue("style", "background-color: " + styleElements[styleCounter++].Value + ";");
+
+                int galleryImageCounter = 0;
+                foreach (HtmlNode node in document.DocumentNode.SelectNodes("//div[@class='gallery']/input"))
+                {
+                    galleryImageCounter++;
+                }
+
+                element = document.DocumentNode.SelectSingleNode("//style[@id='gallery_pictures']");
+
+                string gallery_images = "";
+                string gallery_tech = "";
+
+                for (int j = 0; j < galleryImageCounter; j++)
+                {
+                    gallery_images += ".gallery #image_" + (j + 1) + " {background-image: url('" + htmlTags[tagsCounter].Values[0] + "');}";
+                    gallery_tech += "#image_input_" + (j + 1) + ":checked~#selected_image {background-image: url('" + htmlTags[tagsCounter++].Values[0] + "');}";
+                }
+
+                element = document.DocumentNode.SelectSingleNode("//style[@id='gallery_pictures']");
+                element.InnerHtml = gallery_images;
+
+                element = document.DocumentNode.SelectSingleNode("//style[@id='gallery_tech']");
+                element.InnerHtml = gallery_tech;
+
+
+                foreach (HtmlNode node in document.DocumentNode.SelectNodes("//ul[@id='arguments']/li"))
+                {
+                    node.InnerHtml = "<i class='" + styleElements[0].Value + "'></i>" + htmlTags[tagsCounter++].Values[0];
+                    node.SetAttributeValue("style", "color: " + styleElements[styleCounter].Value + ";");
+                }
+                styleCounter++;
+
+                //-- Tab menu
+                foreach (HtmlNode node in document.DocumentNode.SelectNodes("//h3[@class='mobile_header']"))
+                {
+                    node.SetAttributeValue("style", "color: " + styleElements[styleCounter].Value + ";");
+                }
+                styleCounter++;
+
+                element = document.DocumentNode.SelectSingleNode("//div[@class='description']");
+                element.SetAttributeValue("style", "background-color: " + styleElements[styleCounter++].Value + ";");
+
+                element = document.DocumentNode.SelectSingleNode("//h3[@id='description_header']");
+                element.InnerHtml = htmlTags[tagsCounter++].Values[0];
+
+                int i = tagsCounter;
+                foreach (HtmlNode node in element.SelectNodes("//div[@id='info_tabs']/h4[@id='mobile_title']"))
+                {
+                    node.InnerHtml = htmlTags[tagsCounter++].Values[0];
+                    node.SetAttributeValue("style", "color: " + styleElements[styleCounter].Value + ";");
+                }
+
+                foreach (HtmlNode node in element.SelectNodes("//div[@id='info_tabs']/p[@id='tab_p']"))
+                {
+                    node.InnerHtml = htmlTags[i++].Values[1];
+                    node.SetAttributeValue("style", "color: " + styleElements[styleCounter + 1].Value + ";");
+                }
+
+                styleCounter += 2;
+
+                element = document.DocumentNode.SelectSingleNode("//div[@class='similar']");
+                element.SetAttributeValue("style", "background-color: " + styleElements[styleCounter++].Value + ";");
+
+                element = document.DocumentNode.SelectSingleNode("//h3[@id='similar_header']");
+                element.InnerHtml = htmlTags[tagsCounter++].Values[0];
 
                 foreach (HtmlNode node in document.DocumentNode.SelectNodes("//div[@id='similar_products']/a"))
                 {
@@ -532,6 +762,9 @@ namespace eBayForm
 
             element = document.DocumentNode.SelectSingleNode("//p[@id='price']");
             element.InnerHtml = configurationKeyValues["ProductPrice"];
+
+            element = document.DocumentNode.SelectSingleNode("//p[@id='price_info']");
+            element.InnerHtml = configurationKeyValues["ProductPriceInfo"];
 
             if (templatename == "Tea")
             {
@@ -693,16 +926,96 @@ namespace eBayForm
                     parentElement.AppendChild(element);
                 }
             }
+            else if (templatename == "CoffeeBeanV2")
+            {
+                element = document.DocumentNode.SelectSingleNode("//header/div/img");
+                element.SetAttributeValue("src", configurationKeyValues["LogoLink"] == "" ? "https://i.imgur.com/ko8F6LC.png" : configurationKeyValues["LogoLink"]);
+
+                HtmlNode parentElement = document.DocumentNode.SelectSingleNode("//div[@class='gallery']");
+                int count = Convert.ToInt16(configurationKeyValues["GallaryImageCount"]);
+
+                string styleString = "";
+                string imageSourceString = "";
+                int back_i = count;
+                for (int i = 0; i < count; i++)
+                {
+                    element = HtmlNode.CreateNode("<label  style='width:" + (90 / count) + "%' for='image_input_" + (back_i) + "' id='image_" + (back_i) + "'></label>");
+                    parentElement.PrependChild(element);
+                    if (back_i == 1)
+                    {
+                        element = HtmlNode.CreateNode("<input type='radio' name ='image_list' id='image_input_" + (back_i) + "' checked>");
+                        styleString += "#image_input_" + (i + 1) + ":checked~#selected_image{background-image: url('" + (configurationKeyValues["ProductImageLink"] == "" ? "https://i.imgur.com/ko8F6LC.png" : configurationKeyValues["ProductImageLink"]) + "');}";
+                        imageSourceString += ".gallery #image_" + (i + 1) + " {background-image: url('" + (configurationKeyValues["ProductImageLink"] == "" ? "https://i.imgur.com/ko8F6LC.png" : configurationKeyValues["ProductImageLink"]) + "');}";
+                    }
+                    else
+                    {
+                        element = HtmlNode.CreateNode("<input type='radio' name ='image_list' id='image_input_" + (back_i) + "'>");
+                        styleString += "#image_input_" + (i + 1) + ":checked~#selected_image{background-image: url('https://i.imgur.com/ko8F6LC.png');}";
+                        imageSourceString += ".gallery #image_" + (i + 1) + " {background-image: url('https://i.imgur.com/ko8F6LC.png');}";
+                    }
+                    back_i--;
+                    parentElement.PrependChild(element);
+                }
+
+                parentElement = document.DocumentNode.SelectSingleNode("//style[@id='gallery_tech']");
+                parentElement.InnerHtml = styleString;
+
+                parentElement = document.DocumentNode.SelectSingleNode("//style[@id='gallery_pictures']");
+                parentElement.InnerHtml = imageSourceString;
+
+                parentElement = document.DocumentNode.SelectSingleNode("//ul[@id='arguments']");
+
+                count = Convert.ToInt16(configurationKeyValues["ArgumentsCount"]);
+
+                for (int i = 0; i < count; i++)
+                {
+                    element = HtmlNode.CreateNode("<li style='color: #3b3b3b;'><i class='fas fa-certificate'></i>Argument</li>");
+                    parentElement.AppendChild(element);
+                }
+
+                parentElement = document.DocumentNode.SelectSingleNode("//div[@id='info_tabs']");
+
+                count = Convert.ToInt16(configurationKeyValues["TexboxCount"]);
+                styleString = "";
+                for (int i = 0; i < count; i++)
+                {
+                    element = HtmlNode.CreateNode("<h4 id='mobile_title' style='color: #D4AA00;'>Title</h4>");
+                    parentElement.AppendChild(element);
+
+                    element = HtmlNode.CreateNode("<p class='tab_div_" + (i + 1) + "' id='tab_p' style='color: #3b3b3b;'> " +
+                                                          "quis voluptatum obcaecati deserunt unde odit expedita, ratione numquam " +
+                                                          "sunt quidem adipisci animi saepe impedit nam repellendus? Ipsum, modi. " +
+                                                          "Lorem ipsum, dolor sit amet consectetur adipisicing elit. " +
+                                                          "Blanditiis rerum possimus cum, sapiente quibusdam, " +
+                                                          "optio ab provident earum animi ipsum ipsa reprehenderit hic! " +
+                                                          "Numquam, doloribus recusandae cumque quibusdam aliquam natus?" +
+                                                   "</p>");
+                    parentElement.AppendChild(element);
+                }
+
+                parentElement = document.DocumentNode.SelectSingleNode("//div[@id='similar_products']");
+                count = Convert.ToInt16(configurationKeyValues["NavLinkCount"]);
+
+                for (int i = 0; i < count; i++)
+                {
+                    element = HtmlNode.CreateNode("<a href='#' style='background-color: rgba(255,255,246,0.02);border: 1px solid #000000;'>" +
+                                                    "<img src='https://i.imgur.com/ko8F6LC.png'>" +
+                                                    "<p style='color: #3B3B3B;'>" +
+                                                        "Blanditiis rerum possimus cum, sapiente quibusdam" +
+                                                    "</p>" +
+                                                  "</a>");
+                    parentElement.AppendChild(element);
+                }
+            }
 
             return document.DocumentNode.OuterHtml;
         }
 
         public void Export(string path)
         {
-            string exportDocument = document.DocumentNode.SelectSingleNode("//head").InnerHtml + document.DocumentNode.SelectSingleNode("//body").OuterHtml;
             using (StreamWriter sw = new StreamWriter(path))
             {
-                sw.WriteLine(exportDocument);
+                sw.WriteLine(Document.Replace("    ", ""));
             }
         }
     }

@@ -12,31 +12,31 @@
 
     <Grid>
         <StackPanel Name="spLogo" HorizontalAlignment="Left" Orientation="Horizontal" Margin="10, 0">
-            <materialDesign:PackIcon Kind="CartOutline" Foreground="{StaticResource MainColor}" Margin="0,0,5,0" VerticalAlignment="Center"/>
+            <materialDesign:PackIcon Kind="CartOutline" Foreground="{StaticResource PrimaryHueMidBrush}" Margin="0,0,5,0" VerticalAlignment="Center"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10, 0">
 
             <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Name="btnMinimize" 
                     Height="25" Width="25" BorderBrush="Transparent"
                     Background="Transparent" Click="BtnMinimize_Click">
-                <materialDesign:PackIcon Kind="WindowMinimize" Foreground="{StaticResource MainColor}" Margin="0,5,0,0"/>
+                <materialDesign:PackIcon Kind="WindowMinimize" Foreground="{StaticResource PrimaryHueMidBrush}" Margin="0,5,0,0"/>
             </Button>
             <Grid Name="grMaximizeRestore" Visibility="Collapsed">
                 <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Name="btnMaximize" 
                         Height="25" Width="25" BorderBrush="Transparent" 
                         Background="Transparent" Click="BtnMaximize_Click">
-                    <materialDesign:PackIcon Kind="WindowMaximize" Foreground="{StaticResource MainColor}"/>
+                    <materialDesign:PackIcon Kind="WindowMaximize" Foreground="{StaticResource PrimaryHueMidBrush}"/>
                 </Button>
                 <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Visibility="Hidden"  Name="btnRestore" 
                         Height="25" Width="25" BorderBrush="Transparent" 
                         Background="Transparent" Click="BtnRestore_Click">
-                    <materialDesign:PackIcon Kind="WindowRestore" Foreground="{StaticResource MainColor}"/>
+                    <materialDesign:PackIcon Kind="WindowRestore" Foreground="{StaticResource PrimaryHueMidBrush}"/>
                 </Button>
             </Grid>
             <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"  Name="btnClose" 
                     Height="25" Width="25" BorderBrush="Transparent" 
                     Background="Transparent">
-                <materialDesign:PackIcon Kind="Close" Foreground="{StaticResource MainColor}"/>
+                <materialDesign:PackIcon Kind="Close" Foreground="{StaticResource PrimaryHueMidBrush}"/>
             </Button>
         </StackPanel>
     </Grid>

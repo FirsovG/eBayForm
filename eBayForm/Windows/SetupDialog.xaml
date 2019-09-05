@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:eBayForm.Windows"
         mc:Ignorable="d" Title="Setup dialog"
-        WindowStartupLocation="CenterScreen" Foreground="{StaticResource SecondColor}"
+        WindowStartupLocation="CenterScreen" Foreground="{StaticResource PrimaryHueMidForegroundBrush}"
         FontFamily="Popins" Background="{DynamicResource AccentDark}"
-        Height="475" Width="400" WindowStyle="None" ResizeMode="NoResize">
+        Height="525" Width="400" WindowStyle="None" ResizeMode="NoResize">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
@@ -26,7 +26,10 @@
 
             <Label Content="Product price" FontWeight="Bold"/>
             <TextBox Name="ProductPrice" Margin="0,0,0,15"/>
-            
+
+            <Label Content="Product price info" FontWeight="Bold"/>
+            <TextBox Name="ProductPriceInfo" Margin="0,0,0,15"/>
+
             <Label Content="Product image link" FontWeight="Bold"/>
             <TextBox Name="ProductImageLink" Margin="0,0,0,15"/>
 

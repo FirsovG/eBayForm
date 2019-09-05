@@ -35,14 +35,14 @@
                     <Style TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
                         <Setter Property="FontWeight" Value="Bold"/>
                         <Setter Property="FontSize" Value="13"/>
-                        <Setter Property="Foreground" Value="{StaticResource SecondColor}"/>
+                        <Setter Property="Foreground" Value="{StaticResource PrimaryHueMidForegroundBrush}"/>
                     </Style>
 
                     <Style TargetType="designitems:WatermarkTextBox" BasedOn="{StaticResource {x:Type TextBox}}">
                         <Setter Property="FontSize" Value="17"/>
                         <Setter Property="BorderThickness" Value="0,0,0,1"/>
                         <Setter Property="Margin" Value="10, 2.5, 12.5, 10"/>
-                        <Setter Property="BorderBrush" Value="{StaticResource SecondColor}"/>
+                        <Setter Property="BorderBrush" Value="{StaticResource PrimaryHueMidForegroundBrush}"/>
                     </Style>
 
                     <Style TargetType="StackPanel">
@@ -51,7 +51,7 @@
 
                     <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
                         <Setter Property="Margin" Value="5"/>
-                        <Setter Property="BorderBrush" Value="{StaticResource MainColor}"/>
+                        <Setter Property="BorderBrush" Value="{StaticResource PrimaryHueMidBrush}"/>
                     </Style>
                 </StackPanel.Resources>
             </StackPanel>

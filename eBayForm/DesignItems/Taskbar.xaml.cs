@@ -44,7 +44,7 @@ namespace eBayForm.DesignItems
                 logoname.FontWeight = FontWeights.Bold;
                 logoname.FontSize = 13;
                 logoname.VerticalAlignment = VerticalAlignment.Center;
-                logoname.Foreground = (Brush)FindResource("SecondColor");
+                logoname.Foreground = (Brush)FindResource("PrimaryHueMidForegroundBrush");
                 spLogo.Children.Add(logoname);
             }
             btnClose.Click += Close;

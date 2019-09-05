@@ -27,16 +27,16 @@
 
             <StackPanel Grid.Column="1" VerticalAlignment="Center">
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Separator (Headline-Text)" Foreground="{StaticResource SecondColor}" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                    <TextBox Name="tbSeparatorHT" MaxLength="1" TextAlignment="Center" Foreground="{StaticResource SecondColor}" Width="15" VerticalAlignment="Center" Background="Transparent"/>
+                    <TextBlock Text="Separator (Headline-Text)" Foreground="{StaticResource PrimaryHueMidForegroundBrush}" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                    <TextBox Name="tbSeparatorHT" MaxLength="1" TextAlignment="Center" Foreground="{StaticResource PrimaryHueMidForegroundBrush}" Width="15" VerticalAlignment="Center" Background="Transparent"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Separator (Textblock-Textblock)" Foreground="{StaticResource SecondColor}" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                    <TextBox Name="tbSeparatorTT" MaxLength="1" TextAlignment="Center" Foreground="{StaticResource SecondColor}" Width="15" VerticalAlignment="Center" Background="Transparent"/>
+                    <TextBlock Text="Separator (Textblock-Textblock)" Foreground="{StaticResource PrimaryHueMidForegroundBrush}" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                    <TextBox Name="tbSeparatorTT" MaxLength="1" TextAlignment="Center" Foreground="{StaticResource PrimaryHueMidForegroundBrush}" Width="15" VerticalAlignment="Center" Background="Transparent"/>
                 </StackPanel>
             </StackPanel>
 
-            <designitems:WatermarkTextBox x:Name="tbText" Grid.Column="3" TextWrapping="Wrap" AcceptsReturn="True" ScrollViewer.VerticalScrollBarVisibility="Auto" Foreground="{StaticResource SecondColor}" Watermark="Enter text here" WatermarkColor="{StaticResource SecondColor}" VerticalAlignment="Center"/>
+            <designitems:WatermarkTextBox x:Name="tbText" Grid.Column="3" TextWrapping="Wrap" AcceptsReturn="True" ScrollViewer.VerticalScrollBarVisibility="Auto" Foreground="{StaticResource PrimaryHueMidForegroundBrush}" Watermark="Enter text here" WatermarkColor="{StaticResource PrimaryHueMidForegroundBrush}" VerticalAlignment="Center"/>
         </Grid>
 
         <StackPanel Grid.Row="2" Width="300px" HorizontalAlignment="Left" Margin="10,0,0,0">

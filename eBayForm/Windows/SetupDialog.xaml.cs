@@ -47,7 +47,7 @@ namespace eBayForm.Windows
         {
             if (((TextBox)sender).BorderBrush == (Brush)FindResource("WarningColor"))
             {
-                ((TextBox)sender).BorderBrush = (Brush)FindResource("SecondColor");
+                ((TextBox)sender).BorderBrush = (Brush)FindResource("PrimaryHueMidForegroundBrush");
             }
         }
     }

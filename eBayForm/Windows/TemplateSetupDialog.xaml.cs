@@ -33,7 +33,7 @@ namespace eBayForm.Windows
             {
                 TeaMarkup();
             }
-            else if (templatename == "CoffeeBean")
+            else if (templatename == "CoffeeBean" || templatename == "CoffeeBeanV2")
             {
                 CoffeeBeanMarkup();
             }
@@ -156,7 +156,7 @@ namespace eBayForm.Windows
 
             textBox = new TextBox();
             textBox.Name = "NavLinkCount";
-            textBox.MaxLength = 1;
+            textBox.MaxLength = 2;
 
             optionalLabel = new Label();
             optionalLabel.Content = "optonal 5";

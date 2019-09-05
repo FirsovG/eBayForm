@@ -18,8 +18,8 @@ namespace eBayForm
     {
         PropertiesToolBox toolBox;
         StylesToolBox stylesToolBox;
-        LogicController lc;
         Phone phone;
+        LogicController lc;
 
         List<Screen> screens;
 
@@ -42,7 +42,6 @@ namespace eBayForm
 
             this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
             this.LocationChanged += MainWindow_LocationChanged;
-            this.StateChanged += MainWindow_StateChanged;
 
             Taskbar.Content = new DesignItems.Taskbar(this);
             lc = new LogicController();
@@ -62,11 +61,6 @@ namespace eBayForm
                     }
                 }
             }
-        }
-
-        private void MainWindow_StateChanged(object sender, System.EventArgs e)
-        {
-
         }
 
         private void MainWindow_LocationChanged(object sender, System.EventArgs e)
@@ -174,8 +168,12 @@ namespace eBayForm
         {
             if(documentIsChanged)
             {
-                if (lc.Document != null && toolBox != null && stylesToolBox != null)
+                if (lc.Document != null && toolBox != null && stylesToolBox != null && phone != null)
                 {
+                    phone.Close();
+                    toolBox.Close();
+                    stylesToolBox.Close();
+
                     bool? result = CustomMessageBox.Dialog("Do you want to export the file?");
                     if (result == true)
                     {
@@ -188,14 +186,10 @@ namespace eBayForm
                             lc.Export(fileDialog.FileName);
                         }
                     }
-                    
                     wbWorkspace.Visibility = Visibility.Hidden;
                     spButtons.Visibility = Visibility.Hidden;
                     spPhoneButtons.Visibility = Visibility.Hidden;
-
-                    phone.Hide();
-                    toolBox.Close();
-                    stylesToolBox.Close();
+                   
                     documentIsChanged = false;
                 }
             }
@@ -242,6 +236,7 @@ namespace eBayForm
                     string htmlCode = await lc.ImportHtmlAsync(openFileDialog.FileName);
                     ShowWorkspace(htmlCode);
                     this.Title = lc.Templatename + " : " + "eBayForm";
+                    documentIsChanged = true;
                 }
             }
             catch (TemplateException exception)
@@ -319,8 +314,53 @@ namespace eBayForm
 
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
         {
-            ExportCheck();
-            base.OnClosing(e);
+            if (documentIsChanged)
+            {
+
+                //toolBox stylesToolBox lc
+                YNCDialog dialog = new YNCDialog("Do you want to export your changes");
+                dialog.ShowDialog();
+                if (dialog.DialogResult == true)
+                {
+                    if (dialog.isYes)
+                    {
+                        SaveFileDialog fileDialog = new SaveFileDialog();
+                        fileDialog.Filter = "Html-Files (*.html)|*.html";
+                        bool? dialogResult = fileDialog.ShowDialog();
+
+                        if (dialogResult == true)
+                        {
+                            lc.Export(fileDialog.FileName);
+                        }
+                    }
+                    if (toolBox != null && stylesToolBox != null)
+                    {
+                        toolBox.Close();
+                        stylesToolBox.Close();
+                    }
+                    if (phone != null)
+                    {
+                        phone.Close();
+                    }
+                    base.OnClosing(e);
+                }
+                else
+                {
+                    e.Cancel = true;
+                }
+            }
+            else
+            {
+                if (toolBox != null && stylesToolBox != null)
+                {
+                    toolBox.Close();
+                    stylesToolBox.Close();
+                }
+                if (phone != null)
+                {
+                    phone.Close();
+                }
+            }
         }
 
         #endregion

@@ -2,7 +2,7 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
 
-<body id="CoffeeBean">
+<body id="CoffeeBeanV2">
     <style>
 
         body {
@@ -112,18 +112,14 @@
             margin: .5em 0;
         }
 
-        .ie #arguments li {
-            font-size: 20em;
-        }
-
-        #arguments li i {
-            padding-right: 1em;
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
+            #arguments li i {
+                padding-right: 1em;
+                -webkit-touch-callout: none;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+            }
 
         #price {
             font-weight: bold;
@@ -135,22 +131,8 @@
             margin: 0;
         }
 
-
         input {
             display: none;
-        }
-
-        #description_items label {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-            padding: .75em 0;
-            float: left;
-            border: none;
-            outline: none;
-            cursor: pointer;
-            font-size: 1em;
         }
 
         #info_tabs {
@@ -159,8 +141,7 @@
 
             #info_tabs #tab_p {
                 min-height: 5em;
-                padding: 2em 1em;
-                padding-top: 4em;
+                padding: 0;
                 text-align: left;
             }
 
@@ -213,12 +194,7 @@
             text-align: center;
         }
 
-        .description .mobile_header {
-            display: none;
-        }
-
         #mobile_title {
-            display: none;
             font-size: 1em;
             text-align: left;
             margin: 0;
@@ -228,6 +204,10 @@
         @media only screen and (max-width: 900px) {
             .col-7 {
                 margin: 1em 0;
+            }
+
+            .col-5 h1 {
+                text-align: center;
             }
 
             .col-5 ul {
@@ -251,7 +231,6 @@
             }
 
             #productname {
-                text-align: center;
                 font-size: 1.25em;
                 width: 100%;
             }
@@ -272,20 +251,9 @@
                 background-color: transparent;
             }
 
-            #description_items label {
-                display: none;
-            }
-
-            #info_tabs #info_tab,
-            .description .mobile_header,
-            #mobile_title {
-                display: block;
-            }
-
             #info_tabs #tab_p {
                 display: block;
                 font-size: 0.8em;
-                padding: 0;
             }
 
             #similar_products a {
@@ -298,6 +266,7 @@
         }
 
         @media only screen and (max-width: 550px) {
+
             .gallery #selected_image {
                 height: 275px;
             }
@@ -326,31 +295,11 @@
                 padding-bottom: 1.5vh;
             }
         }
-
         @media only screen and (max-width: 550px\0) {
             #similar_products {
                 display: block;
             }
         }
-    </style>
-
-    <style id="tab_item_style">
-        #description_items label {
-            color: #2e2e2e;
-            background-color: #D4AA00;
-        }
-
-        #description_items {
-            background-color: rgba(104, 104, 104, 0.116);
-        }
-
-            #description_items [id^='tab_button']:checked + label {
-                color: #D4AA00;
-                background-color: #2e2e2e;
-            }
-    </style>
-
-    <style id="tab_item_tech">
     </style>
 
     <style id="gallery_style">

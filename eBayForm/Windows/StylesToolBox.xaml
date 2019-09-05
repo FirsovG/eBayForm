@@ -19,7 +19,7 @@
 
     <Window.Resources>
         <Style TargetType="xctk:ByteUpDown">
-            <Setter Property="Foreground" Value="{StaticResource MainColor}"/>
+            <Setter Property="Foreground" Value="{StaticResource PrimaryHueMidBrush}"/>
             <Style.Triggers>
                 <Trigger Property="IsEnabled" Value="True">
                     <Setter Property="BorderBrush" Value="{StaticResource WatermarkColor}"/>
@@ -42,7 +42,7 @@
         <Frame Grid.Row="0" Name="Taskbar"/>
 
         <ScrollViewer Grid.Row="1" Margin="0,5,2,5" VerticalScrollBarVisibility="Auto">
-            <StackPanel  Name="spMain" TextBlock.Foreground="{StaticResource SecondColor}">
+            <StackPanel  Name="spMain" TextBlock.Foreground="{StaticResource PrimaryHueMidForegroundBrush}">
                 <StackPanel.Resources>
 
                     <Style TargetType="Grid">

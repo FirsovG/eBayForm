@@ -102,7 +102,7 @@ namespace eBayForm.DesignItems
 
         public WatermarkTextBox(string watermark)
         {
-            Foreground = (Brush)FindResource("SecondColor");
+            Foreground = (Brush)FindResource("PrimaryHueMidForegroundBrush");
             base.Foreground = Foreground;
             WatermarkColor = (Brush)FindResource("WatermarkColor");
             Loaded += (s, ea) => ShowWatermark();

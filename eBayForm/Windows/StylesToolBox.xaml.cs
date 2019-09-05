@@ -139,7 +139,7 @@ namespace eBayForm.Windows
 
             OwnColorCanvas colorCanvas = new OwnColorCanvas();
             colorCanvas.TextBoxStyle = Application.Current.TryFindResource(typeof(TextBox)) as Style;
-            colorCanvas.TextBoxForeground = (Brush)FindResource("SecondColor");
+            colorCanvas.TextBoxForeground = (Brush)FindResource("PrimaryHueMidForegroundBrush");
             colorCanvas.ApplyTemplate();
             colorCanvas.LostFocus += StyleChanged;
 

@@ -46,6 +46,11 @@ namespace eBayForm.Windows
                 
                 StackPanel panel = spMain;
 
+                for (int i = 0; i < element.Values.Count; i++)
+                {
+                    element.Values[i] = element.Values[i].Replace("<br>", "\n");
+                }
+
                 if (element.IsInList)
                 {
                     string menuName = new string(element.Name.Where(c => (c < '0' || c > '9')).ToArray()).Replace(" ", "");
@@ -263,18 +268,18 @@ namespace eBayForm.Windows
             {
                 if (textBoxList[i].Tag == null)
                 {
-                    htmlTags.Add(new HtmlTagElement(textBoxList[i].Text));
+                    htmlTags.Add(new HtmlTagElement(textBoxList[i].Text.Replace("\n", "<br/>")));
                 }
                 else
                 {
                     if (textBoxList[i + 1].Tag == null)
                     {
-                        htmlTags.Add(new HtmlTagElement(textBoxList[i].Text, textBoxList[i + 1].Text));
+                        htmlTags.Add(new HtmlTagElement(textBoxList[i].Text.Replace("\n", "<br/>"), textBoxList[i + 1].Text.Replace("\n", "<br/>")));
                         i += 1;
                     }
                     else
                     {
-                        htmlTags.Add(new HtmlTagElement(textBoxList[i].Text, textBoxList[i + 1].Text, textBoxList[i + 2].Text));
+                        htmlTags.Add(new HtmlTagElement(textBoxList[i].Text.Replace("\n", "<br/>"), textBoxList[i + 1].Text.Replace("\n", "<br/>"), textBoxList[i + 2].Text.Replace("\n", "<br/>")));
                         i += 2;
                     }
                 }

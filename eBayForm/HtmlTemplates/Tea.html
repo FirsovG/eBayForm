@@ -1,10 +1,7 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <meta http-equiv="X-UA-Compatible" content="IE=11">
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
-</head>
+﻿<meta http-equiv="X-UA-Compatible" content="IE=11">
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+
 <body id="Tea">
     <style type="text/css">
         body {
@@ -100,16 +97,17 @@
 
         .product_image_wrapper {
             display: flex;
-            margin: 1vh 3vh;
+            justify-content: center;
         }
 
             .product_image_wrapper img {
+                width: 80%;
                 object-fit: contain;
-                margin: auto;
             }
 
         #productname {
             font-weight: 700;
+            width: 100%;
         }
 
         #arguments {
@@ -118,6 +116,7 @@
         }
 
             #arguments li {
+                display:flex;
                 list-style: none;
                 font-weight: 500;
                 padding-bottom: 10px
@@ -129,9 +128,14 @@
 
         #price {
             font-weight: bold;
-            font-size: 2em;
-            margin: 1em 0.5em;
+            font-size: 2.2em;
+            margin: 1em 0 0 0;
         }
+
+        #price_info {
+            margin: 0;
+        }
+
 
         .description {
             padding: 2em 0;
@@ -156,6 +160,9 @@
 
 
         @media only screen and (max-width: 900px) {
+            .product_image_wrapper {
+                margin: 1vh 0;
+            }
             nav ul {
                 display: none;
             }
@@ -168,6 +175,8 @@
 
             #productname {
                 text-align: center;
+                font-size: 1.25em;
+                width: 100%;
             }
 
             #price {
@@ -176,8 +185,14 @@
         }
 
         @media only screen and (max-width: 550px) {
+
+            .product_image_wrapper img {
+                width: 100%;
+                object-fit: contain;
+            }
+
             #arguments li {
-                font-size: 0.9em;
+                font-size: 1em;
             }
 
             .title {
@@ -229,6 +244,7 @@
                     <h1 id="productname" style="color: #D4AA00;"></h1>
                     <ul id="arguments"></ul>
                     <p id='price' style='color: #3B3B3B;'></p>
+                    <p id='price_info' style='color: #F1C100;'></p>
                 </div>
             </div>
         </div>
@@ -258,9 +274,6 @@
     </footer>
 
     <div id="short_description" vocab="https://schema.org/" typeof="Product">
-        <span property="description"> 
-            
-        </span>
+        <span property="description"></span>
     </div>
 </body>
-</html>

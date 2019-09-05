@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:eBayForm.Windows"
         mc:Ignorable="d"
-        WindowStartupLocation="CenterScreen" Foreground="{StaticResource SecondColor}"
+        WindowStartupLocation="CenterScreen" Foreground="{StaticResource PrimaryHueMidForegroundBrush}"
         FontFamily="Popins" Background="{DynamicResource AccentDark}"
         Height="400" Width="300" WindowStyle="None" ResizeMode="NoResize">
     <Grid>
